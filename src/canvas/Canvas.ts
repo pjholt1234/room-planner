@@ -3,6 +3,7 @@ import RectangleTool from "./tools/RectangleTool";
 
 class Canvas {
     private _selectedTool: CanvasToolInterface;
+    public canvasObjects: ShapeInterface[] = [];
     public canvas: HTMLCanvasElement;
     public ctx: CanvasRenderingContext2D;
 
@@ -19,13 +20,27 @@ class Canvas {
         this._selectedTool = tool;
         this.setMouseDownListener();
         this.setMouseUpListener();
+        this.setMouseMoveListener()
     }
     get selectedTool(): CanvasToolInterface
     {
         return this._selectedTool;
     }
 
-    initCanvas(): void
+    public clearCanvas(): void
+    {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    public redrawCanvas(): void
+    {
+        this.clearCanvas();
+        this.canvasObjects.forEach((canvasObject: ShapeInterface) => {
+            canvasObject.draw(this.ctx);
+        });
+    }
+
+    private initCanvas(): void
     {
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
@@ -47,6 +62,14 @@ class Canvas {
         this.canvas?.removeEventListener('mouseup', () => {});
         this.canvas?.addEventListener('mouseup', (event) => {
             this._selectedTool.mouseUp(event, this);
+        });
+    }
+
+    private setMouseMoveListener(): void
+    {
+        this.canvas?.removeEventListener('mousemove', () => {});
+        this.canvas?.addEventListener('mousemove', (event) => {
+            this._selectedTool.mouseMove(event, this);
         });
     }
 }
