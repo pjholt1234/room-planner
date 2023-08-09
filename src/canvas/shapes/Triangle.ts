@@ -4,7 +4,7 @@ class Triangle implements ShapeInterface {
     public name = "Triangle";
     constructor(public points : TrianglePoints ) {}
 
-    draw(context: CanvasRenderingContext2D): void {
+    public draw(context: CanvasRenderingContext2D): void {
         context.beginPath();
         context.strokeStyle = 'black';
         context.lineWidth = 1;
@@ -15,7 +15,7 @@ class Triangle implements ShapeInterface {
         context.stroke();
     }
 
-    isPointInside(x: number, y: number): boolean {
+    public isPointInside(x: number, y: number): boolean {
         // Calculate the barycentric coordinates
         const denominator = ((this.points.y2 - this.points.y3) * (this.points.x1 - this.points.x3)) + ((this.points.x3 - this.points.x2) * (this.points.y1 - this.points.y3));
         const alpha = ((this.points.y2 - this.points.y3) * (x - this.points.x3) + (this.points.x3 - this.points.x2) * (y - this.points.y3)) / denominator;
