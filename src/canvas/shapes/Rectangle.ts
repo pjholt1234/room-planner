@@ -1,7 +1,7 @@
 import RectanglePoints from "../RectanglePoints";
 
 class Rectangle implements ShapeInterface {
-
+    public name = "Rectangle";
     constructor(public points : RectanglePoints ) {}
 
     public draw(context: CanvasRenderingContext2D) {

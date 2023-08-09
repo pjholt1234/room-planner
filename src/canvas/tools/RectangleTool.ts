@@ -7,18 +7,18 @@ class RectangleTool implements CanvasToolInterface {
     private x1: number = 0;
     private y1: number = 0;
 
-    public isDrawing: boolean = false;
+    private _isDrawing: boolean = false;
 
     public mouseDown(event: any) {
         this.x1 = event.clientX;
         this.y1 = event.clientY;
 
-        this.isDrawing = true;
+        this._isDrawing = true;
     }
 
     public mouseUp(event: any, canvas: Canvas) {
-        if(!this.isDrawing) return;
-        this.isDrawing = false;
+        if(!this._isDrawing) return;
+        this._isDrawing = false;
 
         const points: RectanglePoints = {
             x1: this.x1,
@@ -29,18 +29,19 @@ class RectangleTool implements CanvasToolInterface {
 
         const rectangle = new Rectangle(points);
         rectangle.draw(canvas.ctx);
+
         canvas.canvasObjects.push(rectangle);
     }
 
     public mouseMove(event: any, canvas: Canvas): void
     {
-        if(!this.isDrawing) return;
+        if(!this._isDrawing) return;
         canvas.redrawCanvas();
-        this.draw(canvas.ctx, this.x1, this.y1, event.clientX, event.clientY);
+        this.drawPreview(canvas.ctx, this.x1, this.y1, event.clientX, event.clientY);
     }
 
 
-    private draw(context: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number) {
+    private drawPreview(context: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number) {
         context.beginPath();
         context.strokeStyle = 'black';
         context.lineWidth = 1;
