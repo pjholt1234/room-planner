@@ -1,6 +1,6 @@
-interface CanvasActionInterface {
+interface CanvasToolInterface {
     mouseDown(event: any, canvas: Canvas): void;
     mouseUp(event: any, canvas: Canvas): void;
 }
 
-export default CanvasActionInterface;
+export default CanvasToolInterface;
