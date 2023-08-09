@@ -20,11 +20,18 @@ class TriangleTool implements CanvasToolInterface {
     public mouseMove(event: any, canvas: Canvas): void
     {
         if(!this._isDrawing) return;
-        this._isDrawing = false;
+        canvas.redrawCanvas();
+
+        let points = this.translateCoordinates(this.x1, this.y1, event.clientX, event.clientY);
+        const triangle = new Triangle(points);
+        triangle.draw(canvas.ctx);
     }
 
     public mouseUp(event: any, canvas: Canvas): void
     {
+        if(!this._isDrawing) return;
+        this._isDrawing = false;
+
         let points = this.translateCoordinates(this.x1, this.y1, event.clientX, event.clientY);
         const triangle = new Triangle(points);
         triangle.draw(canvas.ctx);
