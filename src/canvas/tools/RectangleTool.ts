@@ -39,7 +39,16 @@ class RectangleTool implements CanvasToolInterface {
     {
         if(!this._isDrawing) return;
         canvas.redrawCanvas();
-        this.drawPreview(canvas.ctx, this.x1, this.y1, event.clientX, event.clientY);
+
+        const points: RectanglePoints = {
+            x1: this.x1,
+            y1: this.y1,
+            x2: event.clientX,
+            y2: event.clientY
+        }
+
+        const rectangle = new Rectangle(points);
+        rectangle.draw(canvas.ctx);
     }
 
     public keyDown(event: any, canvas: Canvas): void
@@ -48,17 +57,6 @@ class RectangleTool implements CanvasToolInterface {
             console.log('Rectangle mode');
             canvas.selectedTool = this;
         }
-    }
-
-
-    private drawPreview(context: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number)
-    {
-        context.beginPath();
-        context.strokeStyle = 'black';
-        context.lineWidth = 1;
-        context.rect(x1, y1, x2 - x1, y2 - y1);
-        context.stroke();
-        context.closePath();
     }
 }
 
