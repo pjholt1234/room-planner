@@ -9,14 +9,16 @@ class RectangleTool implements CanvasToolInterface {
 
     private _isDrawing: boolean = false;
 
-    public mouseDown(event: any) {
+    public mouseDown(event: any): void
+    {
         this.x1 = event.clientX;
         this.y1 = event.clientY;
 
         this._isDrawing = true;
     }
 
-    public mouseUp(event: any, canvas: Canvas) {
+    public mouseUp(event: any, canvas: Canvas): void
+    {
         if(!this._isDrawing) return;
         this._isDrawing = false;
 

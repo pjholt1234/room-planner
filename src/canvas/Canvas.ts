@@ -1,6 +1,7 @@
 import CanvasToolInterface from './tools/CanvasToolInterface';
 import RectangleTool from "./tools/RectangleTool";
 import SelectionTool from "./tools/SelectionTool";
+import TriangleTool from "./tools/TriangleTool";
 
 class Canvas {
     private _selectedTool: CanvasToolInterface;
@@ -16,7 +17,8 @@ class Canvas {
 
         this._tools = [
             new RectangleTool(),
-            new SelectionTool()
+            new SelectionTool(),
+            new TriangleTool(),
         ]
 
         this.initCanvas();
