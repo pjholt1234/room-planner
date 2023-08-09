@@ -1,5 +1,6 @@
 import CanvasToolInterface from './tools/CanvasToolInterface';
 import RectangleTool from "./tools/RectangleTool";
+import SelectionTool from "./tools/SelectionTool";
 
 class Canvas {
     private _selectedTool: CanvasToolInterface;
@@ -7,9 +8,16 @@ class Canvas {
     public canvas: HTMLCanvasElement;
     public ctx: CanvasRenderingContext2D;
 
+    private _tools: CanvasToolInterface[] = [];
+
     constructor(canvasId: string) {
         this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+
+        this._tools = [
+            new RectangleTool(),
+            new SelectionTool()
+        ]
 
         this.initCanvas();
         this.selectedTool = new RectangleTool();
@@ -21,6 +29,7 @@ class Canvas {
         this.setMouseDownListener();
         this.setMouseUpListener();
         this.setMouseMoveListener()
+        this.setModeClickListener();
     }
     get selectedTool(): CanvasToolInterface
     {
@@ -70,6 +79,21 @@ class Canvas {
         this.canvas?.removeEventListener('mousemove', () => {});
         this.canvas?.addEventListener('mousemove', (event) => {
             this._selectedTool.mouseMove(event, this);
+        });
+    }
+
+    private setModeClickListener(): void
+    {
+        document.addEventListener("keydown", (event) =>{
+            if (event.key === "m" || event.key === "M") {
+                this._selectedTool = this._tools[1];
+                console.log('Selection mode');
+            }
+
+            if (event.key === "r" || event.key === "R") {
+                this._selectedTool = this._tools[0];
+                console.log('Rectangle mode');
+            }
         });
     }
 }
