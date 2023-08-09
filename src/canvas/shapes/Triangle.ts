@@ -16,7 +16,14 @@ class Triangle implements ShapeInterface {
     }
 
     isPointInside(x: number, y: number): boolean {
-        return false;
+        // Calculate the barycentric coordinates
+        const denominator = ((this.points.y2 - this.points.y3) * (this.points.x1 - this.points.x3)) + ((this.points.x3 - this.points.x2) * (this.points.y1 - this.points.y3));
+        const alpha = ((this.points.y2 - this.points.y3) * (x - this.points.x3) + (this.points.x3 - this.points.x2) * (y - this.points.y3)) / denominator;
+        const beta = ((this.points.y3 - this.points.y1) * (x - this.points.x3) + (this.points.x1 - this.points.x3) * (y - this.points.y3)) / denominator;
+        const gamma = 1 - alpha - beta;
+
+        // Check if the point lies inside the triangle
+        return alpha >= 0 && beta >= 0 && gamma >= 0;
     }
 }
 
