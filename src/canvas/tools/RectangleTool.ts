@@ -40,8 +40,17 @@ class RectangleTool implements CanvasToolInterface {
         this.drawPreview(canvas.ctx, this.x1, this.y1, event.clientX, event.clientY);
     }
 
+    public keyDown(event: any, canvas: Canvas): void
+    {
+        if (event.key === "r" || event.key === "R") {
+            console.log('Rectangle mode');
+            canvas.selectedTool = this;
+        }
+    }
 
-    private drawPreview(context: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number) {
+
+    private drawPreview(context: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number)
+    {
         context.beginPath();
         context.strokeStyle = 'black';
         context.lineWidth = 1;

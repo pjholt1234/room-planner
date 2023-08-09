@@ -21,6 +21,9 @@ class Canvas {
 
         this.initCanvas();
         this.selectedTool = new RectangleTool();
+
+
+        this.setModeClickListener();
     }
 
     set selectedTool(tool: CanvasToolInterface)
@@ -28,8 +31,7 @@ class Canvas {
         this._selectedTool = tool;
         this.setMouseDownListener();
         this.setMouseUpListener();
-        this.setMouseMoveListener()
-        this.setModeClickListener();
+        this.setMouseMoveListener();
     }
     get selectedTool(): CanvasToolInterface
     {
@@ -58,42 +60,40 @@ class Canvas {
         this.canvas.height = windowHeight;
     }
 
-    private setMouseDownListener(): void
-    {
-        this.canvas?.removeEventListener('mousedown', () => {});
-        this.canvas?.addEventListener('mousedown', (event) => {
-            this._selectedTool.mouseDown(event, this);
-        });
+    private setMouseDownListener(): void {
+        this.canvas?.removeEventListener('mousedown', this.handleMouseDown);
+        this.canvas?.addEventListener('mousedown', this.handleMouseDown);
     }
 
-    private setMouseUpListener(): void
-    {
-        this.canvas?.removeEventListener('mouseup', () => {});
-        this.canvas?.addEventListener('mouseup', (event) => {
-            this._selectedTool.mouseUp(event, this);
-        });
+    private handleMouseDown = (event: MouseEvent) => {
+        this._selectedTool.mouseDown(event, this);
+    };
+
+    private setMouseUpListener(): void {
+        this.canvas?.removeEventListener('mouseup', this.handleMouseUp);
+        this.canvas?.addEventListener('mouseup', this.handleMouseUp);
     }
 
-    private setMouseMoveListener(): void
-    {
-        this.canvas?.removeEventListener('mousemove', () => {});
-        this.canvas?.addEventListener('mousemove', (event) => {
-            this._selectedTool.mouseMove(event, this);
-        });
+    private handleMouseUp = (event: MouseEvent) => {
+        this._selectedTool.mouseUp(event, this);
+    };
+
+    private setMouseMoveListener(): void {
+        this.canvas?.removeEventListener('mousemove', this.handleMouseMove);
+        this.canvas?.addEventListener('mousemove', this.handleMouseMove);
     }
+
+    private handleMouseMove = (event: MouseEvent) => {
+        this._selectedTool.mouseMove(event, this);
+    };
 
     private setModeClickListener(): void
     {
+        document.removeEventListener('keydown', () => {});
         document.addEventListener("keydown", (event) =>{
-            if (event.key === "m" || event.key === "M") {
-                this._selectedTool = this._tools[1];
-                console.log('Selection mode');
-            }
-
-            if (event.key === "r" || event.key === "R") {
-                this._selectedTool = this._tools[0];
-                console.log('Rectangle mode');
-            }
+            this._tools.forEach((tool: CanvasToolInterface) => {
+                tool.keyDown(event, this);
+            });
         });
     }
 }
