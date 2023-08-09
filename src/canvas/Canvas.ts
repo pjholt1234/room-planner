@@ -1,5 +1,5 @@
 import CanvasToolInterface from './tools/CanvasToolInterface';
-import RectangleTool from "./tools/RectangeTool";
+import RectangleTool from "./tools/RectangleTool";
 
 class Canvas {
     private _selectedTool: CanvasToolInterface;
