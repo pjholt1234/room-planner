@@ -3,10 +3,10 @@ import Canvas from "../Canvas";
 
 class SelectionTool implements CanvasToolInterface {
     public selectedObject: ShapeInterface | null = null;
-
     private _mode: number = 0;
-
     private _modes: string[] = ['move', 'resize'];
+    private _x: number = 0;
+    private _y: number = 0;
 
     public mouseDown(event: any, canvas: Canvas): void
     {
@@ -15,16 +15,17 @@ class SelectionTool implements CanvasToolInterface {
             return;
         }
 
-
         canvas.canvasObjects.reverse().every((canvasObject: ShapeInterface) => {
             if(canvasObject.isPointInside(event.clientX, event.clientY)) {
+                this._x = event.clientX;
+                this._y = event.clientY;
+
                 this.selectedObject = canvasObject;
 
                 const index = canvas.canvasObjects.indexOf(canvasObject);
                 canvas.canvasObjects.splice(index, 1);
 
                 this.selectedObject.draw(canvas.ctx, 'blue');
-
                 return;
             }
         });
@@ -37,6 +38,10 @@ class SelectionTool implements CanvasToolInterface {
 
         if(this._modes[this._mode] === 'move') {
             this.moveObject(event, canvas);
+        }
+
+        if(this._modes[this._mode] === 'resize') {
+            this.resizeObject(event, canvas);
         }
     }
 
@@ -72,6 +77,15 @@ class SelectionTool implements CanvasToolInterface {
             canvas.redrawCanvas();
             this.selectedObject.draw(canvas.ctx, 'blue');
         }
+    }
+
+    private resizeObject(event: any, canvas: Canvas): void
+    {
+        //todo resize object
+        //Use x and y to determine which corner to resize
+        //Use mouse position to determine new size
+        
+        return;
     }
 
     private switchMode(): void
