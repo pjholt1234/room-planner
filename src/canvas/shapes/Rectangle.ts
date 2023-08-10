@@ -6,9 +6,11 @@ class Rectangle implements ShapeInterface {
         this.translateCoordinates();
     }
 
-    public draw(context: CanvasRenderingContext2D) {
+    public draw(context: CanvasRenderingContext2D, colour?: string) {
+        if(!colour) colour = "black";
+
         context.beginPath();
-        context.strokeStyle = 'black';
+        context.strokeStyle = colour;
         context.lineWidth = 1;
         context.rect(
             this.points.x1,
@@ -27,6 +29,16 @@ class Rectangle implements ShapeInterface {
         return xCheck && yCheck;
     }
 
+    public setPosition(x: number, y: number) {
+        //todo this needs work, it locks to the top left corner right now
+        const width = this.points.x2 - this.points.x1;
+        const height = this.points.y2 - this.points.y1;
+
+        this.points.x1 = x;
+        this.points.y1 = y;
+        this.points.x2 = x + width;
+        this.points.y2 = y + height;
+    }
 
     private translateCoordinates() {
         const topLeft = [Math.min(this.points.x1, this.points.x2), Math.min(this.points.y1, this.points.y2)];
