@@ -32,7 +32,6 @@ class SelectionTool implements CanvasToolInterface {
         });
     }
 
-    // @ts-ignore
     public mouseMove(event: any, canvas: Canvas): void
     {
         if(this.selectedObject === null) return;
@@ -80,7 +79,6 @@ class SelectionTool implements CanvasToolInterface {
         }
     }
 
-    // @ts-ignore
     private resizeObject(event: any, canvas: Canvas): void
     {
         if(this.selectedObject === null) return;
