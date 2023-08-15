@@ -1,7 +1,6 @@
-import Point from "../point-types/Point";
+import Point from '../point-types/Point';
 
-const findClosestPoint = (points: Point[], searchPoint: Point): number =>
-{
+const findClosestPoint = (points: Point[], searchPoint: Point): number => {
     let closestPointIndex = 0;
     let minDistance: number | null = null;
 
@@ -15,12 +14,12 @@ const findClosestPoint = (points: Point[], searchPoint: Point): number =>
     });
 
     return closestPointIndex;
-}
+};
 
 const calculateDistance = (point1: Point, point2: Point): number => {
     const dx = point2.x - point1.x;
     const dy = point2.y - point1.y;
     return Math.sqrt(dx * dx + dy * dy);
-}
+};
 
 export default findClosestPoint;

@@ -1,15 +1,16 @@
-import RectanglePoints from "./point-types/RectanglePoints";
-import ShapeInterface from "./ShapeInterface";
-import findClosestPoint from "./shape-utilities/getClosestPoint";
-import Point from "./point-types/Point";
+import RectanglePoints from './point-types/RectanglePoints';
+import ShapeInterface from './ShapeInterface';
+import findClosestPoint from './shape-utilities/getClosestPoint';
+import Point from './point-types/Point';
 
 class Rectangle implements ShapeInterface {
-    public name = "Rectangle";
+    public name = 'Rectangle';
     private pivotPointIndex: number | null = null;
-    constructor(public points : RectanglePoints ) {}
+
+    constructor(public points: RectanglePoints) {}
 
     public draw(context: CanvasRenderingContext2D, colour?: string) {
-        if(!colour) colour = "black";
+        if (!colour) colour = 'black';
 
         context.beginPath();
         context.strokeStyle = colour;
@@ -24,7 +25,7 @@ class Rectangle implements ShapeInterface {
     }
 
     public isPointInside(point: Point): boolean {
-        const xCheck =  point.x > this.points[0].x && point.x < this.points[3].x;
+        const xCheck = point.x > this.points[0].x && point.x < this.points[3].x;
         const yCheck = point.y > this.points[0].y && point.y < this.points[3].y;
 
         return xCheck && yCheck;
@@ -34,7 +35,7 @@ class Rectangle implements ShapeInterface {
         const xOffset = point.x - this.points[0].x;
         const yOffset = point.y - this.points[0].y;
 
-        this.points.forEach(point => {
+        this.points.forEach((point) => {
             point.x += xOffset;
             point.y += yOffset;
         });
@@ -45,7 +46,7 @@ class Rectangle implements ShapeInterface {
     }
 
     public resize(point: Point): void {
-        if(this.pivotPointIndex === null) return;
+        if (this.pivotPointIndex === null) return;
         this.points[this.pivotPointIndex] = point;
     }
 

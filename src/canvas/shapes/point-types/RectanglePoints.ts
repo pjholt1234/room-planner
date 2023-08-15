@@ -1,7 +1,5 @@
-import Point from "./Point";
+import Point from './Point';
 
-type RectanglePoints  = [
-    Point, Point, Point, Point
-];
+type RectanglePoints = [Point, Point, Point, Point];
 
 export default RectanglePoints;

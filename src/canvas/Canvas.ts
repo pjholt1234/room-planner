@@ -1,7 +1,8 @@
 import CanvasToolInterface from './tools/CanvasToolInterface';
-import RectangleTool from "./tools/RectangleTool";
-import SelectionTool from "./tools/SelectionTool";
-import TriangleTool from "./tools/TriangleTool";
+import RectangleTool from './tools/RectangleTool';
+import SelectionTool from './tools/SelectionTool';
+import TriangleTool from './tools/TriangleTool';
+import ShapeInterface from './shapes/ShapeInterface';
 
 class Canvas {
     private _selectedTool: CanvasToolInterface;
@@ -18,43 +19,38 @@ class Canvas {
         this._tools = [
             new RectangleTool(),
             new SelectionTool(),
-            new TriangleTool(),
-        ]
+            new TriangleTool()
+        ];
 
         this.initCanvas();
         this.selectedTool = new RectangleTool();
 
-
         this.setModeClickListener();
     }
 
-    set selectedTool(tool: CanvasToolInterface)
-    {
+    set selectedTool(tool: CanvasToolInterface) {
         this._selectedTool = tool;
         this.setMouseDownListener();
         this.setMouseUpListener();
         this.setMouseMoveListener();
     }
-    get selectedTool(): CanvasToolInterface
-    {
+
+    get selectedTool(): CanvasToolInterface {
         return this._selectedTool;
     }
 
-    public clearCanvas(): void
-    {
+    public clearCanvas(): void {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    public redrawCanvas(): void
-    {
+    public redrawCanvas(): void {
         this.clearCanvas();
         this.canvasObjects.forEach((canvasObject: ShapeInterface) => {
             canvasObject.draw(this.ctx);
         });
     }
 
-    private initCanvas(): void
-    {
+    private initCanvas(): void {
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
 
@@ -89,10 +85,9 @@ class Canvas {
         this._selectedTool.mouseMove(event, this);
     };
 
-    private setModeClickListener(): void
-    {
+    private setModeClickListener(): void {
         document.removeEventListener('keydown', () => {});
-        document.addEventListener("keydown", (event) =>{
+        document.addEventListener('keydown', (event) => {
             this._tools.forEach((tool: CanvasToolInterface) => {
                 tool.keyDown(event, this);
             });

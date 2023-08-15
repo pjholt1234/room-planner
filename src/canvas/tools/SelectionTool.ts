@@ -1,23 +1,22 @@
-import CanvasToolInterface from "./CanvasToolInterface";
-import ShapeInterface from "../shapes/ShapeInterface";
-import Canvas from "../Canvas";
+import CanvasToolInterface from './CanvasToolInterface';
+import ShapeInterface from '../shapes/ShapeInterface';
+import Canvas from '../Canvas';
 
 class SelectionTool implements CanvasToolInterface {
     public selectedObject: ShapeInterface | null = null;
     private _mode: number = 0;
     private _modes: string[] = ['move', 'resize'];
 
-    public mouseDown(event: any, canvas: Canvas): void
-    {
-        if(this.selectedObject !== null) {
+    public mouseDown(event: any, canvas: Canvas): void {
+        if (this.selectedObject !== null) {
             this.deselectObject(canvas);
             return;
         }
-        const selectedPoint = {x: event.clientX, y: event.clientY};
+        const selectedPoint = { x: event.clientX, y: event.clientY };
 
         canvas.canvasObjects.reverse().every((canvasObject: ShapeInterface) => {
-            if(canvasObject.isPointInside(selectedPoint)) {
-                if(this._modes[this._mode] === 'resize') {
+            if (canvasObject.isPointInside(selectedPoint)) {
+                if (this._modes[this._mode] === 'resize') {
                     canvasObject.setPivotPoint(selectedPoint);
                 }
 
@@ -32,71 +31,67 @@ class SelectionTool implements CanvasToolInterface {
         });
     }
 
-    public mouseMove(event: any, canvas: Canvas): void
-    {
-        if(this.selectedObject === null) return;
+    public mouseMove(event: any, canvas: Canvas): void {
+        if (this.selectedObject === null) return;
 
-        if(this._modes[this._mode] === 'move') {
+        if (this._modes[this._mode] === 'move') {
             this.moveObject(event, canvas);
         }
 
-        if(this._modes[this._mode] === 'resize') {
+        if (this._modes[this._mode] === 'resize') {
             this.resizeObject(event, canvas);
         }
     }
 
     // @ts-ignore
-    public mouseUp(event: any, canvas: Canvas): void
-    {}
+    public mouseUp(event: any, canvas: Canvas): void {}
 
-    public keyDown(event: any, canvas: Canvas): void
-    {
-        if (event.key === "s" || event.key === "S") {
+    public keyDown(event: any, canvas: Canvas): void {
+        if (event.key === 's' || event.key === 'S') {
             console.log('Selection tool selected');
             canvas.selectedTool = this;
         }
 
-        if (event.key === "m" || event.key === "M" ) {
+        if (event.key === 'm' || event.key === 'M') {
             this.switchMode();
         }
     }
 
-    private deselectObject(canvas: Canvas): void
-    {
-        if(this.selectedObject !== null) {
+    private deselectObject(canvas: Canvas): void {
+        if (this.selectedObject !== null) {
             this.selectedObject.draw(canvas.ctx);
             canvas.canvasObjects.push(this.selectedObject);
             this.selectedObject = null;
         }
     }
 
-    private moveObject(event: any, canvas: Canvas): void
-    {
-        if(this.selectedObject !== null) {
-            this.selectedObject.setPosition({x: event.clientX, y: event.clientY});
+    private moveObject(event: any, canvas: Canvas): void {
+        if (this.selectedObject !== null) {
+            this.selectedObject.setPosition({
+                x: event.clientX,
+                y: event.clientY
+            });
             canvas.redrawCanvas();
             this.selectedObject.draw(canvas.ctx, 'blue');
         }
     }
 
-    private resizeObject(event: any, canvas: Canvas): void
-    {
-        if(this.selectedObject === null) return;
+    private resizeObject(event: any, canvas: Canvas): void {
+        if (this.selectedObject === null) return;
 
-        this.selectedObject.resize({x: event.clientX, y: event.clientY});
+        this.selectedObject.resize({ x: event.clientX, y: event.clientY });
 
         canvas.redrawCanvas();
         this.selectedObject.draw(canvas.ctx, 'blue');
     }
 
-    private switchMode(): void
-    {
-        if(this.selectedObject !== null) {
+    private switchMode(): void {
+        if (this.selectedObject !== null) {
             console.log('Cannot switch mode while object is selected');
             return;
         }
 
-        if(this._mode + 1 > this._modes.length - 1) {
+        if (this._mode + 1 > this._modes.length - 1) {
             this._mode = 0;
         } else {
             this._mode++;

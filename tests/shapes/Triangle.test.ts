@@ -1,6 +1,6 @@
-import { expect, test } from 'vitest'
+import { expect, test } from 'vitest';
 import Triangle from '../../src/canvas/shapes/Triangle';
-import TrianglePoints from "../../src/canvas/shapes/point-types/TrianglePoints";
+import TrianglePoints from '../../src/canvas/shapes/point-types/TrianglePoints';
 
 test('Point is not inside triangle', () => {
     const points: TrianglePoints = [
@@ -20,7 +20,7 @@ test('Point is not inside triangle', () => {
 
     const triangle = new Triangle(points);
 
-    expect(triangle.isPointInside(11,11)).toBe(false);
+    expect(triangle.isPointInside({ x: 11, y: 11 })).toBe(false);
 });
 
 test('Point is inside triangle', () => {
@@ -41,8 +41,8 @@ test('Point is inside triangle', () => {
 
     const triangle = new Triangle(points);
 
-    expect(triangle.isPointInside(5,1)).toBe(true);
-})
+    expect(triangle.isPointInside({ x: 5, y: 1 })).toBe(true);
+});
 
 test('class name is triangle', () => {
     const points: TrianglePoints = [
@@ -62,5 +62,5 @@ test('class name is triangle', () => {
 
     const triangle = new Triangle(points);
 
-    expect(triangle.name).toBe("Triangle");
-})
+    expect(triangle.name).toBe('Triangle');
+});
