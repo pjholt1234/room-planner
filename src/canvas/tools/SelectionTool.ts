@@ -83,14 +83,12 @@ class SelectionTool implements CanvasToolInterface {
     // @ts-ignore
     private resizeObject(event: any, canvas: Canvas): void
     {
-        //todo resize object
-        //Use x and y to determine which corner to resize
-        //Use mouse position to determine new size
-
         if(this.selectedObject === null) return;
 
+        this.selectedObject.resize(this._x, this._y, event.clientX, event.clientY);
+
+        canvas.redrawCanvas();
         this.selectedObject.draw(canvas.ctx, 'blue');
-        return;
     }
 
     private switchMode(): void
