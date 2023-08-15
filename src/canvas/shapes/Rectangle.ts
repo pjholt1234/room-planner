@@ -1,4 +1,5 @@
 import RectanglePoints from "../RectanglePoints";
+import ShapeInterface from "./ShapeInterface";
 
 class Rectangle implements ShapeInterface {
     public name = "Rectangle";

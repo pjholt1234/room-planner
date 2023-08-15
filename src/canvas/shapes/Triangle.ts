@@ -1,4 +1,5 @@
 import TrianglePoints from "../TrianglePoints";
+import ShapeInterface from "./ShapeInterface";
 
 class Triangle implements ShapeInterface {
     public name = "Triangle";
