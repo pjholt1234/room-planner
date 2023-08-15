@@ -22,7 +22,7 @@ class TriangleTool implements CanvasToolInterface {
         if(!this._isDrawing) return;
         canvas.redrawCanvas();
 
-        let points = this.translateCoordinates(this.x1, this.y1, event.clientX, event.clientY);
+        const points = this.translateCoordinates(this.x1, this.y1, event.clientX, event.clientY);
         const triangle = new Triangle(points);
         triangle.draw(canvas.ctx);
     }
@@ -32,7 +32,7 @@ class TriangleTool implements CanvasToolInterface {
         if(!this._isDrawing) return;
         this._isDrawing = false;
 
-        let points = this.translateCoordinates(this.x1, this.y1, event.clientX, event.clientY);
+        const points = this.translateCoordinates(this.x1, this.y1, event.clientX, event.clientY);
         const triangle = new Triangle(points);
         triangle.draw(canvas.ctx);
 
@@ -54,14 +54,20 @@ class TriangleTool implements CanvasToolInterface {
         const bottomLeft = [Math.min(x1, x2), Math.max(y1, y2)];
         const bottomRight = [Math.max(x1, x2), Math.max(y1, y2)];
 
-        return {
-            x1: top[0],
-            y1: top[1],
-            x2: bottomLeft[0],
-            y2: bottomLeft[1],
-            x3: bottomRight[0],
-            y3: bottomRight[1],
-        };
+        return [
+            {
+                x: top[0],
+                y: top[1],
+            },
+            {
+                x: bottomLeft[0],
+                y: bottomLeft[1],
+            },
+            {
+                x: bottomRight[0],
+                y: bottomRight[1]
+            }
+        ];
     }
 }
 

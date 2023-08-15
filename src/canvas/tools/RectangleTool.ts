@@ -22,12 +22,7 @@ class RectangleTool implements CanvasToolInterface {
         if(!this._isDrawing) return;
         this._isDrawing = false;
 
-        const points: RectanglePoints = {
-            x1: this.x1,
-            y1: this.y1,
-            x2: event.clientX,
-            y2: event.clientY
-        }
+        const points = this.translateCoordinates(this.x1, this.y1, event.clientX, event.clientY);
 
         const rectangle = new Rectangle(points);
         rectangle.draw(canvas.ctx);
@@ -40,12 +35,7 @@ class RectangleTool implements CanvasToolInterface {
         if(!this._isDrawing) return;
         canvas.redrawCanvas();
 
-        const points: RectanglePoints = {
-            x1: this.x1,
-            y1: this.y1,
-            x2: event.clientX,
-            y2: event.clientY
-        }
+        const points = this.translateCoordinates(this.x1, this.y1, event.clientX, event.clientY);
 
         const rectangle = new Rectangle(points);
         rectangle.draw(canvas.ctx);
@@ -57,6 +47,31 @@ class RectangleTool implements CanvasToolInterface {
             console.log('Rectangle mode');
             canvas.selectedTool = this;
         }
+    }
+
+    private translateCoordinates(x1: number, y1: number, x2: number, y2: number): RectanglePoints
+    {
+        const topLeft = [Math.min(x1, x2), Math.min(y1, y2)];
+        const bottomRight = [Math.max(x1, x2), Math.max(y1, y2)];
+
+        return [
+            {
+                x: topLeft[0],
+                y: topLeft[1],
+            },
+            {
+                x: topLeft[0],
+                y: bottomRight[1],
+            },
+            {
+                x: bottomRight[0],
+                y: topLeft[1],
+            },
+            {
+                x: bottomRight[0],
+                y: bottomRight[1],
+            },
+        ];
     }
 }
 

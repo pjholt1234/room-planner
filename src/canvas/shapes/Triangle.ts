@@ -11,18 +11,18 @@ class Triangle implements ShapeInterface {
         context.beginPath();
         context.strokeStyle = colour;
         context.lineWidth = 1;
-        context.moveTo(this.points.x1, this.points.y1);
-        context.lineTo(this.points.x2, this.points.y2);
-        context.lineTo(this.points.x3, this.points.y3);
+        context.moveTo(this.points[0].x, this.points[0].y);
+        context.lineTo(this.points[1].x, this.points[1].y);
+        context.lineTo(this.points[2].x, this.points[2].y);
         context.closePath();
         context.stroke();
     }
 
     public isPointInside(x: number, y: number): boolean {
         // Calculate the barycentric coordinates
-        const denominator = ((this.points.y2 - this.points.y3) * (this.points.x1 - this.points.x3)) + ((this.points.x3 - this.points.x2) * (this.points.y1 - this.points.y3));
-        const alpha = ((this.points.y2 - this.points.y3) * (x - this.points.x3) + (this.points.x3 - this.points.x2) * (y - this.points.y3)) / denominator;
-        const beta = ((this.points.y3 - this.points.y1) * (x - this.points.x3) + (this.points.x1 - this.points.x3) * (y - this.points.y3)) / denominator;
+        const denominator = ((this.points[1].y - this.points[2].y) * (this.points[0].x - this.points[2].x)) + ((this.points[2].x - this.points[1].x) * (this.points[0].y - this.points[2].y));
+        const alpha = ((this.points[1].y - this.points[2].y) * (x - this.points[2].x) + (this.points[2].x - this.points[1].x) * (y - this.points[2].y)) / denominator;
+        const beta = ((this.points[2].y - this.points[0].y) * (x - this.points[2].x) + (this.points[0].x - this.points[2].x) * (y - this.points[2].y)) / denominator;
         const gamma = 1 - alpha - beta;
 
         // Check if the point lies inside the triangle
@@ -30,20 +30,20 @@ class Triangle implements ShapeInterface {
     }
 
     public setPosition(x: number, y: number) {
-        const x2Change = this.points.x2 - this.points.x1;
-        const y2Change = this.points.y2 - this.points.y1;
+        const x2Change = this.points[1].x - this.points[0].x;
+        const y2Change = this.points[1].y - this.points[0].y;
 
-        const x3Change = this.points.x3 - this.points.x1;
-        const y3Change = this.points.y3 - this.points.y1;
+        const x3Change = this.points[2].x - this.points[0].x;
+        const y3Change = this.points[2].y - this.points[0].y;
 
-        this.points.x1 = x;
-        this.points.y1 = y;
+        this.points[0].x = x;
+        this.points[0].y = y;
 
-        this.points.x2 = x + x2Change;
-        this.points.y2 = y + y2Change;
+        this.points[1].x = x + x2Change;
+        this.points[1].y = y + y2Change;
 
-        this.points.x3 = x + x3Change;
-        this.points.y3 = y + y3Change;
+        this.points[2].x = x + x3Change;
+        this.points[2].y = y + y3Change;
     }
 }
 
