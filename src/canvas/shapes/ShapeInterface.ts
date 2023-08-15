@@ -3,3 +3,5 @@ interface ShapeInterface {
   isPointInside(x: number, y: number): boolean;
   setPosition(x: number, y: number): void;
 };
+
+export default ShapeInterface;
