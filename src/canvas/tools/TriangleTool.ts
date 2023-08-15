@@ -1,6 +1,6 @@
 import CanvasToolInterface from "./CanvasToolInterface";
 import Canvas from "../Canvas";
-import TrianglePoints from "../TrianglePoints";
+import TrianglePoints from "../shapes/point-types/TrianglePoints";
 import Triangle from "../shapes/Triangle";
 
 class TriangleTool implements CanvasToolInterface {
@@ -69,6 +69,7 @@ class TriangleTool implements CanvasToolInterface {
             }
         ];
     }
+
 }
 
 export default TriangleTool;
