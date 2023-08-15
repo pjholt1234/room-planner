@@ -1,9 +1,10 @@
 import RectanglePoints from "./point-types/RectanglePoints";
 import ShapeInterface from "./ShapeInterface";
-import Point from "./point-types/Point";
+import findClosestPoint from "./shape-utilities/getClosestPoint";
 
 class Rectangle implements ShapeInterface {
     public name = "Rectangle";
+    private pivotPointIndex: number | null = null;
     constructor(public points : RectanglePoints ) {}
 
     public draw(context: CanvasRenderingContext2D, colour?: string) {
@@ -12,12 +13,11 @@ class Rectangle implements ShapeInterface {
         context.beginPath();
         context.strokeStyle = colour;
         context.lineWidth = 1;
-        context.rect(
-            this.points[0].x,
-            this.points[0].y,
-            this.points[3].x - this.points[0].x,
-            this.points[3].y - this.points[0].y
-        );
+        context.moveTo(this.points[0].x, this.points[0].y);
+        context.lineTo(this.points[1].x, this.points[1].y);
+        context.lineTo(this.points[3].x, this.points[3].y);
+        context.lineTo(this.points[2].x, this.points[2].y);
+        context.lineTo(this.points[0].x, this.points[0].y);
         context.stroke();
         context.closePath();
     }
@@ -30,45 +30,31 @@ class Rectangle implements ShapeInterface {
     }
 
     public setPosition(x: number, y: number) {
-        //todo this needs work, it locks to the top left corner right now
-        const width = this.points[3].x - this.points[0].x;
-        const height = this.points[3].y - this.points[0].y;
+        const xOffset = x - this.points[0].x;
+        const yOffset = y - this.points[0].y;
 
-        this.points[0].x = x;
-        this.points[0].y = y;
-        this.points[3].x = x + width;
-        this.points[3].y = y + height;
+        this.points.forEach(point => {
+            point.x += xOffset;
+            point.y += yOffset;
+        });
     }
 
     public getPoints(): RectanglePoints {
         return this.points;
     }
 
-    public resize(clickX: number, clickY: number, x: number, y: number): void {
-        const closestPointIndex = this.findClosestPoint(clickX, clickY);
-        this.points[closestPointIndex] = { x: x, y: y };
+    public resize(x: number, y: number): void {
+
+
+        if(this.pivotPointIndex === null) return;
+
+        this.points[this.pivotPointIndex] = { x: x, y: y };
+
+        console.log(this.points);
     }
 
-    private calculateDistance(point1: Point, point2: Point): number {
-        const dx = point2.x - point1.x;
-        const dy = point2.y - point1.y;
-        return Math.sqrt(dx * dx + dy * dy);
-    }
-
-    private findClosestPoint(x: number, y: number): number
-    {
-        let closestPointIndex = 0;
-        let minDistance = 0;
-
-        this.points.forEach((point: Point, index: number) => {
-            const distance = this.calculateDistance({ x: x, y: y }, point);
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestPointIndex = index;
-            }
-        });
-
-        return closestPointIndex;
+    public setPivotPoint(x: number, y: number): void {
+        this.pivotPointIndex = findClosestPoint(this.points, x, y);
     }
 }
 

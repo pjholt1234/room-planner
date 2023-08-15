@@ -1,8 +1,11 @@
 import TrianglePoints from "./point-types/TrianglePoints";
 import ShapeInterface from "./ShapeInterface";
+import findClosestPoint from "./shape-utilities/getClosestPoint";
 
 class Triangle implements ShapeInterface {
     public name = "Triangle";
+    private pivotPointIndex: number | null = null;
+
     constructor(public points : TrianglePoints ) {}
 
     public draw(context: CanvasRenderingContext2D, colour?: string): void {
@@ -30,20 +33,26 @@ class Triangle implements ShapeInterface {
     }
 
     public setPosition(x: number, y: number) {
-        const x2Change = this.points[1].x - this.points[0].x;
-        const y2Change = this.points[1].y - this.points[0].y;
+        const xOffset = x - this.points[0].x;
+        const yOffset = y - this.points[0].y;
 
-        const x3Change = this.points[2].x - this.points[0].x;
-        const y3Change = this.points[2].y - this.points[0].y;
+        this.points.forEach(point => {
+            point.x += xOffset;
+            point.y += yOffset;
+        });
+    }
 
-        this.points[0].x = x;
-        this.points[0].y = y;
+    public getPoints(): TrianglePoints {
+        return this.points;
+    }
 
-        this.points[1].x = x + x2Change;
-        this.points[1].y = y + y2Change;
+    public resize(x: number, y: number): void {
+        if(this.pivotPointIndex === null) return;
+        this.points[this.pivotPointIndex] = { x: x, y: y };
+    }
 
-        this.points[2].x = x + x3Change;
-        this.points[2].y = y + y3Change;
+    public setPivotPoint(x: number, y: number): void {
+        this.pivotPointIndex = findClosestPoint(this.points, x, y);
     }
 }
 

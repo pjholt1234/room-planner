@@ -3,8 +3,8 @@ interface ShapeInterface {
   isPointInside(x: number, y: number): boolean;
   setPosition(x: number, y: number): void;
   getPoints(): any;
-  resize(clickX: number, clickY: number, x: number, y: number): void;
-
+  resize(x: number, y: number): void;
+  setPivotPoint(x: number, y: number): void;
 }
 
 export default ShapeInterface;

@@ -6,8 +6,6 @@ class SelectionTool implements CanvasToolInterface {
     public selectedObject: ShapeInterface | null = null;
     private _mode: number = 0;
     private _modes: string[] = ['move', 'resize'];
-    private _x: number = 0;
-    private _y: number = 0;
 
     public mouseDown(event: any, canvas: Canvas): void
     {
@@ -18,8 +16,9 @@ class SelectionTool implements CanvasToolInterface {
 
         canvas.canvasObjects.reverse().every((canvasObject: ShapeInterface) => {
             if(canvasObject.isPointInside(event.clientX, event.clientY)) {
-                this._x = event.clientX;
-                this._y = event.clientY;
+                if(this._modes[this._mode] === 'resize') {
+                    canvasObject.setPivotPoint(event.clientX, event.clientY);
+                }
 
                 this.selectedObject = canvasObject;
 
@@ -85,7 +84,7 @@ class SelectionTool implements CanvasToolInterface {
     {
         if(this.selectedObject === null) return;
 
-        this.selectedObject.resize(this._x, this._y, event.clientX, event.clientY);
+        this.selectedObject.resize(event.clientX, event.clientY);
 
         canvas.redrawCanvas();
         this.selectedObject.draw(canvas.ctx, 'blue');
