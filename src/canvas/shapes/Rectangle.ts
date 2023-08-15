@@ -1,4 +1,4 @@
-import RectanglePoints from "../RectanglePoints";
+import RectanglePoints from "./point-types/RectanglePoints";
 import ShapeInterface from "./ShapeInterface";
 
 class Rectangle implements ShapeInterface {

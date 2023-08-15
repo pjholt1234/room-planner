@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import Rectangle from '../../src/canvas/shapes/Rectangle';
-import RectanglePoints from "../../src/canvas/RectanglePoints";
+import RectanglePoints from "../../src/canvas/shapes/point-types/RectanglePoints";
 
 test('Point is not inside rectangle', () => {
     const points: RectanglePoints = [

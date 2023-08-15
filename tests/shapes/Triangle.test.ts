@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import Triangle from '../../src/canvas/shapes/Triangle';
-import TrianglePoints from "../../src/canvas/TrianglePoints";
+import TrianglePoints from "../../src/canvas/shapes/point-types/TrianglePoints";
 
 test('Point is not inside triangle', () => {
     const points: TrianglePoints = [

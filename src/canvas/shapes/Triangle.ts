@@ -1,4 +1,4 @@
-import TrianglePoints from "../TrianglePoints";
+import TrianglePoints from "./point-types/TrianglePoints";
 import ShapeInterface from "./ShapeInterface";
 
 class Triangle implements ShapeInterface {

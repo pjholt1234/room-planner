@@ -1,4 +1,5 @@
 import CanvasToolInterface from "./CanvasToolInterface";
+import ShapeInterface from "../shapes/ShapeInterface";
 import Canvas from "../Canvas";
 
 class SelectionTool implements CanvasToolInterface {
@@ -79,12 +80,16 @@ class SelectionTool implements CanvasToolInterface {
         }
     }
 
+    // @ts-ignore
     private resizeObject(event: any, canvas: Canvas): void
     {
         //todo resize object
         //Use x and y to determine which corner to resize
         //Use mouse position to determine new size
-        
+
+        if(this.selectedObject === null) return;
+
+        this.selectedObject.draw(canvas.ctx, 'blue');
         return;
     }
 

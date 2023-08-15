@@ -1,6 +1,6 @@
 import Canvas from "../Canvas";
 import CanvasToolInterface from "./CanvasToolInterface";
-import RectanglePoints from "../RectanglePoints";
+import RectanglePoints from "../shapes/point-types/RectanglePoints";
 import Rectangle from "../shapes/Rectangle";
 
 class RectangleTool implements CanvasToolInterface {
