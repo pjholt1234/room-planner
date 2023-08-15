@@ -13,11 +13,12 @@ class SelectionTool implements CanvasToolInterface {
             this.deselectObject(canvas);
             return;
         }
+        const selectedPoint = {x: event.clientX, y: event.clientY};
 
         canvas.canvasObjects.reverse().every((canvasObject: ShapeInterface) => {
-            if(canvasObject.isPointInside(event.clientX, event.clientY)) {
+            if(canvasObject.isPointInside(selectedPoint)) {
                 if(this._modes[this._mode] === 'resize') {
-                    canvasObject.setPivotPoint(event.clientX, event.clientY);
+                    canvasObject.setPivotPoint(selectedPoint);
                 }
 
                 this.selectedObject = canvasObject;
@@ -73,7 +74,7 @@ class SelectionTool implements CanvasToolInterface {
     private moveObject(event: any, canvas: Canvas): void
     {
         if(this.selectedObject !== null) {
-            this.selectedObject.setPosition(event.clientX, event.clientY);
+            this.selectedObject.setPosition({x: event.clientX, y: event.clientY});
             canvas.redrawCanvas();
             this.selectedObject.draw(canvas.ctx, 'blue');
         }
@@ -84,7 +85,7 @@ class SelectionTool implements CanvasToolInterface {
     {
         if(this.selectedObject === null) return;
 
-        this.selectedObject.resize(event.clientX, event.clientY);
+        this.selectedObject.resize({x: event.clientX, y: event.clientY});
 
         canvas.redrawCanvas();
         this.selectedObject.draw(canvas.ctx, 'blue');

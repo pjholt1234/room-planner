@@ -2,27 +2,26 @@ import Canvas from "../Canvas";
 import CanvasToolInterface from "./CanvasToolInterface";
 import RectanglePoints from "../shapes/point-types/RectanglePoints";
 import Rectangle from "../shapes/Rectangle";
+import Point from "../shapes/point-types/Point";
 
 class RectangleTool implements CanvasToolInterface {
-    private x1: number = 0;
-    private y1: number = 0;
+    private _selectedPoint: Point | null = null;
 
     private _isDrawing: boolean = false;
 
     public mouseDown(event: any): void
     {
-        this.x1 = event.clientX;
-        this.y1 = event.clientY;
+        this._selectedPoint = {x: event.clientX, y: event.clientY};
 
         this._isDrawing = true;
     }
 
     public mouseUp(event: any, canvas: Canvas): void
     {
-        if(!this._isDrawing) return;
+        if(!this._isDrawing || !this._selectedPoint) return;
         this._isDrawing = false;
 
-        const points = this.translateCoordinates(this.x1, this.y1, event.clientX, event.clientY);
+        const points = this.translateCoordinates(this._selectedPoint, {x: event.clientX, y: event.clientY});
 
         const rectangle = new Rectangle(points);
         rectangle.draw(canvas.ctx);
@@ -32,10 +31,10 @@ class RectangleTool implements CanvasToolInterface {
 
     public mouseMove(event: any, canvas: Canvas): void
     {
-        if(!this._isDrawing) return;
+        if(!this._isDrawing || !this._selectedPoint) return;
         canvas.redrawCanvas();
 
-        const points = this.translateCoordinates(this.x1, this.y1, event.clientX, event.clientY);
+        const points = this.translateCoordinates(this._selectedPoint, {x: event.clientX, y: event.clientY});
 
         const rectangle = new Rectangle(points);
         rectangle.draw(canvas.ctx);
@@ -49,10 +48,10 @@ class RectangleTool implements CanvasToolInterface {
         }
     }
 
-    private translateCoordinates(x1: number, y1: number, x2: number, y2: number): RectanglePoints
+    private translateCoordinates(point1: Point, point2: Point): RectanglePoints
     {
-        const topLeft = [Math.min(x1, x2), Math.min(y1, y2)];
-        const bottomRight = [Math.max(x1, x2), Math.max(y1, y2)];
+        const topLeft = [Math.min(point1.x, point2.x), Math.min(point1.y, point2.y)];
+        const bottomRight = [Math.max(point1.x, point2.x), Math.max(point1.y, point2.y)];
 
         return [
             {

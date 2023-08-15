@@ -1,10 +1,12 @@
+import Point from "./point-types/Point";
+
 interface ShapeInterface {
   draw(context: CanvasRenderingContext2D, colour?: string): void;
-  isPointInside(x: number, y: number): boolean;
-  setPosition(x: number, y: number): void;
+  isPointInside(point: Point): boolean;
+  setPosition(point: Point): void;
   getPoints(): any;
-  resize(x: number, y: number): void;
-  setPivotPoint(x: number, y: number): void;
+  resize(point: Point): void;
+  setPivotPoint(point: Point): void;
 }
 
 export default ShapeInterface;

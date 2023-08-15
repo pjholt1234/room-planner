@@ -1,13 +1,13 @@
 import Point from "../point-types/Point";
 
-const findClosestPoint = (points: Point[], x: number, y: number): number =>
+const findClosestPoint = (points: Point[], searchPoint: Point): number =>
 {
     let closestPointIndex = 0;
     let minDistance: number | null = null;
 
     points.forEach((point: Point, index: number) => {
-        const distance = calculateDistance({ x: x, y: y }, point);
-        console.log(distance);
+        const distance = calculateDistance(searchPoint, point);
+
         if (minDistance === null || distance < minDistance) {
             minDistance = distance;
             closestPointIndex = index;

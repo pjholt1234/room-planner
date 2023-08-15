@@ -26,7 +26,7 @@ test('Return closest rectangle point', () => {
     ];
 
     const rectangle = new Rectangle(points);
-    expect(getClosestPoint(rectangle.points, 3,4)).toBe(3);
+    expect(getClosestPoint(rectangle.points, {x: 3, y: 4})).toBe(3);
 });
 
 test('Return closest triangle point', () => {
@@ -46,5 +46,5 @@ test('Return closest triangle point', () => {
     ];
 
     const triangle = new Triangle(points);
-    expect(getClosestPoint(triangle.points, 0,3)).toBe(2);
+    expect(getClosestPoint(triangle.points, {x: 0, y: 3})).toBe(2);
 });

@@ -1,6 +1,7 @@
 import RectanglePoints from "./point-types/RectanglePoints";
 import ShapeInterface from "./ShapeInterface";
 import findClosestPoint from "./shape-utilities/getClosestPoint";
+import Point from "./point-types/Point";
 
 class Rectangle implements ShapeInterface {
     public name = "Rectangle";
@@ -22,16 +23,16 @@ class Rectangle implements ShapeInterface {
         context.closePath();
     }
 
-    public isPointInside(x: number, y: number): boolean {
-        const xCheck =  x > this.points[0].x && x < this.points[3].x;
-        const yCheck = y > this.points[0].y && y < this.points[3].y;
+    public isPointInside(point: Point): boolean {
+        const xCheck =  point.x > this.points[0].x && point.x < this.points[3].x;
+        const yCheck = point.y > this.points[0].y && point.y < this.points[3].y;
 
         return xCheck && yCheck;
     }
 
-    public setPosition(x: number, y: number) {
-        const xOffset = x - this.points[0].x;
-        const yOffset = y - this.points[0].y;
+    public setPosition(point: Point): void {
+        const xOffset = point.x - this.points[0].x;
+        const yOffset = point.y - this.points[0].y;
 
         this.points.forEach(point => {
             point.x += xOffset;
@@ -43,18 +44,13 @@ class Rectangle implements ShapeInterface {
         return this.points;
     }
 
-    public resize(x: number, y: number): void {
-
-
+    public resize(point: Point): void {
         if(this.pivotPointIndex === null) return;
-
-        this.points[this.pivotPointIndex] = { x: x, y: y };
-
-        console.log(this.points);
+        this.points[this.pivotPointIndex] = point;
     }
 
-    public setPivotPoint(x: number, y: number): void {
-        this.pivotPointIndex = findClosestPoint(this.points, x, y);
+    public setPivotPoint(point: Point): void {
+        this.pivotPointIndex = findClosestPoint(this.points, point);
     }
 }
 

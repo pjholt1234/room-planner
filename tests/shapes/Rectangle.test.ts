@@ -24,7 +24,7 @@ test('Point is not inside rectangle', () => {
 
     const rectangle = new Rectangle(points);
 
-    expect(rectangle.isPointInside(11,11)).toBe(false);
+    expect(rectangle.isPointInside({x: 11, y: 11})).toBe(false);
 });
 
 test('Point is inside rectangle', () => {
@@ -49,7 +49,7 @@ test('Point is inside rectangle', () => {
 
     const rectangle = new Rectangle(points);
 
-    expect(rectangle.isPointInside(5,1)).toBe(true);
+    expect(rectangle.isPointInside({x: 5, y: 1})).toBe(true);
 })
 
 test('class name is rectangle', () => {
