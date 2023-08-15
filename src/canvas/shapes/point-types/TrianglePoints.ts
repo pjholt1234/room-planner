@@ -1,16 +1,7 @@
+import Point from "./Point";
+
 type TrianglePoints = [
-    {
-        x: number,
-        y: number
-    },
-    {
-        x: number,
-        y: number
-    },
-    {
-        x: number,
-        y: number
-    }
+    Point, Point, Point
 ];
 
 export default TrianglePoints;
