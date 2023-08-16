@@ -8,6 +8,8 @@ interface CanvasToolInterface {
     mouseMove(event: any, canvas: Canvas): void;
 
     keyDown(event: any, canvas: Canvas): void;
+
+    cursorStyle(): CursorStyle;
 }
 
 export default CanvasToolInterface;

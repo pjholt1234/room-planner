@@ -1,6 +1,7 @@
 import CanvasToolInterface from './CanvasToolInterface';
 import ShapeInterface from '../shapes/ShapeInterface';
 import Canvas from '../Canvas';
+import CursorStyle from '../enums/CursorStyle';
 
 class SelectionTool implements CanvasToolInterface {
     public selectedObject: ShapeInterface | null = null;
@@ -58,6 +59,10 @@ class SelectionTool implements CanvasToolInterface {
         ) {
             this.switchMode();
         }
+    }
+
+    public cursorStyle(): CursorStyle {
+        return CursorStyle.Move;
     }
 
     private deselectObject(canvas: Canvas): void {

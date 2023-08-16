@@ -1,5 +1,6 @@
 import Canvas from '../Canvas';
 import CanvasToolInterface from './CanvasToolInterface';
+import CursorStyle from '../enums/CursorStyle';
 
 class GridTool implements CanvasToolInterface {
     // @ts-ignore
@@ -34,6 +35,10 @@ class GridTool implements CanvasToolInterface {
             canvas.grid.toggleGridMode();
             canvas.redrawCanvas();
         }
+    }
+
+    public cursorStyle(): CursorStyle {
+        return CursorStyle.Default;
     }
 }
 

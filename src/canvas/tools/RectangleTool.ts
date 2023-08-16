@@ -3,6 +3,7 @@ import CanvasToolInterface from './CanvasToolInterface';
 import RectanglePoints from '../shapes/point-types/RectanglePoints';
 import Rectangle from '../shapes/Rectangle';
 import Point from '../shapes/point-types/Point';
+import CursorStyle from '../enums/CursorStyle';
 
 class RectangleTool implements CanvasToolInterface {
     private _selectedPoint: Point | null = null;
@@ -23,7 +24,7 @@ class RectangleTool implements CanvasToolInterface {
             x: event.clientX,
             y: event.clientY
         });
-        
+
         const rectangle = new Rectangle(points);
         rectangle.draw(canvas.ctx);
 
@@ -48,6 +49,10 @@ class RectangleTool implements CanvasToolInterface {
             console.log('Rectangle mode');
             canvas.selectedTool = this;
         }
+    }
+
+    public cursorStyle(): CursorStyle {
+        return CursorStyle.Crosshair;
     }
 
     private translateCoordinates(

@@ -3,6 +3,7 @@ import Canvas from '../Canvas';
 import TrianglePoints from '../shapes/point-types/TrianglePoints';
 import Triangle from '../shapes/Triangle';
 import Point from '../shapes/point-types/Point';
+import CursorStyle from '../enums/CursorStyle';
 
 class TriangleTool implements CanvasToolInterface {
     private _selectedPoint: Point | null = null;
@@ -45,6 +46,10 @@ class TriangleTool implements CanvasToolInterface {
             console.log('Triangle mode');
             canvas.selectedTool = this;
         }
+    }
+
+    public cursorStyle(): CursorStyle {
+        return CursorStyle.Crosshair;
     }
 
     private translateCoordinates(point1: Point, point2: Point): TrianglePoints {
