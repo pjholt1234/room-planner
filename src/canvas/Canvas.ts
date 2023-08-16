@@ -3,29 +3,37 @@ import RectangleTool from './tools/RectangleTool';
 import SelectionTool from './tools/SelectionTool';
 import TriangleTool from './tools/TriangleTool';
 import ShapeInterface from './shapes/ShapeInterface';
+import GridTool from './tools/GridTool';
+import Grid from './utilities/Grid';
 
 class Canvas {
-    private _selectedTool: CanvasToolInterface;
-    public canvasObjects: ShapeInterface[] = [];
     public canvas: HTMLCanvasElement;
     public ctx: CanvasRenderingContext2D;
+    public canvasObjects: ShapeInterface[] = [];
+    public grid: Grid;
 
     private _tools: CanvasToolInterface[] = [];
+    private _selectedTool: CanvasToolInterface;
 
     constructor(canvasId: string) {
         this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 
+        this.grid = new Grid();
+
         this._tools = [
             new RectangleTool(),
             new SelectionTool(),
-            new TriangleTool()
+            new TriangleTool(),
+            new GridTool()
         ];
 
         this.initCanvas();
         this.selectedTool = new RectangleTool();
 
         this.setModeClickListener();
+
+        this.redrawCanvas();
     }
 
     set selectedTool(tool: CanvasToolInterface) {
@@ -45,6 +53,9 @@ class Canvas {
 
     public redrawCanvas(): void {
         this.clearCanvas();
+
+        this.grid.draw(this.ctx, this);
+
         this.canvasObjects.forEach((canvasObject: ShapeInterface) => {
             canvasObject.draw(this.ctx);
         });

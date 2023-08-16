@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import RectanglePoints from '../../src/canvas/shapes/point-types/RectanglePoints';
 import Rectangle from '../../src/canvas/shapes/Rectangle';
-import getClosestPoint from '../../src/canvas/shapes/shape-utilities/getClosestPoint';
+import getClosestPoint from '../../src/canvas/shapes/shape-helpers/getClosestPoint';
 import TrianglePoints from '../../src/canvas/shapes/point-types/TrianglePoints';
 import Triangle from '../../src/canvas/shapes/Triangle';
 

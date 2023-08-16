@@ -52,7 +52,10 @@ class SelectionTool implements CanvasToolInterface {
             canvas.selectedTool = this;
         }
 
-        if (event.key === 'm' || event.key === 'M') {
+        if (
+            canvas.selectedTool === this &&
+            (event.key === 'm' || event.key === 'M')
+        ) {
             this.switchMode();
         }
     }

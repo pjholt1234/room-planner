@@ -1,6 +1,6 @@
 import TrianglePoints from './point-types/TrianglePoints';
 import ShapeInterface from './ShapeInterface';
-import findClosestPoint from './shape-utilities/getClosestPoint';
+import findClosestPoint from './shape-helpers/getClosestPoint';
 import Point from './point-types/Point';
 
 class Triangle implements ShapeInterface {
