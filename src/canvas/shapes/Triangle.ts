@@ -1,12 +1,11 @@
-import TrianglePoints from './point-types/TrianglePoints';
 import Point from './point-types/Point';
 import AbstractShape from './AbstractShape';
 
 class Triangle extends AbstractShape {
     public name = 'Triangle';
-    public points: TrianglePoints;
+    public points: Point[];
 
-    constructor(points: TrianglePoints) {
+    constructor(points: Point[]) {
         super();
         this.points = points;
     }

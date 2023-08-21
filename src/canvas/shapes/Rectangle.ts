@@ -1,12 +1,11 @@
-import RectanglePoints from './point-types/RectanglePoints';
 import Point from './point-types/Point';
 import AbstractShape from './AbstractShape';
 
 class Rectangle extends AbstractShape {
     public name = 'Rectangle';
-    public points: RectanglePoints;
+    public points: Point[];
 
-    constructor(points: RectanglePoints) {
+    constructor(points: Point[]) {
         super();
         this.points = points;
     }

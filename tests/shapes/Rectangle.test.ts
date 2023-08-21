@@ -1,9 +1,9 @@
 import { expect, test } from 'vitest';
 import Rectangle from '../../src/canvas/shapes/Rectangle';
-import RectanglePoints from '../../src/canvas/shapes/point-types/RectanglePoints';
+import Point from '../../src/canvas/shapes/point-types/Point';
 
 test('Point is not inside rectangle', () => {
-    const points: RectanglePoints = [
+    const points: Point[] = [
         {
             x: 0,
             y: 0
@@ -28,7 +28,7 @@ test('Point is not inside rectangle', () => {
 });
 
 test('Point is inside rectangle', () => {
-    const points: RectanglePoints = [
+    const points: Point[] = [
         {
             x: 0,
             y: 0
@@ -53,7 +53,7 @@ test('Point is inside rectangle', () => {
 });
 
 test('class name is rectangle', () => {
-    const points: RectanglePoints = [
+    const points: Point[] = [
         {
             x: 0,
             y: 0

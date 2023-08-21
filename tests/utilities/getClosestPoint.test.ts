@@ -1,12 +1,11 @@
 import { expect, test } from 'vitest';
-import RectanglePoints from '../../src/canvas/shapes/point-types/RectanglePoints';
+import Point from '../../src/canvas/shapes/point-types/Point';
 import Rectangle from '../../src/canvas/shapes/Rectangle';
 import getClosestPoint from '../../src/canvas/shapes/shape-helpers/getClosestPoint';
-import TrianglePoints from '../../src/canvas/shapes/point-types/TrianglePoints';
 import Triangle from '../../src/canvas/shapes/Triangle';
 
 test('Return closest rectangle point', () => {
-    const points: RectanglePoints = [
+    const points: Point[] = [
         {
             x: 0,
             y: 0
@@ -30,7 +29,7 @@ test('Return closest rectangle point', () => {
 });
 
 test('Return closest triangle point', () => {
-    const points: TrianglePoints = [
+    const points: Point[] = [
         {
             x: 0,
             y: 0

@@ -1,9 +1,9 @@
 import { expect, test } from 'vitest';
 import Triangle from '../../src/canvas/shapes/Triangle';
-import TrianglePoints from '../../src/canvas/shapes/point-types/TrianglePoints';
+import Point from '../../src/canvas/shapes/point-types/Point';
 
 test('Point is not inside triangle', () => {
-    const points: TrianglePoints = [
+    const points: Point[] = [
         {
             x: 0,
             y: 0
@@ -24,7 +24,7 @@ test('Point is not inside triangle', () => {
 });
 
 test('Point is inside triangle', () => {
-    const points: TrianglePoints = [
+    const points: Point[] = [
         {
             x: 0,
             y: 0
@@ -45,7 +45,7 @@ test('Point is inside triangle', () => {
 });
 
 test('class name is triangle', () => {
-    const points: TrianglePoints = [
+    const points: Point[] = [
         {
             x: 0,
             y: 0
