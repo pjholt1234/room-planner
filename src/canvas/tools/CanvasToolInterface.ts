@@ -1,4 +1,5 @@
 import Canvas from '../Canvas';
+import CursorStyle from '../enums/CursorStyle';
 
 interface CanvasToolInterface {
     mouseDown(event: any, canvas: Canvas): void;
