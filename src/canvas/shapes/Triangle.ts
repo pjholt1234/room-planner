@@ -7,6 +7,9 @@ class Triangle implements ShapeInterface {
     public name = 'Triangle';
     private pivotPointIndex: number | null = null;
 
+    private initialClickXOffset: number;
+    private initialClickYOffset: number;
+
     constructor(public points: TrianglePoints) {}
 
     public draw(context: CanvasRenderingContext2D, colour?: string): void {
@@ -47,9 +50,9 @@ class Triangle implements ShapeInterface {
         return alpha >= 0 && beta >= 0 && gamma >= 0;
     }
 
-    public setPosition(point: Point) {
-        const xOffset = point.x - this.points[0].x;
-        const yOffset = point.y - this.points[0].y;
+    public setPosition(point: Point): void {
+        const xOffset = point.x - this.points[0].x - this.initialClickXOffset;
+        const yOffset = point.y - this.points[0].y - this.initialClickYOffset;
 
         this.points.forEach((point) => {
             point.x += xOffset;
@@ -68,6 +71,11 @@ class Triangle implements ShapeInterface {
 
     public setPivotPoint(point: Point): void {
         this.pivotPointIndex = findClosestPoint(this.points, point);
+    }
+
+    public setClickOffsets(point: Point): void {
+        this.initialClickXOffset = point.x - this.points[0].x;
+        this.initialClickYOffset = point.y - this.points[0].y;
     }
 }
 

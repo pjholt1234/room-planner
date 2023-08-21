@@ -7,6 +7,9 @@ class Rectangle implements ShapeInterface {
     public name = 'Rectangle';
     private pivotPointIndex: number | null = null;
 
+    private initialClickXOffset: number;
+    private initialClickYOffset: number;
+
     constructor(public points: RectanglePoints) {}
 
     public draw(context: CanvasRenderingContext2D, colour?: string) {
@@ -32,8 +35,8 @@ class Rectangle implements ShapeInterface {
     }
 
     public setPosition(point: Point): void {
-        const xOffset = point.x - this.points[0].x;
-        const yOffset = point.y - this.points[0].y;
+        const xOffset = point.x - this.points[0].x - this.initialClickXOffset;
+        const yOffset = point.y - this.points[0].y - this.initialClickYOffset;
 
         this.points.forEach((point) => {
             point.x += xOffset;
@@ -52,6 +55,11 @@ class Rectangle implements ShapeInterface {
 
     public setPivotPoint(point: Point): void {
         this.pivotPointIndex = findClosestPoint(this.points, point);
+    }
+
+    public setClickOffsets(point: Point): void {
+        this.initialClickXOffset = point.x - this.points[0].x;
+        this.initialClickYOffset = point.y - this.points[0].y;
     }
 }
 

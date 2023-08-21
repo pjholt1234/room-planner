@@ -12,6 +12,8 @@ interface ShapeInterface {
     resize(point: Point): void;
 
     setPivotPoint(point: Point): void;
+
+    setClickOffsets(point: Point): void;
 }
 
 export default ShapeInterface;

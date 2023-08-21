@@ -21,6 +21,10 @@ class SelectionTool implements CanvasToolInterface {
                     canvasObject.setPivotPoint(selectedPoint);
                 }
 
+                if (this._modes[this._mode] === 'move') {
+                    canvasObject.setClickOffsets(selectedPoint);
+                }
+
                 this.selectedObject = canvasObject;
 
                 const index = canvas.canvasObjects.indexOf(canvasObject);
@@ -79,6 +83,7 @@ class SelectionTool implements CanvasToolInterface {
                 x: event.clientX,
                 y: event.clientY
             });
+
             canvas.redrawCanvas();
             this.selectedObject.draw(canvas.ctx, 'blue');
         }
