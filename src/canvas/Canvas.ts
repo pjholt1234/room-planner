@@ -5,6 +5,7 @@ import TriangleTool from './tools/TriangleTool';
 import ShapeInterface from './shapes/ShapeInterface';
 import GridTool from './tools/GridTool';
 import Grid from './utilities/Grid';
+import CircleTool from './tools/CircleTool';
 
 class Canvas {
     public canvas: HTMLCanvasElement;
@@ -25,6 +26,7 @@ class Canvas {
             new RectangleTool(),
             new SelectionTool(),
             new TriangleTool(),
+            new CircleTool(),
             new GridTool()
         ];
 
