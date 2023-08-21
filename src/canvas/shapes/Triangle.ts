@@ -1,16 +1,15 @@
 import TrianglePoints from './point-types/TrianglePoints';
-import ShapeInterface from './ShapeInterface';
-import findClosestPoint from './shape-helpers/getClosestPoint';
 import Point from './point-types/Point';
+import AbstractShape from './AbstractShape';
 
-class Triangle implements ShapeInterface {
+class Triangle extends AbstractShape {
     public name = 'Triangle';
-    private pivotPointIndex: number | null = null;
+    public points: TrianglePoints;
 
-    private initialClickXOffset: number;
-    private initialClickYOffset: number;
-
-    constructor(public points: TrianglePoints) {}
+    constructor(points: TrianglePoints) {
+        super();
+        this.points = points;
+    }
 
     public draw(context: CanvasRenderingContext2D, colour?: string): void {
         if (!colour) colour = 'black';
@@ -48,34 +47,6 @@ class Triangle implements ShapeInterface {
 
         // Check if the point lies inside the triangle
         return alpha >= 0 && beta >= 0 && gamma >= 0;
-    }
-
-    public setPosition(point: Point): void {
-        const xOffset = point.x - this.points[0].x - this.initialClickXOffset;
-        const yOffset = point.y - this.points[0].y - this.initialClickYOffset;
-
-        this.points.forEach((point) => {
-            point.x += xOffset;
-            point.y += yOffset;
-        });
-    }
-
-    public getPoints(): TrianglePoints {
-        return this.points;
-    }
-
-    public resize(point: Point): void {
-        if (this.pivotPointIndex === null) return;
-        this.points[this.pivotPointIndex] = point;
-    }
-
-    public setPivotPoint(point: Point): void {
-        this.pivotPointIndex = findClosestPoint(this.points, point);
-    }
-
-    public setClickOffsets(point: Point): void {
-        this.initialClickXOffset = point.x - this.points[0].x;
-        this.initialClickYOffset = point.y - this.points[0].y;
     }
 }
 

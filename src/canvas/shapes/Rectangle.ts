@@ -1,16 +1,15 @@
 import RectanglePoints from './point-types/RectanglePoints';
-import ShapeInterface from './ShapeInterface';
-import findClosestPoint from './shape-helpers/getClosestPoint';
 import Point from './point-types/Point';
+import AbstractShape from './AbstractShape';
 
-class Rectangle implements ShapeInterface {
+class Rectangle extends AbstractShape {
     public name = 'Rectangle';
-    private pivotPointIndex: number | null = null;
+    public points: RectanglePoints;
 
-    private initialClickXOffset: number;
-    private initialClickYOffset: number;
-
-    constructor(public points: RectanglePoints) {}
+    constructor(points: RectanglePoints) {
+        super();
+        this.points = points;
+    }
 
     public draw(context: CanvasRenderingContext2D, colour?: string) {
         if (!colour) colour = 'black';
@@ -32,34 +31,6 @@ class Rectangle implements ShapeInterface {
         const yCheck = point.y > this.points[0].y && point.y < this.points[3].y;
 
         return xCheck && yCheck;
-    }
-
-    public setPosition(point: Point): void {
-        const xOffset = point.x - this.points[0].x - this.initialClickXOffset;
-        const yOffset = point.y - this.points[0].y - this.initialClickYOffset;
-
-        this.points.forEach((point) => {
-            point.x += xOffset;
-            point.y += yOffset;
-        });
-    }
-
-    public getPoints(): RectanglePoints {
-        return this.points;
-    }
-
-    public resize(point: Point): void {
-        if (this.pivotPointIndex === null) return;
-        this.points[this.pivotPointIndex] = point;
-    }
-
-    public setPivotPoint(point: Point): void {
-        this.pivotPointIndex = findClosestPoint(this.points, point);
-    }
-
-    public setClickOffsets(point: Point): void {
-        this.initialClickXOffset = point.x - this.points[0].x;
-        this.initialClickYOffset = point.y - this.points[0].y;
     }
 }
 
