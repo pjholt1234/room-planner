@@ -1,8 +1,7 @@
 import CanvasToolInterface from './CanvasToolInterface';
 import Canvas from '../Canvas';
-import TrianglePoints from '../shapes/point-types/TrianglePoints';
-import Triangle from '../shapes/Triangle';
 import Point from '../shapes/point-types/Point';
+import Triangle from '../shapes/Triangle';
 import CursorStyle from '../enums/CursorStyle';
 
 class TriangleTool implements CanvasToolInterface {
@@ -24,7 +23,7 @@ class TriangleTool implements CanvasToolInterface {
             y: event.clientY
         });
         const triangle = new Triangle(points);
-        triangle.draw(canvas.ctx);
+        triangle.draw(canvas.ctx, 'blue');
     }
 
     public mouseUp(event: any, canvas: Canvas): void {
@@ -52,7 +51,7 @@ class TriangleTool implements CanvasToolInterface {
         return CursorStyle.Crosshair;
     }
 
-    private translateCoordinates(point1: Point, point2: Point): TrianglePoints {
+    private translateCoordinates(point1: Point, point2: Point): Point[] {
         const topXPoint =
             Math.min(point1.x, point2.x) +
             (Math.max(point1.x, point2.x) - Math.min(point1.x, point2.x)) / 2;

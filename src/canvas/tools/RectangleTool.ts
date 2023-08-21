@@ -1,8 +1,7 @@
 import Canvas from '../Canvas';
 import CanvasToolInterface from './CanvasToolInterface';
-import RectanglePoints from '../shapes/point-types/RectanglePoints';
-import Rectangle from '../shapes/Rectangle';
 import Point from '../shapes/point-types/Point';
+import Rectangle from '../shapes/Rectangle';
 import CursorStyle from '../enums/CursorStyle';
 
 class RectangleTool implements CanvasToolInterface {
@@ -41,7 +40,7 @@ class RectangleTool implements CanvasToolInterface {
         });
 
         const rectangle = new Rectangle(points);
-        rectangle.draw(canvas.ctx);
+        rectangle.draw(canvas.ctx, 'blue');
     }
 
     public keyDown(event: any, canvas: Canvas): void {
@@ -55,10 +54,7 @@ class RectangleTool implements CanvasToolInterface {
         return CursorStyle.Crosshair;
     }
 
-    private translateCoordinates(
-        point1: Point,
-        point2: Point
-    ): RectanglePoints {
+    private translateCoordinates(point1: Point, point2: Point): Point[] {
         const topLeft = [
             Math.min(point1.x, point2.x),
             Math.min(point1.y, point2.y)
