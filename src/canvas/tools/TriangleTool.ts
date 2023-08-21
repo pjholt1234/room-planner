@@ -15,29 +15,15 @@ class TriangleTool implements CanvasToolInterface {
     }
 
     public mouseMove(event: any, canvas: Canvas): void {
-        if (!this._isDrawing || !this._selectedPoint) return;
-        canvas.redrawCanvas();
-
-        const points = this.translateCoordinates(this._selectedPoint, {
-            x: event.clientX,
-            y: event.clientY
-        });
-        const triangle = new Triangle(points);
-        triangle.draw(canvas.ctx, 'blue');
+        this.draw(event, canvas, true);
     }
 
     public mouseUp(event: any, canvas: Canvas): void {
-        if (!this._isDrawing || !this._selectedPoint) return;
-        this._isDrawing = false;
-
-        const points = this.translateCoordinates(this._selectedPoint, {
-            x: event.clientX,
-            y: event.clientY
-        });
-        const triangle = new Triangle(points);
-        triangle.draw(canvas.ctx);
+        const triangle = this.draw(event, canvas);
+        if (!triangle) return;
 
         canvas.canvasObjects.push(triangle);
+        this._isDrawing = false;
     }
 
     public keyDown(event: any, canvas: Canvas): void {
@@ -49,6 +35,29 @@ class TriangleTool implements CanvasToolInterface {
 
     public cursorStyle(): CursorStyle {
         return CursorStyle.Crosshair;
+    }
+
+    private draw(
+        event: any,
+        canvas: Canvas,
+        preview: boolean = false
+    ): Triangle | undefined {
+        if (!this._isDrawing || !this._selectedPoint) return;
+        canvas.redrawCanvas();
+
+        const points = this.translateCoordinates(this._selectedPoint, {
+            x: event.clientX,
+            y: event.clientY
+        });
+
+        const triangle = new Triangle(points);
+
+        let color = 'black';
+        if (preview) color = 'blue';
+
+        triangle.draw(canvas.ctx, color);
+
+        return triangle;
     }
 
     private translateCoordinates(point1: Point, point2: Point): Point[] {

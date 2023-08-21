@@ -8,26 +8,40 @@ class CircleTool implements CanvasToolInterface {
     private _isDrawing: boolean = false;
     private _selectedPoint: Point | null = null;
 
-    cursorStyle(): CursorStyle {
-        return CursorStyle.Crosshair;
-    }
-
-    keyDown(event: any, canvas: Canvas): void {
+    public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 'o' || event.key === 'O') {
             console.log('Circle mode');
             canvas.selectedTool = this;
         }
     }
 
-    //@ts-ignore
-    mouseDown(event: any, canvas: Canvas): void {
+    // @ts-ignore
+    public mouseDown(event: any, canvas: Canvas): void {
         this._isDrawing = true;
-
         this._selectedPoint = { x: event.clientX, y: event.clientY };
     }
 
-    //@ts-ignore
-    mouseMove(event: any, canvas: Canvas): void {
+    public mouseMove(event: any, canvas: Canvas): void {
+        this.draw(event, canvas, true);
+    }
+
+    public mouseUp(event: any, canvas: Canvas): void {
+        const circle = this.draw(event, canvas);
+        if (!circle) return;
+
+        canvas.canvasObjects.push(circle);
+        this._isDrawing = false;
+    }
+
+    public cursorStyle(): CursorStyle {
+        return CursorStyle.Crosshair;
+    }
+
+    private draw(
+        event: any,
+        canvas: Canvas,
+        preview: boolean = false
+    ): Circle | undefined {
         if (!this._isDrawing || !this._selectedPoint) return;
         canvas.redrawCanvas();
 
@@ -36,20 +50,12 @@ class CircleTool implements CanvasToolInterface {
             y: event.clientY
         });
 
-        circle.draw(canvas.ctx, 'blue');
-    }
+        let color = 'black';
+        if (preview) color = 'blue';
 
-    mouseUp(event: any, canvas: Canvas): void {
-        if (!this._isDrawing || !this._selectedPoint) return;
-        this._isDrawing = false;
+        circle.draw(canvas.ctx, color);
 
-        const circle = new Circle(this._selectedPoint, {
-            x: event.clientX,
-            y: event.clientY
-        });
-
-        circle.draw(canvas.ctx);
-        canvas.canvasObjects.push(circle);
+        return circle;
     }
 }
 
