@@ -9,7 +9,7 @@ class TextTool implements CanvasToolInterface {
     }
 
     public keyDown(event: any, canvas: Canvas): void {
-        if (event.key === 't' || event.key === 'T') {
+        if (event.key === 'w' || event.key === 'W') {
             console.log('Text mode');
             canvas.selectedTool = this;
         }
