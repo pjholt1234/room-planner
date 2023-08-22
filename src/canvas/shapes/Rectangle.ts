@@ -23,6 +23,11 @@ class Rectangle extends AbstractShape {
         context.lineTo(this.points[0].x, this.points[0].y);
         context.stroke();
         context.closePath();
+
+        if (this.fillColour !== '') {
+            context.fillStyle = this.fillColour;
+            context.fill();
+        }
     }
 
     public isPointInside(point: Point): boolean {

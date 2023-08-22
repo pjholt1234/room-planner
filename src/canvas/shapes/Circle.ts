@@ -19,6 +19,11 @@ class Circle extends AbstractShape {
         const radius = this.calculateRadius();
         context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
         context.stroke();
+
+        if (this.fillColour !== '') {
+            context.fillStyle = this.fillColour;
+            context.fill();
+        }
     }
 
     public getPoints(): any {

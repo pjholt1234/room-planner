@@ -14,6 +14,8 @@ interface ShapeInterface {
     setPivotPoint(point: Point): void;
 
     setClickOffsets(point: Point): void;
+
+    setFillColour(colour: string): void;
 }
 
 export default ShapeInterface;

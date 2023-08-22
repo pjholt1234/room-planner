@@ -21,6 +21,11 @@ class Triangle extends AbstractShape {
         context.lineTo(this.points[2].x, this.points[2].y);
         context.closePath();
         context.stroke();
+
+        if (this.fillColour !== '') {
+            context.fillStyle = this.fillColour;
+            context.fill();
+        }
     }
 
     public isPointInside(point: Point): boolean {

@@ -7,6 +7,7 @@ import GridTool from './tools/GridTool';
 import Grid from './utilities/Grid';
 import CircleTool from './tools/CircleTool';
 import TextTool from './tools/TextTool';
+import FillTool from './tools/FillTool';
 
 class Canvas {
     public canvas: HTMLCanvasElement;
@@ -29,6 +30,7 @@ class Canvas {
             new TriangleTool(),
             new CircleTool(),
             new TextTool(),
+            new FillTool(),
             new GridTool()
         ];
 

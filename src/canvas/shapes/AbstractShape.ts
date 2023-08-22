@@ -7,6 +7,7 @@ abstract class AbstractShape implements ShapeInterface {
     protected pivotPointIndex: number | null = null;
     protected initialClickXOffset: number;
     protected initialClickYOffset: number;
+    protected fillColour: string = '';
 
     abstract draw(context: CanvasRenderingContext2D, colour?: string): void;
 
@@ -38,6 +39,10 @@ abstract class AbstractShape implements ShapeInterface {
     public setClickOffsets(point: Point): void {
         this.initialClickXOffset = point.x - this.points[0].x;
         this.initialClickYOffset = point.y - this.points[0].y;
+    }
+
+    public setFillColour(colour: string): void {
+        this.fillColour = colour;
     }
 }
 
