@@ -9,7 +9,7 @@ class CircleTool implements CanvasToolInterface {
     private _selectedPoint: Point | null = null;
 
     public keyDown(event: any, canvas: Canvas): void {
-        if (event.key === 'o' || event.key === 'O') {
+        if (event.key === 'c' || event.key === 'C') {
             console.log('Circle mode');
             canvas.selectedTool = this;
         }
