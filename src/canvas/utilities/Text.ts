@@ -36,6 +36,42 @@ class Text implements ShapeInterface {
         this._boundingBox = this.setBoundingBox(context);
     }
 
+    public getPoints(): Point {
+        return this.textStartPoint;
+    }
+
+    public isPointInside(point: Point): boolean {
+        const xCheck =
+            point.x > this._boundingBox[0].x &&
+            point.x < this._boundingBox[3].x;
+        const yCheck =
+            point.y > this._boundingBox[0].y &&
+            point.y < this._boundingBox[3].y;
+
+        return xCheck && yCheck;
+    }
+
+    //@ts-ignore
+    public resize(point: Point): void {}
+
+    //@ts-ignore
+    public setPivotPoint(point: Point): void {}
+
+    public setClickOffsets(point: Point): void {
+        this.initialClickXOffset = point.x - this.textStartPoint.x;
+        this.initialClickYOffset = point.y - this.textStartPoint.y;
+    }
+
+    public setPosition(point: Point): void {
+        this.textStartPoint = {
+            x: point.x - this.initialClickXOffset,
+            y: point.y - this.initialClickYOffset
+        };
+    }
+
+    //@ts-ignore
+    public setFillColour(colour: string): void {}
+
     private setBoundingBox(context: CanvasRenderingContext2D): Point[] {
         context.font = this.fontSize + 'px ' + this.font;
         const textMetrics = context.measureText(this.body);
@@ -71,39 +107,6 @@ class Text implements ShapeInterface {
                 y: bottomRight[1]
             }
         ];
-    }
-
-    public getPoints(): Point {
-        return this.textStartPoint;
-    }
-
-    public isPointInside(point: Point): boolean {
-        const xCheck =
-            point.x > this._boundingBox[0].x &&
-            point.x < this._boundingBox[3].x;
-        const yCheck =
-            point.y > this._boundingBox[0].y &&
-            point.y < this._boundingBox[3].y;
-
-        return xCheck && yCheck;
-    }
-
-    //@ts-ignore
-    public resize(point: Point): void {}
-
-    //@ts-ignore
-    public setPivotPoint(point: Point): void {}
-
-    public setClickOffsets(point: Point): void {
-        this.initialClickXOffset = point.x - this.textStartPoint.x;
-        this.initialClickYOffset = point.y - this.textStartPoint.y;
-    }
-
-    public setPosition(point: Point): void {
-        this.textStartPoint = {
-            x: point.x - this.initialClickXOffset,
-            y: point.y - this.initialClickYOffset
-        };
     }
 }
 
