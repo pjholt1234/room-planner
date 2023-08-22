@@ -13,6 +13,7 @@ class SelectionTool implements CanvasToolInterface {
             this.deselectObject(canvas);
             return;
         }
+
         const selectedPoint = { x: event.clientX, y: event.clientY };
 
         canvas.canvasObjects.reverse().every((canvasObject: ShapeInterface) => {
@@ -63,6 +64,14 @@ class SelectionTool implements CanvasToolInterface {
         ) {
             this.switchMode();
         }
+
+        if (canvas.selectedTool === this && event.key === 'Delete') {
+            this.deleteObject(canvas);
+        }
+
+        if (canvas.selectedTool === this && event.key === 'Escape') {
+            this.deselectObject(canvas);
+        }
     }
 
     public cursorStyle(): CursorStyle {
@@ -70,11 +79,20 @@ class SelectionTool implements CanvasToolInterface {
     }
 
     private deselectObject(canvas: Canvas): void {
-        if (this.selectedObject !== null) {
-            this.selectedObject.draw(canvas.ctx);
-            canvas.canvasObjects.push(this.selectedObject);
-            this.selectedObject = null;
-        }
+        if (this.selectedObject === null) return;
+
+        this.selectedObject.draw(canvas.ctx);
+        canvas.canvasObjects.push(this.selectedObject);
+        this.selectedObject = null;
+    }
+
+    private deleteObject(canvas: Canvas): void {
+        if (this.selectedObject === null) return;
+
+        const index = canvas.canvasObjects.indexOf(this.selectedObject);
+        canvas.canvasObjects.splice(index, 1);
+        this.selectedObject = null;
+        canvas.redrawCanvas();
     }
 
     private moveObject(event: any, canvas: Canvas): void {
