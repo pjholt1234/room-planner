@@ -1,6 +1,5 @@
 import Point from '../shapes/point-types/Point';
 import ShapeInterface from '../shapes/ShapeInterface';
-import findClosestPoint from '../shapes/shape-helpers/getClosestPoint';
 
 class Text implements ShapeInterface {
     public body: string;
@@ -8,7 +7,6 @@ class Text implements ShapeInterface {
     public font: string;
     public textStartPoint: Point;
     private _boundingBox: Point[];
-    private pivotPointIndex: number | null = null;
     private initialClickXOffset: number;
     private initialClickYOffset: number;
 
@@ -75,11 +73,11 @@ class Text implements ShapeInterface {
         ];
     }
 
-    getPoints(): any {
+    public getPoints(): Point {
         return this.textStartPoint;
     }
 
-    isPointInside(point: Point): boolean {
+    public isPointInside(point: Point): boolean {
         const xCheck =
             point.x > this._boundingBox[0].x &&
             point.x < this._boundingBox[3].x;
@@ -87,28 +85,21 @@ class Text implements ShapeInterface {
             point.y > this._boundingBox[0].y &&
             point.y < this._boundingBox[3].y;
 
-        console.log(this._boundingBox, point.x, point.y, xCheck, yCheck);
-
         return xCheck && yCheck;
     }
 
-    public resize(point: Point): void {
-        if (this.pivotPointIndex === null) return;
-        this._boundingBox[this.pivotPointIndex] = point;
-    }
+    //@ts-ignore
+    public resize(point: Point): void {}
 
-    public setPivotPoint(point: Point): void {
-        this.pivotPointIndex = findClosestPoint(this._boundingBox, point);
-    }
+    //@ts-ignore
+    public setPivotPoint(point: Point): void {}
 
-    // @ts-ignore
     public setClickOffsets(point: Point): void {
         this.initialClickXOffset = point.x - this.textStartPoint.x;
         this.initialClickYOffset = point.y - this.textStartPoint.y;
     }
 
-    // @ts-ignore
-    setPosition(point: Point): void {
+    public setPosition(point: Point): void {
         this.textStartPoint = {
             x: point.x - this.initialClickXOffset,
             y: point.y - this.initialClickYOffset
