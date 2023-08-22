@@ -22,6 +22,8 @@ class Canvas {
         this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 
+        console.log('loaded canvas', this.canvas);
+
         this.grid = new Grid();
 
         this._tools = [
@@ -34,8 +36,9 @@ class Canvas {
             new GridTool()
         ];
 
-        this.initCanvas();
         this.selectedTool = new RectangleTool();
+
+        this.initCanvasDimensions();
 
         this.setModeClickListener();
 
@@ -66,14 +69,6 @@ class Canvas {
         this.canvasObjects.forEach((canvasObject: ShapeInterface) => {
             canvasObject.draw(this.ctx);
         });
-    }
-
-    private initCanvas(): void {
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
-
-        this.canvas.width = windowWidth;
-        this.canvas.height = windowHeight;
     }
 
     private setMouseDownListener(): void {
@@ -110,6 +105,14 @@ class Canvas {
                 tool.keyDown(event, this);
             });
         });
+    }
+
+    private initCanvasDimensions() {
+        const container = document.getElementById('myCanvas');
+        // @ts-ignore
+        this.canvas.width = container.clientWidth;
+        // @ts-ignore
+        this.canvas.height = container.clientHeight;
     }
 }
 
