@@ -4,13 +4,11 @@ import { useActiveTool } from '../hooks/ActiveToolContext';
 interface ToolButtonProps {
     icon: ReactNode;
     eventName: string;
-    isToggleable?: boolean;
 }
 
 const ToolButton: FC<ToolButtonProps> = ({
     icon,
-    eventName,
-    isToggleable = false
+    eventName
 }: ToolButtonProps) => {
     const { activeTool, setActiveTool } = useActiveTool();
 
@@ -22,7 +20,7 @@ const ToolButton: FC<ToolButtonProps> = ({
 
     let activeToolClass = '';
 
-    if (activeTool === eventName && !isToggleable) {
+    if (activeTool === eventName) {
         activeToolClass = 'toolbar-button--active';
     }
 

@@ -22,19 +22,15 @@ class GridTool extends AbstractTool {
         }
 
         if (canvas.grid.gridEnabled && event.key === 'ArrowUp') {
-            canvas.grid.increaseGridSize();
-            canvas.redrawCanvas();
+            this.increaseGridSize(canvas);
         }
 
         if (canvas.grid.gridEnabled && event.key === 'ArrowDown') {
-            console.log('Decreasing grid size');
-            canvas.grid.decreaseGridSize();
-            canvas.redrawCanvas();
+            this.decreaseGridSize(canvas);
         }
 
         if (canvas.grid.gridEnabled && event.key === 'ArrowLeft') {
-            canvas.grid.toggleGridMode();
-            canvas.redrawCanvas();
+            this.toggleGridMode(canvas);
         }
     }
 
@@ -44,6 +40,45 @@ class GridTool extends AbstractTool {
 
         canvas.redrawCanvas();
         console.log('Grid enabled: ', canvas.grid.gridEnabled);
+    }
+
+    public addCustomEventListeners(canvas: Canvas): void {
+        document.addEventListener(this.eventName, () =>
+            this.enableTool(canvas)
+        );
+
+        document.addEventListener('increase-grid-size', () => {
+            this.increaseGridSize(canvas);
+        });
+
+        document.addEventListener('decrease-grid-size', () => {
+            this.decreaseGridSize(canvas);
+        });
+
+        document.addEventListener('toggle-grid-mode', () => {
+            this.toggleGridMode(canvas);
+        });
+    }
+
+    private increaseGridSize(canvas: Canvas): void {
+        if (!canvas.grid.gridEnabled) return;
+
+        canvas.grid.increaseGridSize();
+        canvas.redrawCanvas();
+    }
+
+    private decreaseGridSize(canvas: Canvas): void {
+        if (!canvas.grid.gridEnabled) return;
+
+        canvas.grid.decreaseGridSize();
+        canvas.redrawCanvas();
+    }
+
+    private toggleGridMode(canvas: Canvas): void {
+        if (!canvas.grid.gridEnabled) return;
+
+        canvas.grid.toggleGridMode();
+        canvas.redrawCanvas();
     }
 }
 

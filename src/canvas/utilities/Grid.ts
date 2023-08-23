@@ -31,6 +31,11 @@ class Grid {
 
         //@ts-ignore
         this._mode = GridMode[newModeKey];
+
+        const gridModeEvent = new CustomEvent('grid-mode-changed', {
+            detail: this._mode
+        });
+        document.dispatchEvent(gridModeEvent);
     }
 
     public draw(context: CanvasRenderingContext2D, canvas: Canvas): void {

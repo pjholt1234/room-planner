@@ -1,5 +1,4 @@
 import ToolButton from './components/ToolButton';
-import GridIcon from './components/icons/GridIcon';
 import RectangleIcon from './components/icons/RectangleIcon';
 import TextIcon from './components/icons/TextIcon';
 import FillIcon from './components/icons/FillIcon';
@@ -7,6 +6,7 @@ import TriangleIcon from './components/icons/TriangleIcon';
 import CircleIcon from './components/icons/CircleIcon';
 import SelectIcon from './components/icons/SelectIcon';
 import { ActiveToolProvider } from './hooks/ActiveToolContext';
+import GridButtonWrapper from './components/GridButtonWrapper';
 
 function App() {
     return (
@@ -25,13 +25,7 @@ function App() {
                     <ToolButton eventName="text" icon={<TextIcon />} />
                     <ToolButton eventName="fill" icon={<FillIcon />} />
                 </div>
-                <div className="toolbar-wrapper">
-                    <ToolButton
-                        eventName="grid"
-                        icon={<GridIcon />}
-                        isToggleable={true}
-                    />
-                </div>
+                <GridButtonWrapper />
             </ActiveToolProvider>
         </>
     );
