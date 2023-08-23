@@ -47,7 +47,7 @@ class Canvas {
 
     set selectedTool(tool: CanvasToolInterface) {
         this._selectedTool = tool;
-        this.canvas.style.cursor = this._selectedTool.cursorStyle();
+        this.canvas.style.cursor = this._selectedTool.getCursorStyle();
         this.setMouseDownListener();
         this.setMouseUpListener();
         this.setMouseMoveListener();

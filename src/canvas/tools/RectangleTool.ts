@@ -1,12 +1,15 @@
 import Canvas from '../Canvas';
-import CanvasToolInterface from './CanvasToolInterface';
 import Point from '../shapes/point-types/Point';
 import Rectangle from '../shapes/Rectangle';
+import AbstractTool from './AbstractTool';
 import CursorStyle from '../enums/CursorStyle';
 
-class RectangleTool implements CanvasToolInterface {
-    private _selectedPoint: Point | null = null;
+class RectangleTool extends AbstractTool {
+    protected cursorStyle: CursorStyle = CursorStyle.Crosshair;
+    protected eventName: string = 'rectangle';
+    protected toolName: string = 'rectangle';
 
+    private _selectedPoint: Point | null = null;
     private _isDrawing: boolean = false;
 
     public mouseDown(event: any): void {
@@ -28,21 +31,8 @@ class RectangleTool implements CanvasToolInterface {
 
     public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 'r' || event.key === 'R') {
-            this.enable(canvas);
+            this.enableTool(canvas);
         }
-    }
-
-    public cursorStyle(): CursorStyle {
-        return CursorStyle.Crosshair;
-    }
-
-    public addCustomEventListeners(canvas: Canvas): void {
-        document.addEventListener('rectangle', () => this.enable(canvas));
-    }
-
-    private enable(canvas: Canvas): void {
-        console.log('Rectangle mode');
-        canvas.selectedTool = this;
     }
 
     private translateCoordinates(point1: Point, point2: Point): Point[] {

@@ -1,19 +1,17 @@
 import ShapeInterface from '../shapes/ShapeInterface';
 import Canvas from '../Canvas';
 import CursorStyle from '../enums/CursorStyle';
-import CanvasToolInterface from './CanvasToolInterface';
+import AbstractTool from './AbstractTool';
 
-class FillTool implements CanvasToolInterface {
+class FillTool extends AbstractTool {
     public fillColour: string = 'red';
-
-    public cursorStyle(): CursorStyle {
-        return CursorStyle.Pointer;
-    }
+    protected cursorStyle: CursorStyle = CursorStyle.Default;
+    protected eventName: string = 'fill';
+    protected toolName: string = 'fill';
 
     public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 'f' || event.key === 'F') {
-            console.log('Fill mode');
-            canvas.selectedTool = this;
+            this.enableTool(canvas);
         }
     }
 
@@ -35,15 +33,6 @@ class FillTool implements CanvasToolInterface {
 
     // @ts-ignore
     public mouseUp(event: any, canvas: Canvas): void {}
-
-    public addCustomEventListeners(canvas: Canvas): void {
-        document.addEventListener('fill', () => this.enable(canvas));
-    }
-
-    private enable(canvas: Canvas): void {
-        console.log('Fill mode');
-        canvas.selectedTool = this;
-    }
 }
 
 export default FillTool;

@@ -1,12 +1,14 @@
-import CanvasToolInterface from './CanvasToolInterface';
 import Canvas from '../Canvas';
 import Point from '../shapes/point-types/Point';
 import Triangle from '../shapes/Triangle';
 import CursorStyle from '../enums/CursorStyle';
+import AbstractTool from './AbstractTool';
 
-class TriangleTool implements CanvasToolInterface {
+class TriangleTool extends AbstractTool {
+    protected cursorStyle: CursorStyle = CursorStyle.Crosshair;
+    protected eventName: string = 'triangle';
+    protected toolName: string = 'triangle';
     private _selectedPoint: Point | null = null;
-
     private _isDrawing: boolean = false;
 
     public mouseDown(event: any): void {
@@ -28,21 +30,8 @@ class TriangleTool implements CanvasToolInterface {
 
     public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 't' || event.key === 'T') {
-            this.enable(canvas);
+            this.enableTool(canvas);
         }
-    }
-
-    public cursorStyle(): CursorStyle {
-        return CursorStyle.Crosshair;
-    }
-
-    public addCustomEventListeners(canvas: Canvas): void {
-        document.addEventListener('triangle', () => this.enable(canvas));
-    }
-
-    private enable(canvas: Canvas): void {
-        console.log('Triangle mode');
-        canvas.selectedTool = this;
     }
 
     private draw(

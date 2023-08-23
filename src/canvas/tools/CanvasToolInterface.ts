@@ -10,7 +10,7 @@ interface CanvasToolInterface {
 
     keyDown(event: any, canvas: Canvas): void;
 
-    cursorStyle(): CursorStyle;
+    getCursorStyle(): CursorStyle;
 
     addCustomEventListeners(canvas: Canvas): void;
 }

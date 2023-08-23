@@ -1,8 +1,12 @@
 import Canvas from '../Canvas';
-import CanvasToolInterface from './CanvasToolInterface';
 import CursorStyle from '../enums/CursorStyle';
+import AbstractTool from './AbstractTool';
 
-class GridTool implements CanvasToolInterface {
+class GridTool extends AbstractTool {
+    protected cursorStyle: CursorStyle = CursorStyle.Default;
+    protected eventName: string = 'grid';
+    protected toolName: string = 'grid';
+
     // @ts-ignore
     public mouseDown(event: any): void {}
 
@@ -14,7 +18,7 @@ class GridTool implements CanvasToolInterface {
 
     public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 'g' || event.key === 'G') {
-            this.enable(canvas);
+            this.enableTool(canvas);
         }
 
         if (canvas.grid.gridEnabled && event.key === 'ArrowUp') {
@@ -34,15 +38,8 @@ class GridTool implements CanvasToolInterface {
         }
     }
 
-    public cursorStyle(): CursorStyle {
-        return CursorStyle.Default;
-    }
-
-    public addCustomEventListeners(canvas: Canvas): void {
-        document.addEventListener('grid', () => this.enable(canvas));
-    }
-
-    private enable(canvas: Canvas): void {
+    //Overrides
+    protected enableTool(canvas: Canvas): void {
         canvas.grid.gridEnabled = !canvas.grid.gridEnabled;
 
         canvas.redrawCanvas();

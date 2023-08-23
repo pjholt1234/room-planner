@@ -1,16 +1,20 @@
-import CanvasToolInterface from './CanvasToolInterface';
 import CursorStyle from '../enums/CursorStyle';
 import Canvas from '../Canvas';
 import Point from '../shapes/point-types/Point';
 import Circle from '../shapes/Circle';
+import AbstractTool from './AbstractTool';
 
-class CircleTool implements CanvasToolInterface {
+class CircleTool extends AbstractTool {
     private _isDrawing: boolean = false;
     private _selectedPoint: Point | null = null;
 
+    protected cursorStyle: CursorStyle = CursorStyle.Crosshair;
+    protected eventName: string = 'circle';
+    protected toolName: string = 'circle';
+
     public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 'c' || event.key === 'C') {
-            this.enable(canvas);
+            this.enableTool(canvas);
         }
     }
 
@@ -30,19 +34,6 @@ class CircleTool implements CanvasToolInterface {
 
         canvas.canvasObjects.push(circle);
         this._isDrawing = false;
-    }
-
-    public cursorStyle(): CursorStyle {
-        return CursorStyle.Crosshair;
-    }
-
-    public addCustomEventListeners(canvas: Canvas): void {
-        document.addEventListener('circle', () => this.enable(canvas));
-    }
-
-    private enable(canvas: Canvas): void {
-        console.log('Circle mode');
-        canvas.selectedTool = this;
     }
 
     private draw(

@@ -1,10 +1,13 @@
-import CanvasToolInterface from './CanvasToolInterface';
 import ShapeInterface from '../shapes/ShapeInterface';
 import Canvas from '../Canvas';
 import CursorStyle from '../enums/CursorStyle';
+import AbstractTool from './AbstractTool';
 
-class SelectionTool implements CanvasToolInterface {
+class SelectionTool extends AbstractTool {
     public selectedObject: ShapeInterface | null = null;
+    protected cursorStyle: CursorStyle = CursorStyle.Move;
+    protected eventName: string = 'select';
+    protected toolName: string = 'select';
     private _mode: number = 0;
     private _modes: string[] = ['move', 'resize'];
 
@@ -54,7 +57,7 @@ class SelectionTool implements CanvasToolInterface {
 
     public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 's' || event.key === 'S') {
-            this.enable(canvas);
+            this.enableTool(canvas);
         }
 
         if (
@@ -71,19 +74,6 @@ class SelectionTool implements CanvasToolInterface {
         if (canvas.selectedTool === this && event.key === 'Escape') {
             this.deselectObject(canvas);
         }
-    }
-
-    public addCustomEventListeners(canvas: Canvas): void {
-        document.addEventListener('select', () => this.enable(canvas));
-    }
-
-    public cursorStyle(): CursorStyle {
-        return CursorStyle.Move;
-    }
-
-    private enable(canvas: Canvas): void {
-        console.log('Selection mode');
-        canvas.selectedTool = this;
     }
 
     private deselectObject(canvas: Canvas): void {
