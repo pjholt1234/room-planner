@@ -105,6 +105,10 @@ class Canvas {
                 tool.keyDown(event, this);
             });
         });
+
+        this._tools.forEach((tool: CanvasToolInterface) => {
+            tool.addCustomEventListeners(this);
+        });
     }
 
     private initCanvasDimensions() {

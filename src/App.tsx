@@ -10,14 +10,14 @@ function App() {
     return (
         <>
             <div className="toolbar-wrapper">
-                <ToolButton icon={<RectangleIcon />} />
-                <ToolButton icon={<TriangleIcon />} />
-                <ToolButton icon={<CircleIcon />} />
+                <ToolButton eventName="rectangle" icon={<RectangleIcon />} />
+                <ToolButton eventName="triangle" icon={<TriangleIcon />} />
+                <ToolButton eventName="circle" icon={<CircleIcon />} />
             </div>
             <div className="toolbar-wrapper">
-                <ToolButton icon={<GridIcon />} />
-                <ToolButton icon={<TextIcon />} />
-                <ToolButton icon={<FillIcon />} />
+                <ToolButton eventName="grid" icon={<GridIcon />} />
+                <ToolButton eventName="text" icon={<TextIcon />} />
+                <ToolButton eventName="fill" icon={<FillIcon />} />
             </div>
         </>
     );

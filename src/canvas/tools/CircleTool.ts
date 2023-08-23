@@ -10,8 +10,7 @@ class CircleTool implements CanvasToolInterface {
 
     public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 'c' || event.key === 'C') {
-            console.log('Circle mode');
-            canvas.selectedTool = this;
+            this.enable(canvas);
         }
     }
 
@@ -35,6 +34,15 @@ class CircleTool implements CanvasToolInterface {
 
     public cursorStyle(): CursorStyle {
         return CursorStyle.Crosshair;
+    }
+
+    public addCustomEventListeners(canvas: Canvas): void {
+        document.addEventListener('circle', () => this.enable(canvas));
+    }
+
+    private enable(canvas: Canvas): void {
+        console.log('Circle mode');
+        canvas.selectedTool = this;
     }
 
     private draw(

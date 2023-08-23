@@ -14,10 +14,7 @@ class GridTool implements CanvasToolInterface {
 
     public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 'g' || event.key === 'G') {
-            canvas.grid.gridEnabled = !canvas.grid.gridEnabled;
-
-            canvas.redrawCanvas();
-            console.log('Grid enabled: ');
+            this.enable(canvas);
         }
 
         if (canvas.grid.gridEnabled && event.key === 'ArrowUp') {
@@ -39,6 +36,17 @@ class GridTool implements CanvasToolInterface {
 
     public cursorStyle(): CursorStyle {
         return CursorStyle.Default;
+    }
+
+    public addCustomEventListeners(canvas: Canvas): void {
+        document.addEventListener('grid', () => this.enable(canvas));
+    }
+
+    private enable(canvas: Canvas): void {
+        canvas.grid.gridEnabled = !canvas.grid.gridEnabled;
+
+        canvas.redrawCanvas();
+        console.log('Grid enabled: ', canvas.grid.gridEnabled);
     }
 }
 

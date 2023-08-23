@@ -35,6 +35,15 @@ class FillTool implements CanvasToolInterface {
 
     // @ts-ignore
     public mouseUp(event: any, canvas: Canvas): void {}
+
+    public addCustomEventListeners(canvas: Canvas): void {
+        document.addEventListener('fill', () => this.enable(canvas));
+    }
+
+    private enable(canvas: Canvas): void {
+        console.log('Fill mode');
+        canvas.selectedTool = this;
+    }
 }
 
 export default FillTool;

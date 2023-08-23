@@ -11,6 +11,8 @@ interface CanvasToolInterface {
     keyDown(event: any, canvas: Canvas): void;
 
     cursorStyle(): CursorStyle;
+
+    addCustomEventListeners(canvas: Canvas): void;
 }
 
 export default CanvasToolInterface;

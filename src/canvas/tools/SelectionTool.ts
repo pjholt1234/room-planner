@@ -54,8 +54,7 @@ class SelectionTool implements CanvasToolInterface {
 
     public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 's' || event.key === 'S') {
-            console.log('Selection tool selected');
-            canvas.selectedTool = this;
+            this.enable(canvas);
         }
 
         if (
@@ -74,8 +73,17 @@ class SelectionTool implements CanvasToolInterface {
         }
     }
 
+    public addCustomEventListeners(canvas: Canvas): void {
+        document.addEventListener('select', () => this.enable(canvas));
+    }
+
     public cursorStyle(): CursorStyle {
         return CursorStyle.Move;
+    }
+
+    private enable(canvas: Canvas): void {
+        console.log('Selection mode');
+        canvas.selectedTool = this;
     }
 
     private deselectObject(canvas: Canvas): void {

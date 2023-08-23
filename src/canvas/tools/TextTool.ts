@@ -10,8 +10,7 @@ class TextTool implements CanvasToolInterface {
 
     public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 'w' || event.key === 'W') {
-            console.log('Text mode');
-            canvas.selectedTool = this;
+            this.enable(canvas);
         }
     }
 
@@ -30,6 +29,15 @@ class TextTool implements CanvasToolInterface {
 
     // @ts-ignore
     public mouseUp(event: any, canvas: Canvas): void {}
+
+    public addCustomEventListeners(canvas: Canvas): void {
+        document.addEventListener('text', () => this.enable(canvas));
+    }
+
+    private enable(canvas: Canvas): void {
+        console.log('Text mode');
+        canvas.selectedTool = this;
+    }
 }
 
 export default TextTool;

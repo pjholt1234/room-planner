@@ -2,14 +2,24 @@ import { FC, ReactNode } from 'react';
 
 interface ToolButtonProps {
     icon: ReactNode;
+    eventName: string;
 }
 
-const ToolButton: FC<ToolButtonProps> = ({ icon }: ToolButtonProps) => {
+const ToolButton: FC<ToolButtonProps> = ({
+    icon,
+    eventName
+}: ToolButtonProps) => {
+    const event = new Event(eventName);
     return (
-        <div className="toolbar-button" onClick={() => console.log('clicked')}>
+        <button className="toolbar-button" onClick={() => dispatchEvent(event)}>
             {icon}
-        </div>
+        </button>
     );
+};
+
+const dispatchEvent = (event: Event) => {
+    console.log('dispatching event', event);
+    document.dispatchEvent(event);
 };
 
 export default ToolButton;

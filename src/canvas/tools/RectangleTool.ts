@@ -17,7 +17,7 @@ class RectangleTool implements CanvasToolInterface {
     public mouseUp(event: any, canvas: Canvas): void {
         const rectangle = this.draw(event, canvas, false);
         if (!rectangle) return;
-        
+
         canvas.canvasObjects.push(rectangle);
         this._isDrawing = false;
     }
@@ -28,13 +28,21 @@ class RectangleTool implements CanvasToolInterface {
 
     public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 'r' || event.key === 'R') {
-            console.log('Rectangle mode');
-            canvas.selectedTool = this;
+            this.enable(canvas);
         }
     }
 
     public cursorStyle(): CursorStyle {
         return CursorStyle.Crosshair;
+    }
+
+    public addCustomEventListeners(canvas: Canvas): void {
+        document.addEventListener('rectangle', () => this.enable(canvas));
+    }
+
+    private enable(canvas: Canvas): void {
+        console.log('Rectangle mode');
+        canvas.selectedTool = this;
     }
 
     private translateCoordinates(point1: Point, point2: Point): Point[] {

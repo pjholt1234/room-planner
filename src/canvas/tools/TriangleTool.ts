@@ -28,13 +28,21 @@ class TriangleTool implements CanvasToolInterface {
 
     public keyDown(event: any, canvas: Canvas): void {
         if (event.key === 't' || event.key === 'T') {
-            console.log('Triangle mode');
-            canvas.selectedTool = this;
+            this.enable(canvas);
         }
     }
 
     public cursorStyle(): CursorStyle {
         return CursorStyle.Crosshair;
+    }
+
+    public addCustomEventListeners(canvas: Canvas): void {
+        document.addEventListener('triangle', () => this.enable(canvas));
+    }
+
+    private enable(canvas: Canvas): void {
+        console.log('Triangle mode');
+        canvas.selectedTool = this;
     }
 
     private draw(
