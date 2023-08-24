@@ -37,11 +37,8 @@ class Canvas {
         ];
 
         this.selectedTool = new RectangleTool();
-
         this.initCanvasDimensions();
-
         this.setModeClickListener();
-
         this.redrawCanvas();
     }
 
@@ -71,13 +68,17 @@ class Canvas {
         });
     }
 
+    public resetCursorStyle(): void {
+        this.canvas.style.cursor = this._selectedTool.getCursorStyle();
+    }
+
     private setMouseDownListener(): void {
         this.canvas?.removeEventListener('mousedown', this.handleMouseDown);
         this.canvas?.addEventListener('mousedown', this.handleMouseDown);
     }
 
     private handleMouseDown = (event: MouseEvent) => {
-        this._selectedTool.mouseDown(event, this);
+        this._selectedTool.mouseDown(this.cursorGridSnapping(event), this);
     };
 
     private setMouseUpListener(): void {
@@ -86,7 +87,7 @@ class Canvas {
     }
 
     private handleMouseUp = (event: MouseEvent) => {
-        this._selectedTool.mouseUp(event, this);
+        this._selectedTool.mouseUp(this.cursorGridSnapping(event), this);
     };
 
     private setMouseMoveListener(): void {
@@ -94,8 +95,8 @@ class Canvas {
         this.canvas?.addEventListener('mousemove', this.handleMouseMove);
     }
 
-    private handleMouseMove = (event: MouseEvent) => {
-        this._selectedTool.mouseMove(event, this);
+    private handleMouseMove = (event: any) => {
+        this._selectedTool.mouseMove(this.cursorGridSnapping(event), this);
     };
 
     private setModeClickListener(): void {
@@ -117,6 +118,28 @@ class Canvas {
         this.canvas.width = container.clientWidth;
         // @ts-ignore
         this.canvas.height = container.clientHeight;
+    }
+
+    private cursorGridSnapping(event: MouseEvent): any {
+        if (!this.grid.gridSnap) {
+            return event;
+        }
+
+        this.canvas.style.cursor = 'none';
+        this.redrawCanvas();
+
+        const gridSize = this.grid.gridSize;
+
+        const gridAlignedX = Math.round(event.x / gridSize) * gridSize;
+        const gridAlignedY = Math.round(event.y / gridSize) * gridSize;
+
+        this.ctx.fillStyle = '#000000';
+        this.ctx.fillRect(gridAlignedX, gridAlignedY, 2, 2);
+
+        return {
+            clientX: gridAlignedX,
+            clientY: gridAlignedY
+        };
     }
 }
 

@@ -32,6 +32,13 @@ class GridTool extends AbstractTool {
         if (canvas.grid.gridEnabled && event.key === 'ArrowLeft') {
             this.toggleGridMode(canvas);
         }
+
+        if (
+            (canvas.grid.gridEnabled && event.key === 'l') ||
+            event.key === 'L'
+        ) {
+            this.toggleGridSnapping(canvas);
+        }
     }
 
     //Overrides
@@ -58,6 +65,10 @@ class GridTool extends AbstractTool {
         document.addEventListener('toggle-grid-mode', () => {
             this.toggleGridMode(canvas);
         });
+
+        document.addEventListener('toggle-grid-snapping', () => {
+            this.toggleGridSnapping(canvas);
+        });
     }
 
     private increaseGridSize(canvas: Canvas): void {
@@ -78,6 +89,17 @@ class GridTool extends AbstractTool {
         if (!canvas.grid.gridEnabled) return;
 
         canvas.grid.toggleGridMode();
+        canvas.redrawCanvas();
+    }
+
+    private toggleGridSnapping(canvas: Canvas): void {
+        canvas.grid.toggleSnapping();
+
+        if (!canvas.grid.gridSnap) {
+            canvas.resetCursorStyle();
+            return;
+        }
+
         canvas.redrawCanvas();
     }
 }

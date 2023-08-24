@@ -4,10 +4,14 @@ import enumToArray from '../helpers/enumToArray';
 
 class Grid {
     public gridEnabled: boolean = false;
+    public gridSnap: boolean = false;
 
     private _gridSize: number = 16;
-
     private _mode: GridMode = GridMode.LINES;
+
+    get gridSize(): number {
+        return this._gridSize;
+    }
 
     set mode(mode: GridMode) {
         this._mode = mode;
@@ -62,6 +66,10 @@ class Grid {
         if (this._gridSize <= 16) return;
 
         this._gridSize -= 16;
+    }
+
+    public toggleSnapping(): void {
+        this.gridSnap = !this.gridSnap;
     }
 
     private drawStraightLines(
