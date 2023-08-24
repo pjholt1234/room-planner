@@ -18,7 +18,7 @@ class FillTool extends AbstractTool {
     public mouseDown(event: any, canvas: Canvas): void {
         const selectedPoint = { x: event.clientX, y: event.clientY };
 
-        canvas.canvasObjects.reverse().every((canvasObject: ShapeInterface) => {
+        canvas.canvasObjects.reverse().some((canvasObject: ShapeInterface) => {
             console.log(canvasObject.isPointInside(selectedPoint));
             if (canvasObject.isPointInside(selectedPoint)) {
                 canvasObject.setFillColour(this.fillColour);

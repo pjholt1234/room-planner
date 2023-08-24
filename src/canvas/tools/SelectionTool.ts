@@ -19,7 +19,7 @@ class SelectionTool extends AbstractTool {
 
         const selectedPoint = { x: event.clientX, y: event.clientY };
 
-        canvas.canvasObjects.reverse().every((canvasObject: ShapeInterface) => {
+        canvas.canvasObjects.some((canvasObject: ShapeInterface) => {
             if (canvasObject.isPointInside(selectedPoint)) {
                 if (this._modes[this._mode] === 'resize') {
                     canvasObject.setPivotPoint(selectedPoint);
@@ -79,6 +79,7 @@ class SelectionTool extends AbstractTool {
     private deselectObject(canvas: Canvas): void {
         if (this.selectedObject === null) return;
 
+        canvas.redrawCanvas();
         this.selectedObject.draw(canvas.ctx);
         canvas.canvasObjects.push(this.selectedObject);
         this.selectedObject = null;
