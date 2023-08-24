@@ -70,6 +70,12 @@ class Grid {
 
     public toggleSnapping(): void {
         this.gridSnap = !this.gridSnap;
+
+        const gridSnappingEvent = new CustomEvent('grid-snapping-changed', {
+            detail: this.gridSnap
+        });
+
+        document.dispatchEvent(gridSnappingEvent);
     }
 
     private drawStraightLines(

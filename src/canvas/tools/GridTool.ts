@@ -94,13 +94,11 @@ class GridTool extends AbstractTool {
 
     private toggleGridSnapping(canvas: Canvas): void {
         canvas.grid.toggleSnapping();
-
+        canvas.redrawCanvas();
+        
         if (!canvas.grid.gridSnap) {
             canvas.resetCursorStyle();
-            return;
         }
-
-        canvas.redrawCanvas();
     }
 }
 
