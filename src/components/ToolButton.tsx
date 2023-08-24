@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { useActiveTool } from '../hooks/ActiveToolContext';
 
 interface ToolButtonProps {
@@ -6,10 +6,7 @@ interface ToolButtonProps {
     eventName: string;
 }
 
-const ToolButton: FC<ToolButtonProps> = ({
-    icon,
-    eventName
-}: ToolButtonProps) => {
+const ToolButton = ({ icon, eventName }: ToolButtonProps) => {
     const { activeTool, setActiveTool } = useActiveTool();
 
     const event = new Event(eventName);
@@ -21,12 +18,12 @@ const ToolButton: FC<ToolButtonProps> = ({
     let activeToolClass = '';
 
     if (activeTool === eventName) {
-        activeToolClass = 'toolbar-button--active';
+        activeToolClass = 'button-circle--active';
     }
 
     return (
         <button
-            className={`toolbar-button ${activeToolClass}`}
+            className={`button button-circle ${activeToolClass}`}
             onClick={() => enableTool(event, eventName)}
         >
             {icon}

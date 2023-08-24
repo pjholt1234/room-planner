@@ -6,27 +6,37 @@ import TriangleIcon from './components/icons/TriangleIcon';
 import CircleIcon from './components/icons/CircleIcon';
 import SelectIcon from './components/icons/SelectIcon';
 import { ActiveToolProvider } from './hooks/ActiveToolContext';
-import GridButtonWrapper from './components/GridButtonWrapper';
+import GridButtonToolbarRow from './components/GridButtonToolbarRow';
+import ToolbarSection from './ToolbarSection';
 
 function App() {
     return (
         <>
             <ActiveToolProvider>
-                <div className="toolbar-wrapper">
-                    <ToolButton
-                        eventName="rectangle"
-                        icon={<RectangleIcon />}
-                    />
-                    <ToolButton eventName="triangle" icon={<TriangleIcon />} />
-                    <ToolButton eventName="circle" icon={<CircleIcon />} />
-                </div>
-                <div className="toolbar-wrapper">
-                    <ToolButton eventName="select" icon={<SelectIcon />} />
-                    <ToolButton eventName="text" icon={<TextIcon />} />
-                    <ToolButton eventName="fill" icon={<FillIcon />} />
-                </div>
-                <GridButtonWrapper />
+                <ToolbarSection title={'Shapes'}>
+                    <div className="toolbar-row">
+                        <ToolButton
+                            eventName="rectangle"
+                            icon={<RectangleIcon />}
+                        />
+                        <ToolButton
+                            eventName="triangle"
+                            icon={<TriangleIcon />}
+                        />
+                        <ToolButton eventName="circle" icon={<CircleIcon />} />
+                    </div>
+                </ToolbarSection>
+                <ToolbarSection title={'Tools'}>
+                    <div className="toolbar-row">
+                        <ToolButton eventName="select" icon={<SelectIcon />} />
+                        <ToolButton eventName="text" icon={<TextIcon />} />
+                        <ToolButton eventName="fill" icon={<FillIcon />} />
+                    </div>
+                </ToolbarSection>
             </ActiveToolProvider>
+            <ToolbarSection title={'Grid'}>
+                <GridButtonToolbarRow />
+            </ToolbarSection>
         </>
     );
 }

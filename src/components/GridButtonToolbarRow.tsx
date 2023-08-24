@@ -6,8 +6,9 @@ import GridIcon from './icons/GridIcon';
 import GridMode from '../canvas/enums/GridMode';
 import GridDottedIcon from './icons/GridDottedIcon';
 import GridDashedIcon from './icons/GridDashedIcon';
+import UpDownButton from './UpDownButton';
 
-const GridButtonWrapper = () => {
+const GridButtonToolbarRow = () => {
     const [gridEnabled, setGridEnabled] = useState<boolean>(false);
     const [gridMode, setGridMode] = useState<GridMode>(GridMode.LINES);
 
@@ -42,27 +43,25 @@ const GridButtonWrapper = () => {
     const decreaseGridSize = new Event('decrease-grid-size');
     const toggleGridMode = new Event('toggle-grid-mode');
 
+    const buttonDisabledClass = gridEnabled ? '' : 'button--disabled';
+
     return (
-        <div className="toolbar-wrapper">
+        <div className="toolbar-row">
             <ToggleSwitch
                 onToggle={(toggleState: boolean) =>
                     enableTool(event, toggleState)
                 }
             />
+            <UpDownButton
+                upOnClick={() => document.dispatchEvent(increaseGridSize)}
+                upContent={<UpIcon />}
+                upDisabled={!gridEnabled}
+                downOnClick={() => document.dispatchEvent(decreaseGridSize)}
+                downContent={<DownIcon />}
+                downDisabled={!gridEnabled}
+            />
             <button
-                disabled={!gridEnabled}
-                onClick={() => document.dispatchEvent(increaseGridSize)}
-            >
-                <UpIcon />
-            </button>
-            <button
-                disabled={!gridEnabled}
-                onClick={() => document.dispatchEvent(decreaseGridSize)}
-            >
-                <DownIcon />
-            </button>
-
-            <button
+                className={`button button-square ${buttonDisabledClass} `}
                 disabled={!gridEnabled}
                 onClick={() => document.dispatchEvent(toggleGridMode)}
             >
@@ -72,4 +71,4 @@ const GridButtonWrapper = () => {
     );
 };
 
-export default GridButtonWrapper;
+export default GridButtonToolbarRow;
