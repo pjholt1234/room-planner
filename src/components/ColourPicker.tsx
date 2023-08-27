@@ -5,17 +5,17 @@ import FillIcon from './icons/FillIcon';
 import ColourPickerBox from './ColourPickerBox';
 
 const ColourPicker = () => {
-    const [colourPickerOpen, setColourPickerOpen] = useState<boolean>(false);
-    const [colourPickerBackground, setColourPickerBackground] = useState({
-        background: '#fff'
-    });
-    const [strokeColour, setStrokeColour] = useState<string>('#000000');
-    const [fillColour, setFillColour] = useState<string>('#FFFFFF');
-    const [selectedColourBox, setSelectedColourBox] = useState<string>('fill');
+    const [colourPickerOpen, setColourPickerOpen] = useState(false);
+    const [selectedColourBox, setSelectedColourBox] = useState('fill');
     const [pickerPosition, setPickerPosition] = useState({
         top: 0,
         left: 0,
         width: 0
+    });
+    const [colors, setColors] = useState({
+        colourPickerBackground: '#fff',
+        strokeColour: '#000000',
+        fillColour: '#FFFFFF'
     });
 
     const colorPickerRef = useRef<HTMLDivElement | null>(null);
@@ -36,28 +36,28 @@ const ColourPicker = () => {
     };
 
     const handleSetBackgroundColour = (colour: string) => {
-        setColourPickerBackground({ background: colour });
-        if (selectedColourBox === 'stroke') {
-            setStrokeColour(colour);
+        setColors((prevColors) => ({
+            ...prevColors,
+            colourPickerBackground: colour
+        }));
+        const eventType =
+            selectedColourBox === 'stroke'
+                ? 'stroke-colour-changed'
+                : 'fill-colour-changed';
+        setColour(colour, eventType);
+    };
 
-            const updateStrokeColourEvent = new CustomEvent(
-                'stroke-colour-changed',
-                {
-                    detail: colour
-                }
-            );
+    const setColour = (colour: string, eventType: string) => {
+        setColors((prevColors) => ({
+            ...prevColors,
+            [selectedColourBox + 'Colour']: colour
+        }));
 
-            document.dispatchEvent(updateStrokeColourEvent);
-            return;
-        }
-
-        setFillColour(colour);
-
-        const updateFillColourEvent = new CustomEvent('fill-colour-changed', {
+        const updateColourEvent = new CustomEvent(eventType, {
             detail: colour
         });
 
-        document.dispatchEvent(updateFillColourEvent);
+        document.dispatchEvent(updateColourEvent);
     };
 
     useEffect(() => {
@@ -93,7 +93,7 @@ const ColourPicker = () => {
                 }}
             >
                 <SketchPicker
-                    color={colourPickerBackground.background}
+                    color={colors.colourPickerBackground}
                     onChangeComplete={(color) =>
                         handleSetBackgroundColour(color.hex)
                     }
@@ -109,13 +109,13 @@ const ColourPicker = () => {
                     id="stroke"
                     icon={<PaintBrushIcon />}
                     onClick={handleColorPickerBoxClick}
-                    backgroundColour={strokeColour}
+                    backgroundColour={colors.strokeColour}
                 />
                 <ColourPickerBox
                     id="fill"
                     icon={<FillIcon />}
                     onClick={handleColorPickerBoxClick}
-                    backgroundColour={fillColour}
+                    backgroundColour={colors.fillColour}
                 />
             </div>
             {renderColourPicker()}
