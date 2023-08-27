@@ -64,7 +64,7 @@ class SelectionTool extends AbstractTool {
             canvas.selectedTool === this &&
             (event.key === 'm' || event.key === 'M')
         ) {
-            this.switchMode();
+            this.switchMode(canvas);
         }
 
         if (canvas.selectedTool === this && event.key === 'Delete') {
@@ -115,7 +115,7 @@ class SelectionTool extends AbstractTool {
         this.selectedObject.draw(canvas.ctx, 'blue');
     }
 
-    private switchMode(): void {
+    private switchMode(canvas: Canvas): void {
         if (this.selectedObject !== null) {
             console.log('Cannot switch mode while object is selected');
             return;
@@ -123,8 +123,10 @@ class SelectionTool extends AbstractTool {
 
         if (this._mode + 1 > this._modes.length - 1) {
             this._mode = 0;
+            canvas.canvas.style.cursor = CursorStyle.Move;
         } else {
             this._mode++;
+            canvas.canvas.style.cursor = CursorStyle.Crosshair;
         }
 
         console.log('Mode changed to: ' + this._modes[this._mode]);
