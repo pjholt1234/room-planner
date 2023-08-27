@@ -9,6 +9,7 @@ import { ActiveToolProvider } from './hooks/ActiveToolContext';
 import GridButtonToolbarRow from './components/GridButtonToolbarRow';
 import ToolbarSection from './ToolbarSection';
 import ColourPicker from './components/ColourPicker';
+import DeleteIcon from './components/icons/DeleteIcon';
 
 function App() {
     return (
@@ -30,6 +31,10 @@ function App() {
                 <ToolbarSection title={'Tools'}>
                     <div className="toolbar-row">
                         <ToolButton eventName="select" icon={<SelectIcon />} />
+                        <ToolButton
+                            eventName="delete-tool"
+                            icon={<DeleteIcon />}
+                        />
                         <ToolButton eventName="text" icon={<TextIcon />} />
                         <ToolButton eventName="fill" icon={<FillIcon />} />
                     </div>
