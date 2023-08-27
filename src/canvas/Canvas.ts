@@ -8,6 +8,7 @@ import Grid from './utilities/Grid';
 import CircleTool from './tools/CircleTool';
 import TextTool from './tools/TextTool';
 import FillTool from './tools/FillTool';
+import DeleteTool from './tools/DeleteTool';
 
 class Canvas {
     public canvas: HTMLCanvasElement;
@@ -33,7 +34,8 @@ class Canvas {
             new CircleTool(),
             new TextTool(),
             new FillTool(),
-            new GridTool()
+            new GridTool(),
+            new DeleteTool()
         ];
 
         this.selectedTool = new RectangleTool();
