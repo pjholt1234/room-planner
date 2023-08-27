@@ -11,7 +11,7 @@ class Rectangle extends AbstractShape {
     }
 
     public draw(context: CanvasRenderingContext2D, colour?: string) {
-        if (!colour) colour = 'black';
+        if (!colour) colour = this.strokeColour;
 
         context.beginPath();
         context.strokeStyle = colour;

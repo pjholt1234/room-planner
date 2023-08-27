@@ -80,7 +80,9 @@ class RectangleTool extends AbstractTool {
 
         const rectangle = new Rectangle(points);
 
-        let color = 'black';
+        rectangle.strokeColour = canvas.strokeColour;
+        let color = canvas.strokeColour;
+
         if (preview) color = 'blue';
 
         rectangle.draw(canvas.ctx, color);

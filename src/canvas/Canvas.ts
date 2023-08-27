@@ -14,6 +14,8 @@ class Canvas {
     public ctx: CanvasRenderingContext2D;
     public canvasObjects: ShapeInterface[] = [];
     public grid: Grid;
+    public fillColour: string = '#FFFFFF';
+    public strokeColour: string = '#000000';
 
     private _tools: CanvasToolInterface[] = [];
     private _selectedTool: CanvasToolInterface;
@@ -21,8 +23,6 @@ class Canvas {
     constructor(canvasId: string) {
         this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
-
-        console.log('loaded canvas', this.canvas);
 
         this.grid = new Grid();
 
@@ -40,6 +40,7 @@ class Canvas {
         this.initCanvasDimensions();
         this.setModeClickListener();
         this.redrawCanvas();
+        this.setUpGlobalEventListeners();
     }
 
     set selectedTool(tool: CanvasToolInterface) {
@@ -140,6 +141,24 @@ class Canvas {
             clientX: gridAlignedX,
             clientY: gridAlignedY
         };
+    }
+
+    private setUpGlobalEventListeners(): void {
+        //@ts-ignore
+        document.addEventListener(
+            'fill-colour-changed',
+            (event: CustomEvent) => {
+                this.fillColour = event.detail;
+            }
+        );
+
+        //@ts-ignore
+        document.addEventListener(
+            'stroke-colour-changed',
+            (event: CustomEvent) => {
+                this.strokeColour = event.detail;
+            }
+        );
     }
 }
 

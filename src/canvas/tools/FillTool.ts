@@ -4,7 +4,6 @@ import CursorStyle from '../enums/CursorStyle';
 import AbstractTool from './AbstractTool';
 
 class FillTool extends AbstractTool {
-    public fillColour: string = 'red';
     protected cursorStyle: CursorStyle = CursorStyle.Default;
     protected eventName: string = 'fill';
     protected toolName: string = 'fill';
@@ -19,10 +18,10 @@ class FillTool extends AbstractTool {
         const selectedPoint = { x: event.clientX, y: event.clientY };
 
         canvas.canvasObjects.reverse().some((canvasObject: ShapeInterface) => {
-            console.log(canvasObject.isPointInside(selectedPoint));
             if (canvasObject.isPointInside(selectedPoint)) {
-                canvasObject.setFillColour(this.fillColour);
+                canvasObject.setFillColour(canvas.fillColour);
                 canvasObject.draw(canvas.ctx);
+                canvas.redrawCanvas();
                 return;
             }
         });

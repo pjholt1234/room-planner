@@ -4,6 +4,7 @@ import ShapeInterface from './ShapeInterface';
 
 abstract class AbstractShape implements ShapeInterface {
     public points: Point[];
+    public strokeColour: string = 'black';
     protected pivotPointIndex: number | null = null;
     protected initialClickXOffset: number;
     protected initialClickYOffset: number;

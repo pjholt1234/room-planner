@@ -48,8 +48,9 @@ class TriangleTool extends AbstractTool {
         });
 
         const triangle = new Triangle(points);
-
-        let color = 'black';
+        triangle.strokeColour = canvas.strokeColour;
+        
+        let color = canvas.strokeColour;
         if (preview) color = 'blue';
 
         triangle.draw(canvas.ctx, color);

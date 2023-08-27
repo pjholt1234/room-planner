@@ -8,6 +8,7 @@ import SelectIcon from './components/icons/SelectIcon';
 import { ActiveToolProvider } from './hooks/ActiveToolContext';
 import GridButtonToolbarRow from './components/GridButtonToolbarRow';
 import ToolbarSection from './ToolbarSection';
+import ColourPicker from './components/ColourPicker';
 
 function App() {
     return (
@@ -34,6 +35,9 @@ function App() {
                     </div>
                 </ToolbarSection>
             </ActiveToolProvider>
+            <ToolbarSection title={'Colour'}>
+                <ColourPicker />
+            </ToolbarSection>
             <ToolbarSection title={'Grid'}>
                 <GridButtonToolbarRow />
             </ToolbarSection>

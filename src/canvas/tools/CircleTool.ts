@@ -49,7 +49,9 @@ class CircleTool extends AbstractTool {
             y: event.clientY
         });
 
-        let color = 'black';
+        circle.strokeColour = canvas.strokeColour;
+
+        let color = canvas.strokeColour;
         if (preview) color = 'blue';
 
         circle.draw(canvas.ctx, color);

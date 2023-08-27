@@ -171,4 +171,22 @@ input:checked + .toggle-switch-slider:before {
     transform: translateX(26px);
 }
 
+.color-picker-container {
+    position: absolute;
+    z-index: 1000;
+}
+
+.colour-picker-box {
+    height: 40px;
+    width: 40px;
+    border-radius: 10%;
+    border: 1px solid white;
+    margin: 5px 5px 5px 5px;
+}
+
+.colour-picker-box-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
