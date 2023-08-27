@@ -3,7 +3,7 @@ import schemaConfig from './schemas';
 import mongoose, { Schema } from 'mongoose';
 
 class MongoDatabase {
-    public models = <any>[];
+    public models = <any>{};
 
     constructor() {
         importEnv();
@@ -30,7 +30,7 @@ class MongoDatabase {
     private async registerModels(): Promise<void> {
         for (const schemaName in schemaConfig) {
             let schema: Schema;
-            
+
             if (Object.keys(schemaConfig[schemaName]).length === 0) {
                 schema = new mongoose.Schema(schemaConfig[schemaName], {
                     strict: false
@@ -39,10 +39,7 @@ class MongoDatabase {
                 schema = new mongoose.Schema(schemaConfig[schemaName]);
             }
 
-            this.models = {
-                name: schemaName,
-                model: mongoose.model(schemaName, schema)
-            };
+            this.models[schemaName] = mongoose.model(schemaName, schema);
         }
     }
 }

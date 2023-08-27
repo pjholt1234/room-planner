@@ -1,7 +1,8 @@
 type Route = {
     path: string;
     method: string;
-    controller: string;
+    controller: any;
+    controllerFunction: string;
 };
 
 export default Route;
