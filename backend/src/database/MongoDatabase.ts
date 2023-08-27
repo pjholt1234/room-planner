@@ -1,10 +1,14 @@
-import mongoose from 'mongoose';
 import importEnv from '../ImportEnv';
+import schemaConfig from './schemas';
+import mongoose, { Schema } from 'mongoose';
 
 class MongoDatabase {
+    public models = <any>[];
+
     constructor() {
         importEnv();
         this.connectToDatabase();
+        this.registerModels();
     }
 
     private getDatabaseUri(): string {
@@ -20,6 +24,25 @@ class MongoDatabase {
             console.log('Connected to database');
         } catch (err) {
             console.error('Error connecting to database:', err);
+        }
+    }
+
+    private async registerModels(): Promise<void> {
+        for (const schemaName in schemaConfig) {
+            let schema: Schema;
+            
+            if (Object.keys(schemaConfig[schemaName]).length === 0) {
+                schema = new mongoose.Schema(schemaConfig[schemaName], {
+                    strict: false
+                });
+            } else {
+                schema = new mongoose.Schema(schemaConfig[schemaName]);
+            }
+
+            this.models = {
+                name: schemaName,
+                model: mongoose.model(schemaName, schema)
+            };
         }
     }
 }
