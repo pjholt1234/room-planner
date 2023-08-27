@@ -6,6 +6,8 @@ class Text implements ShapeInterface {
     public fontSize: number;
     public font: string;
     public textStartPoint: Point;
+    public strokeColour: string = 'black';
+
     private _boundingBox: Point[];
     private initialClickXOffset: number;
     private initialClickYOffset: number;
@@ -23,7 +25,7 @@ class Text implements ShapeInterface {
     }
 
     public draw(context: CanvasRenderingContext2D, colour?: string): void {
-        if (!colour) colour = 'black';
+        if (!colour) colour = this.strokeColour;
 
         context.font = this.fontSize + 'px ' + this.font;
         context.fillStyle = colour;

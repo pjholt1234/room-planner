@@ -19,6 +19,8 @@ class TextTool extends abstractTool {
         if (!body) return;
 
         const text = new Text({ x: event.x, y: event.y }, body);
+        text.strokeColour = canvas.strokeColour;
+
         text.draw(canvas.ctx, canvas.strokeColour);
 
         canvas.canvasObjects.push(text);
