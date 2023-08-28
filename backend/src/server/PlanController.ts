@@ -1,12 +1,18 @@
-import { database } from './index';
-import ControllerInterface from './server/ControllerInterface';
+import { database } from '../index';
+import ControllerInterface from './ControllerInterface';
 
 class PlanController implements ControllerInterface {
     public static async index(req: any, res: any) {
         const Plan = database.models.Plan;
 
         const doc = await Plan.find({});
-        res.send(doc);
+        const plans = doc.map((plan: any) => {
+            return {
+                id: plan._id,
+                planName: plan.planName
+            };
+        });
+        res.send(plans);
     }
 
     public static async get(req: any, res: any) {
