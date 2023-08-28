@@ -17,7 +17,6 @@ class Server {
     }
 
     private setUpServer(): void {
-        console.log('Setting up server'); // Debugging line
         this.app.use(express.json());
         this.app.use(cors());
 
@@ -41,11 +40,32 @@ class Server {
                 throw new Error('Invalid route');
             }
 
-            this.app[requestType](route.path, (req: Request, res: Response) =>
-                //@ts-ignore
-                Controller[controllerFunction](req, res)
+            this.app[requestType](
+                route.path,
+                this.authMiddleware,
+                (req: Request, res: Response) =>
+                    Controller[controllerFunction](req, res)
             );
         });
+    }
+
+    private authMiddleware(req: any, res: any, next: any) {
+        const authorizationHeader = req.headers['authorization'];
+
+        if (!authorizationHeader) {
+            return res.status(403).send('Authentication required.');
+        }
+
+        const decodedCredentials = Buffer.from(
+            authorizationHeader,
+            'base64'
+        ).toString('utf-8');
+
+        if (decodedCredentials !== process.env.BASIC_AUTH_SECRET) {
+            return res.status(403).send('Authentication failed.');
+        }
+
+        next();
     }
 }
 
