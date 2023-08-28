@@ -20,7 +20,7 @@ class ApiClient {
             if (this.authToken) {
                 headers.authorization = this.authToken;
             }
-            console.log(headers);
+
             const response: AxiosResponse<T> = await axios.request({
                 method,
                 url: `${this.baseURL}${url}`,
