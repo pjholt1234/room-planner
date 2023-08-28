@@ -16,6 +16,8 @@ interface ShapeInterface {
     setClickOffsets(point: Point): void;
 
     setFillColour(colour: string): void;
+
+    encode(): any;
 }
 
 export default ShapeInterface;

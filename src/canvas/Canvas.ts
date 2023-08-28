@@ -187,20 +187,14 @@ class Canvas {
         await this.planRepository
             .loadPlan(this.planId)
             .then((response: any) => {
-                //todo this needs decoding
-                this.canvasObjects = JSON.parse(response.data);
+                this.canvasObjects = response.canvasObjects;
                 this.redrawCanvas();
             });
     }
 
     private async savePlan() {
-        //todo error handling
-        //todo needs encoding
         await this.planRepository
-            .savePlan({
-                name: 'test',
-                data: JSON.stringify(this.canvasObjects)
-            })
+            .savePlan(this.planId, 'test', this.canvasObjects)
             .then((response: any) => {
                 this.planId = response._id;
             });

@@ -110,6 +110,18 @@ class Text implements ShapeInterface {
             }
         ];
     }
+
+    public encode() {
+        return {
+            type: this.constructor.name,
+            textStartPoint: this.textStartPoint,
+            strokeColour: this.strokeColour,
+            body: this.body,
+            fontSize: this.fontSize,
+            font: this.font,
+            isText: true
+        };
+    }
 }
 
 export default Text;

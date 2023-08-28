@@ -4,9 +4,9 @@ import AbstractShape from './AbstractShape';
 class Circle extends AbstractShape {
     public points: Point[];
 
-    constructor(point1: Point, point2: Point) {
+    constructor(points: Point[]) {
         super();
-        this.points = [point1, point2];
+        this.points = points;
     }
 
     public draw(context: CanvasRenderingContext2D, colour?: string): void {

@@ -44,10 +44,13 @@ class CircleTool extends AbstractTool {
         if (!this._isDrawing || !this._selectedPoint) return;
         canvas.redrawCanvas();
 
-        const circle = new Circle(this._selectedPoint, {
-            x: event.clientX,
-            y: event.clientY
-        });
+        const circle = new Circle([
+            this._selectedPoint,
+            {
+                x: event.clientX,
+                y: event.clientY
+            }
+        ]);
 
         circle.strokeColour = canvas.strokeColour;
 

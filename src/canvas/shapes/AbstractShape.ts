@@ -45,6 +45,16 @@ abstract class AbstractShape implements ShapeInterface {
     public setFillColour(colour: string): void {
         this.fillColour = colour;
     }
+
+    public encode() {
+        return {
+            type: this.constructor.name,
+            points: this.points,
+            strokeColour: this.strokeColour,
+            fillColour: this.fillColour,
+            isText: false
+        };
+    }
 }
 
 export default AbstractShape;
