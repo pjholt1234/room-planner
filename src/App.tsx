@@ -47,7 +47,7 @@ function App() {
             <ToolbarSection title={'Grid'}>
                 <GridButtonToolbarRow />
             </ToolbarSection>
-            <ToolbarSection title={'Your Plans'}>
+            <ToolbarSection title={'Plans'}>
                 <PlanManagementToolBar />
             </ToolbarSection>
         </>
