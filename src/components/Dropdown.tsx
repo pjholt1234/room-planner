@@ -10,9 +10,14 @@ interface Option {
 interface DropdownProps {
     options: Option[];
     onSelect: (option: Option) => void;
+    disabled?: boolean;
 }
 
-const Dropdown: FC<DropdownProps> = ({ options, onSelect }) => {
+const Dropdown: FC<DropdownProps> = ({
+    options,
+    onSelect,
+    disabled = false
+}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
@@ -24,10 +29,12 @@ const Dropdown: FC<DropdownProps> = ({ options, onSelect }) => {
     });
 
     const toggleDropdown = () => {
+        if (disabled) return;
         setIsOpen(!isOpen);
     };
 
     const handleOptionClick = (option: Option) => {
+        if (disabled) return;
         setSelectedOption(option);
         onSelect(option);
         toggleDropdown();
@@ -35,7 +42,12 @@ const Dropdown: FC<DropdownProps> = ({ options, onSelect }) => {
 
     return (
         <div className="dropdown">
-            <div className="dropdown-header" onClick={toggleDropdown}>
+            <div
+                className={`dropdown-header ${
+                    disabled ? 'dropdown--disabled' : ''
+                }`}
+                onClick={toggleDropdown}
+            >
                 {selectedOption ? selectedOption.label : 'Select an option'}
                 {isOpen ? (
                     <UpIcon className="dropdown-header__chevron" />

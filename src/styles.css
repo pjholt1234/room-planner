@@ -12,6 +12,13 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+
+
+    --button-bg-color-primary: #6b6b6b;
+    --button-bg-color-secondary: #3498db;
+
+    --button-bg-color--disabled: #4a4949;
+    --button-bg-color-secondary--disabled: #114a70;
 }
 
 body {
@@ -63,7 +70,7 @@ body {
 }
 
 .button--disabled {
-    background-color: #4a4949 !important;
+    background-color: var(--button-bg-color--disabled) !important;
     color: #7f8c8d !important;
     cursor: not-allowed !important;;
 }
@@ -73,7 +80,7 @@ body {
     height: 50px;
     border: none;
     border-radius: 50%;
-    background-color: #3498db;
+    background-color: var(--button-bg-color-secondary);
     margin: 10px;
 }
 
@@ -81,10 +88,16 @@ body {
     border: 2px solid white;
 }
 
+.button-circle--disabled {
+    background-color: var(--button-bg-color-secondary--disabled) !important;
+    color: #7f8c8d !important;
+    cursor: not-allowed !important;
+}
+
 .button-square {
     border: transparent 2px solid;
     border-radius: 2px;
-    background-color: #6b6b6b;
+    background-color: var(--button-bg-color-primary);
     width: 40px;
     height: 40px;
 }
@@ -96,7 +109,7 @@ body {
 .button-up-down {
     border: transparent 2px solid;
     border-radius: 2px;
-    background-color: #6b6b6b;
+    background-color: var(--button-bg-color-primary);
     width: 40px;
     max-height: 18px;
 }
@@ -164,7 +177,7 @@ body {
 }
 
 input:checked + .toggle-switch-slider {
-    background-color: #2196F3;
+    background-color: var(--button-bg-color-secondary);
 }
 
 input:checked + .toggle-switch-slider:before {
@@ -197,7 +210,7 @@ input:checked + .toggle-switch-slider:before {
     border-radius: 2px;
     cursor: pointer;
     font-size: 15px;
-    background-color: #6b6b6b;
+    background-color: var(--button-bg-color-primary);
 }
 
 .dropdown-header {
@@ -215,9 +228,9 @@ input:checked + .toggle-switch-slider:before {
     list-style: none;
     padding: 0;
     margin: 0;
-    border: 1px solid #4a4949;
+    border: 1px solid var(--button-bg-color--disabled);
     position: absolute;
-    background-color: #6b6b6b;
+    background-color: var(--button-bg-color-primary);
     width: 100%;
 }
 
@@ -227,5 +240,11 @@ input:checked + .toggle-switch-slider:before {
 }
 
 .dropdown-option:hover {
-    background-color: #3498db;
+    background-color: var(--button-bg-color-secondary);
+}
+
+.dropdown--disabled {
+    background-color: var(--button-bg-color--disabled) !important;
+    color: #7f8c8d !important;
+    cursor: not-allowed !important;
 }

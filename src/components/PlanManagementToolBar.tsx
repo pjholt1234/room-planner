@@ -6,7 +6,7 @@ import SaveIcon from './icons/SaveIcon';
 import Dropdown from './Dropdown';
 
 const PlanManagementToolBar = () => {
-    const { loadAllPlans } = usePlanRepository(new apiClient());
+    const { error, loading, loadAllPlans } = usePlanRepository(new apiClient());
 
     const [plans, setPlans] = useState<any[]>([]);
     const [selectedPlanId, setSelectedPlanId] = useState<string>('');
@@ -46,19 +46,46 @@ const PlanManagementToolBar = () => {
     };
 
     const handleSavePlan = () => {
+        /*
+            1. Check if current plan has name
+            2. Change prompt to modal
+         */
         const name = prompt('Save plan as:');
 
         const savePlanEvent = new CustomEvent('save-plan', { detail: name });
         document.dispatchEvent(savePlanEvent);
     };
 
+    const isDisabled: boolean = !!(error || loading);
+    const getButtonClasses = (isDisabled: boolean): string => {
+        const baseClasses: string = 'button button-circle';
+
+        if (!isDisabled) {
+            return baseClasses;
+        }
+
+        return `${baseClasses} button-circle--disabled`;
+    };
+
     return (
         <div className="toolbar-row">
-            <Dropdown options={plans} onSelect={handlePlanSelect} />
-            <button className="button button-circle" onClick={handleLoadPlan}>
+            <Dropdown
+                disabled={isDisabled}
+                options={plans}
+                onSelect={handlePlanSelect}
+            />
+            <button
+                disabled={isDisabled || !selectedPlanId}
+                className={getButtonClasses(isDisabled || !selectedPlanId)}
+                onClick={handleLoadPlan}
+            >
                 <LoadIcon />
             </button>
-            <button className="button button-circle" onClick={handleSavePlan}>
+            <button
+                disabled={isDisabled}
+                className={getButtonClasses(isDisabled)}
+                onClick={handleSavePlan}
+            >
                 <SaveIcon />
             </button>
         </div>
