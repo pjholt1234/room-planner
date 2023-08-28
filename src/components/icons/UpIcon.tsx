@@ -1,4 +1,12 @@
-const UpIcon = () => {
-    return <span className="material-symbols-outlined">expand_less</span>;
+interface UpIconProps {
+    className?: string;
+}
+
+const UpIcon = ({ className = '' }: UpIconProps) => {
+    return (
+        <span className={`material-symbols-outlined ${className}`}>
+            expand_less
+        </span>
+    );
 };
 export default UpIcon;

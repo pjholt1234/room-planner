@@ -3,6 +3,7 @@ import usePlanRepository from '../hooks/usePlanRepository';
 import { useEffect, useState } from 'react';
 import LoadIcon from './icons/LoadIcon';
 import SaveIcon from './icons/SaveIcon';
+import Dropdown from './Dropdown';
 
 const PlanManagementToolBar = () => {
     const { loadAllPlans } = usePlanRepository(new apiClient());
@@ -14,15 +15,24 @@ const PlanManagementToolBar = () => {
         const fetchPlans = async () => {
             const loadedPlans = await loadAllPlans();
             if (loadedPlans) {
-                setPlans(loadedPlans);
+                setPlans(translateOptions(loadedPlans));
             }
         };
 
         fetchPlans();
     }, []);
 
-    const handlePlanSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedPlanId(event.target.value);
+    const translateOptions = (plans: any[]) => {
+        return plans.map((plan) => {
+            return {
+                label: plan.planName,
+                value: plan._id
+            };
+        });
+    };
+
+    const handlePlanSelect = (option: any) => {
+        setSelectedPlanId(option.value);
     };
 
     const handleLoadPlan = () => {
@@ -44,17 +54,7 @@ const PlanManagementToolBar = () => {
 
     return (
         <div className="toolbar-row">
-            {plans.length > 0 && (
-                <select value={selectedPlanId} onChange={handlePlanSelect}>
-                    <option value="">Select a Plan</option>
-                    {plans.map((plan) => (
-                        <option key={plan._id} value={plan._id}>
-                            {plan.planName}
-                        </option>
-                    ))}
-                </select>
-            )}
-
+            <Dropdown options={plans} onSelect={handlePlanSelect} />
             <button className="button button-circle" onClick={handleLoadPlan}>
                 <LoadIcon />
             </button>
