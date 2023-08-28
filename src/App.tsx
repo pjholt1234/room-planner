@@ -10,6 +10,7 @@ import GridButtonToolbarRow from './components/GridButtonToolbarRow';
 import ToolbarSection from './ToolbarSection';
 import ColourPicker from './components/ColourPicker';
 import DeleteIcon from './components/icons/DeleteIcon';
+import PlanManagementToolBar from './components/PlanManagementToolBar';
 
 function App() {
     return (
@@ -45,6 +46,9 @@ function App() {
             </ToolbarSection>
             <ToolbarSection title={'Grid'}>
                 <GridButtonToolbarRow />
+            </ToolbarSection>
+            <ToolbarSection title={'Your Plans'}>
+                <PlanManagementToolBar />
             </ToolbarSection>
         </>
     );
