@@ -1,5 +1,5 @@
 import Route from '../types/Route';
-import PlanController from '../PlanController';
+import PlanController from './PlanController';
 
 const routes: Route[] = [
     {
