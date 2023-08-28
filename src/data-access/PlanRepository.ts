@@ -8,7 +8,7 @@ class PlanRepository {
     }
 
     public async savePlan(data: any): Promise<void> {
-        await this.apiClient.post(`${this.baseUrl}/create`, data);
+        return await this.apiClient.post(`${this.baseUrl}/create`, data);
     }
 
     public async loadPlan(id: string): Promise<any> {
