@@ -9,6 +9,8 @@ import CircleTool from './tools/CircleTool';
 import TextTool from './tools/TextTool';
 import FillTool from './tools/FillTool';
 import DeleteTool from './tools/DeleteTool';
+import PlanRepository from '../data-access/PlanRepository';
+import ApiClient from '../data-access/ApiClient';
 
 class Canvas {
     public canvas: HTMLCanvasElement;
@@ -18,12 +20,15 @@ class Canvas {
     public fillColour: string = '#FFFFFF';
     public strokeColour: string = '#000000';
 
+    private planRepository: PlanRepository;
+    private planId: string = '';
     private _tools: CanvasToolInterface[] = [];
     private _selectedTool: CanvasToolInterface;
 
     constructor(canvasId: string) {
         this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+        this.planRepository = new PlanRepository(new ApiClient());
 
         this.grid = new Grid();
 
@@ -161,6 +166,44 @@ class Canvas {
                 this.strokeColour = event.detail;
             }
         );
+
+        //@ts-ignore
+        document.addEventListener('load-plan', (event: CustomEvent) => {
+            this.planId = event.detail;
+            this.loadPlan();
+        });
+
+        //@ts-ignore
+        document.addEventListener('save-plan', (event: CustomEvent) => {
+            this.savePlan();
+        });
+    }
+
+    private async loadPlan() {
+        if (!this.planId) {
+            return;
+        }
+
+        await this.planRepository
+            .loadPlan(this.planId)
+            .then((response: any) => {
+                //todo this needs decoding
+                this.canvasObjects = JSON.parse(response.data);
+                this.redrawCanvas();
+            });
+    }
+
+    private async savePlan() {
+        //todo error handling
+        //todo needs encoding
+        await this.planRepository
+            .savePlan({
+                name: 'test',
+                data: JSON.stringify(this.canvasObjects)
+            })
+            .then((response: any) => {
+                this.planId = response._id;
+            });
     }
 }
 
