@@ -8,7 +8,7 @@ class PlanController implements ControllerInterface {
         const doc = await Plan.find({});
         const plans = doc.map((plan: any) => {
             return {
-                id: plan._id,
+                _id: plan._id,
                 planName: plan.planName
             };
         });
