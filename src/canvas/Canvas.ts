@@ -22,6 +22,7 @@ class Canvas {
 
     private planRepository: PlanRepository;
     private planId: string = '';
+    private planName: string = '';
     private _tools: CanvasToolInterface[] = [];
     private _selectedTool: CanvasToolInterface;
 
@@ -175,6 +176,7 @@ class Canvas {
 
         //@ts-ignore
         document.addEventListener('save-plan', (event: CustomEvent) => {
+            this.planName = event.detail;
             this.savePlan();
         });
     }
@@ -194,7 +196,7 @@ class Canvas {
 
     private async savePlan() {
         await this.planRepository
-            .savePlan(this.planId, 'test', this.canvasObjects)
+            .savePlan(this.planId, this.planName, this.canvasObjects)
             .then((response: any) => {
                 this.planId = response._id;
             });

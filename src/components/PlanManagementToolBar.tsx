@@ -36,21 +36,20 @@ const PlanManagementToolBar = () => {
     };
 
     const handleSavePlan = () => {
-        const savePlanEvent = new CustomEvent('save-plan');
+        const name = prompt('Save plan as:');
+
+        const savePlanEvent = new CustomEvent('save-plan', { detail: name });
         document.dispatchEvent(savePlanEvent);
     };
 
     return (
         <div className="toolbar-row">
-            {/*{loading && <p>Loading...</p>}*/}
-            {/*{error && <p>Error: {error}</p>}*/}
-
             {plans.length > 0 && (
                 <select value={selectedPlanId} onChange={handlePlanSelect}>
                     <option value="">Select a Plan</option>
                     {plans.map((plan) => (
                         <option key={plan._id} value={plan._id}>
-                            {plan._id}{' '}
+                            {plan.planName}
                         </option>
                     ))}
                 </select>
