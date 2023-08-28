@@ -11,10 +11,12 @@ import ToolbarSection from './ToolbarSection';
 import ColourPicker from './components/ColourPicker';
 import DeleteIcon from './components/icons/DeleteIcon';
 import PlanManagementToolBar from './components/PlanManagementToolBar';
+import AlertModalWrapper from './components/AlertModalWrapper';
 
 function App() {
     return (
         <>
+            <AlertModalWrapper />
             <ActiveToolProvider>
                 <ToolbarSection title={'Shapes'}>
                     <div className="toolbar-row">

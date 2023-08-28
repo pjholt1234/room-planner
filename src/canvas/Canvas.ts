@@ -192,6 +192,15 @@ class Canvas {
                 this.canvasObjects = response.canvasObjects;
                 this.redrawCanvas();
             });
+
+        const loadPlanAlert = new CustomEvent('alert', {
+            detail: {
+                message: 'Plan loaded successfully',
+                type: 'success'
+            }
+        });
+
+        document.dispatchEvent(loadPlanAlert);
     }
 
     private async savePlan() {
@@ -200,6 +209,15 @@ class Canvas {
             .then((response: any) => {
                 this.planId = response._id;
             });
+
+        const loadPlanAlert = new CustomEvent('alert', {
+            detail: {
+                message: `${this.planName} saved successfully`,
+                type: 'success'
+            }
+        });
+
+        document.dispatchEvent(loadPlanAlert);
     }
 }
 
