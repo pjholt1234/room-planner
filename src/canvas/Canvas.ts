@@ -122,11 +122,10 @@ class Canvas {
     }
 
     private initCanvasDimensions() {
-        const container = document.getElementById('myCanvas');
         // @ts-ignore
-        this.canvas.width = container.clientWidth;
+        this.canvas.width = this.canvas.clientWidth;
         // @ts-ignore
-        this.canvas.height = container.clientHeight;
+        this.canvas.height = this.canvas.clientHeight;
     }
 
     private cursorGridSnapping(event: MouseEvent): any {
