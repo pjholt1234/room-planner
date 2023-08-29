@@ -8,18 +8,6 @@ const usePlanRepository = (apiClient: ApiClient) => {
 
     const planRepository = new PlanRepository(apiClient);
 
-    const savePlan = async (data: any) => {
-        try {
-            setLoading(true);
-            setError(null);
-            await planRepository.savePlan(data);
-        } catch (error) {
-            setError('Failed to save plan');
-        } finally {
-            setLoading(false);
-        }
-    };
-
     const loadPlan = async (id: string) => {
         try {
             setLoading(true);
@@ -61,7 +49,6 @@ const usePlanRepository = (apiClient: ApiClient) => {
     return {
         loading,
         error,
-        savePlan,
         loadPlan,
         deletePlan,
         loadAllPlans
