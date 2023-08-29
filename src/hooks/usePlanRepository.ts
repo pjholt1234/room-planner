@@ -12,7 +12,7 @@ const usePlanRepository = (apiClient: ApiClient) => {
         try {
             setLoading(true);
             setError(null);
-            return await planRepository.loadPlan(id);
+            return await planRepository.load(id);
         } catch (error) {
             setError('Failed to load plan');
             return null;
@@ -25,7 +25,7 @@ const usePlanRepository = (apiClient: ApiClient) => {
         try {
             setLoading(true);
             setError(null);
-            await planRepository.deletePlan(id);
+            await planRepository.delete(id);
         } catch (error) {
             setError('Failed to delete plan');
         } finally {
@@ -37,7 +37,7 @@ const usePlanRepository = (apiClient: ApiClient) => {
         try {
             setLoading(true);
             setError(null);
-            return await planRepository.loadAllPlans();
+            return await planRepository.loadAll();
         } catch (error) {
             setError('Failed to load plans');
             return null;

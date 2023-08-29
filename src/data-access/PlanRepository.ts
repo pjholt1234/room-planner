@@ -19,7 +19,7 @@ class PlanRepository {
         };
     }
 
-    public async savePlan(
+    public async save(
         id: string,
         planName: string,
         planData: ShapeInterface[]
@@ -41,7 +41,7 @@ class PlanRepository {
         return await this.apiClient.post(`${this.baseUrl}/create`, plan);
     }
 
-    public async loadPlan(id: string): Promise<any> {
+    public async load(id: string): Promise<any> {
         const response: any[] = await this.apiClient.get(
             `${this.baseUrl}/${id}`
         );
@@ -55,19 +55,19 @@ class PlanRepository {
         return {
             id: data._id,
             planName: data.planName,
-            canvasObjects: this.preparePlanData(data.planData)
+            canvasObjects: this.prepareDataForCanvas(data.planData)
         };
     }
 
-    public async deletePlan(id: string): Promise<any> {
+    public async delete(id: string): Promise<any> {
         return await this.apiClient.delete(`${this.baseUrl}/delete/${id}`);
     }
 
-    public async loadAllPlans(): Promise<void> {
+    public async loadAll(): Promise<void> {
         return await this.apiClient.get(`${this.baseUrl}`);
     }
 
-    private preparePlanData(planData: any): ShapeInterface[] {
+    private prepareDataForCanvas(planData: any): ShapeInterface[] {
         const canvasObjects: ShapeInterface[] = [];
         planData.map((object: any) => {
             const Object = this.shapeMap[object.type];

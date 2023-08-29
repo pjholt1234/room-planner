@@ -186,12 +186,10 @@ class Canvas {
             return;
         }
 
-        await this.planRepository
-            .loadPlan(this.planId)
-            .then((response: any) => {
-                this.canvasObjects = response.canvasObjects;
-                this.redrawCanvas();
-            });
+        await this.planRepository.load(this.planId).then((response: any) => {
+            this.canvasObjects = response.canvasObjects;
+            this.redrawCanvas();
+        });
 
         const loadPlanAlert = new CustomEvent('alert', {
             detail: {
@@ -205,7 +203,7 @@ class Canvas {
 
     private async savePlan() {
         await this.planRepository
-            .savePlan(this.planId, this.planName, this.canvasObjects)
+            .save(this.planId, this.planName, this.canvasObjects)
             .then((response: any) => {
                 this.planId = response._id;
             });
