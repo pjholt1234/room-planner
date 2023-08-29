@@ -261,13 +261,20 @@ input:checked + .toggle-switch-slider:before {
 }
 
 .alert-modal {
-    background-color: green;
     border-radius: 8px;
     padding: 16px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     height: 15%;
     display: flex;
     width: 100%;
+}
+
+.alert-modal_error {
+    background-color: red !important;
+}
+
+.alert-modal_success {
+    background-color: green !important;
 }
 
 .alert-content {

@@ -20,7 +20,7 @@ const AlertModal: FC<AlertModalProps> = ({ type, message, onClose }) => {
 
     return ReactDOM.createPortal(
         <div className="alert-overlay">
-            <div className={`alert-modal ${type}`}>
+            <div className={`alert-modal alert-modal_${type}`}>
                 <span className="close-button" onClick={onClose}>
                     &times;
                 </span>
