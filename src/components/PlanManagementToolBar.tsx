@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react';
 import LoadIcon from './icons/LoadIcon';
 import SaveIcon from './icons/SaveIcon';
 import Dropdown from './Dropdown';
+import SavePlanModal from './SavePlanModal';
 
 const PlanManagementToolBar = () => {
     const { error, loading, loadAllPlans } = usePlanRepository(new apiClient());
 
     const [plans, setPlans] = useState<any[]>([]);
     const [selectedPlanId, setSelectedPlanId] = useState<string>('');
-    const [reload, setReload] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [reloadCount, setReloadCount] = useState(0);
 
     useEffect(() => {
         const fetchPlans = async () => {
@@ -21,16 +23,19 @@ const PlanManagementToolBar = () => {
         };
 
         fetchPlans();
-    }, []);
+    }, [reloadCount]);
 
     useEffect(() => {
-        document.addEventListener('plan-saved', () => setReload(!reload));
+        const handleBrowserEvent = () => {
+            setReloadCount((prevCount) => prevCount + 1);
+        };
 
-        return () =>
-            document.removeEventListener('plan-saved', () =>
-                setReload(!reload)
-            );
-    }, [reload]);
+        document.addEventListener('plan-saved', handleBrowserEvent);
+
+        return () => {
+            document.removeEventListener('plan-saved', handleBrowserEvent);
+        };
+    }, []);
 
     const translateOptions = (plans: any[]) => {
         return plans.map((plan) => {
@@ -47,7 +52,7 @@ const PlanManagementToolBar = () => {
 
     const handleLoadPlan = () => {
         if (!selectedPlanId) return;
-        console.log('load plan', selectedPlanId);
+
         const loadPlanEvent = new CustomEvent('load-plan', {
             detail: selectedPlanId
         });
@@ -55,9 +60,12 @@ const PlanManagementToolBar = () => {
         document.dispatchEvent(loadPlanEvent);
     };
 
-    const handleSavePlan = () => {
-        const name = prompt('Save plan as:');
+    const handleSaveButtonClicked = () => {
+        if (loading || error) return;
+        setShowModal(true);
+    };
 
+    const dispatchSavePlanEvent = (name: string) => {
         const savePlanEvent = new CustomEvent('save-plan', { detail: name });
         document.dispatchEvent(savePlanEvent);
     };
@@ -74,27 +82,34 @@ const PlanManagementToolBar = () => {
     };
 
     return (
-        <div className="toolbar-row">
-            <Dropdown
-                disabled={isDisabled}
-                options={plans}
-                onSelect={handlePlanSelect}
+        <>
+            <SavePlanModal
+                showModal={showModal}
+                onSubmit={dispatchSavePlanEvent}
+                onClose={() => setShowModal(false)}
             />
-            <button
-                disabled={isDisabled || !selectedPlanId}
-                className={getButtonClasses(isDisabled || !selectedPlanId)}
-                onClick={handleLoadPlan}
-            >
-                <LoadIcon />
-            </button>
-            <button
-                disabled={isDisabled}
-                className={getButtonClasses(isDisabled)}
-                onClick={handleSavePlan}
-            >
-                <SaveIcon />
-            </button>
-        </div>
+            <div className="toolbar-row">
+                <Dropdown
+                    disabled={isDisabled}
+                    options={plans}
+                    onSelect={handlePlanSelect}
+                />
+                <button
+                    disabled={isDisabled || !selectedPlanId}
+                    className={getButtonClasses(isDisabled || !selectedPlanId)}
+                    onClick={handleLoadPlan}
+                >
+                    <LoadIcon />
+                </button>
+                <button
+                    disabled={isDisabled}
+                    className={getButtonClasses(isDisabled)}
+                    onClick={handleSaveButtonClicked}
+                >
+                    <SaveIcon />
+                </button>
+            </div>
+        </>
     );
 };
 

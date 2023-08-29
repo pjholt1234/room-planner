@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import UpIcon from './icons/UpIcon';
 import DownIcon from './icons/DownIcon';
 
@@ -27,6 +27,10 @@ const Dropdown: FC<DropdownProps> = ({
             setIsOpen(false);
         }
     });
+
+    useEffect(() => {
+        setSelectedOption(null);
+    }, [options]);
 
     const toggleDropdown = () => {
         if (disabled) return;
