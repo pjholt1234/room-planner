@@ -10,6 +10,7 @@ const PlanManagementToolBar = () => {
 
     const [plans, setPlans] = useState<any[]>([]);
     const [selectedPlanId, setSelectedPlanId] = useState<string>('');
+    const [reload, setReload] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchPlans = async () => {
@@ -21,6 +22,15 @@ const PlanManagementToolBar = () => {
 
         fetchPlans();
     }, []);
+
+    useEffect(() => {
+        document.addEventListener('plan-saved', () => setReload(!reload));
+
+        return () =>
+            document.removeEventListener('plan-saved', () =>
+                setReload(!reload)
+            );
+    }, [reload]);
 
     const translateOptions = (plans: any[]) => {
         return plans.map((plan) => {
@@ -46,10 +56,6 @@ const PlanManagementToolBar = () => {
     };
 
     const handleSavePlan = () => {
-        /*
-            1. Check if current plan has name
-            2. Change prompt to modal
-         */
         const name = prompt('Save plan as:');
 
         const savePlanEvent = new CustomEvent('save-plan', { detail: name });

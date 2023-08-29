@@ -207,14 +207,18 @@ class Canvas {
                 this.planId = response._id;
             });
 
-        const loadPlanAlert = new CustomEvent('alert', {
+        const savePlanAlert = new CustomEvent('alert', {
             detail: {
                 message: `${this.planName} saved successfully`,
                 type: 'success'
             }
         });
 
-        document.dispatchEvent(loadPlanAlert);
+        document.dispatchEvent(savePlanAlert);
+
+        const savedPlanAlert = new CustomEvent('plan-saved');
+
+        document.dispatchEvent(savedPlanAlert);
     }
 }
 
