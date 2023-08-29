@@ -4,8 +4,8 @@ import ControllerInterface from './ControllerInterface';
 class PlanController implements ControllerInterface {
     public static async index(req: any, res: any) {
         const Plan = database.models.Plan;
-
         const doc = await Plan.find({});
+        
         const plans = doc.map((plan: any) => {
             return {
                 _id: plan._id,

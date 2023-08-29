@@ -16,7 +16,16 @@ const schemas: Record<string, mongoose.SchemaDefinition> = {
             default: Date.now
         }
     },
-    Plan: {}
+    Plan: {
+        planName: {
+            type: String,
+            required: true
+        },
+        planData: {
+            type: Array,
+            required: false
+        }
+    }
 };
 
 export default schemas;
