@@ -31,7 +31,16 @@ class ApiClient {
 
             return response.data;
         } catch (error: any) {
-            throw error.response?.data || error.message || 'An error occurred';
+            const errorAlert = new CustomEvent('alert', {
+                detail: {
+                    message:
+                        'Oops, something went wrong. Please try again later',
+                    type: 'error'
+                }
+            });
+
+            document.dispatchEvent(errorAlert);
+            throw 'Oops, something went wrong. Please try again later';
         }
     }
 
