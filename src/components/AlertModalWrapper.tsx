@@ -9,7 +9,6 @@ const AlertModalWrapper = () => {
 
     useEffect(() => {
         const handleCustomAlert = (event: CustomEvent) => {
-            console.log('event.detail', event.detail);
             setAlertData({
                 type: event.detail.type,
                 message: event.detail.message
