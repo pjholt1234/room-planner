@@ -5,6 +5,7 @@ import LoadIcon from './icons/LoadIcon';
 import SaveIcon from './icons/SaveIcon';
 import Dropdown from './Dropdown';
 import SavePlanModal from './SavePlanModal';
+import SaveAsIcon from './icons/SaveAsIcon';
 
 const PlanManagementToolBar = () => {
     const { error, loading, loadAllPlans } = usePlanRepository(new apiClient());
@@ -106,7 +107,7 @@ const PlanManagementToolBar = () => {
                     className={getButtonClasses(isDisabled)}
                     onClick={handleSaveButtonClicked}
                 >
-                    <SaveIcon />
+                    {selectedPlanId ? <SaveAsIcon /> : <SaveIcon />}
                 </button>
             </div>
         </>
