@@ -91,6 +91,7 @@ const PlanManagementToolBar = () => {
             />
             <div className="toolbar-row">
                 <Dropdown
+                    selectedKey={selectedPlanId}
                     disabled={isDisabled}
                     options={plans}
                     onSelect={handlePlanSelect}

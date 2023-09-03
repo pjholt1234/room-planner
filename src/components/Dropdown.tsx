@@ -11,13 +11,15 @@ interface DropdownProps {
     options: Option[];
     onSelect: (option: Option) => void;
     disabled?: boolean;
+    selectedKey?: string | null;
 }
 
 const Dropdown: FC<DropdownProps> = ({
-    options,
-    onSelect,
-    disabled = false
-}) => {
+                                         options,
+                                         onSelect,
+                                         disabled = false,
+                                         selectedKey = null
+                                     }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
@@ -29,7 +31,19 @@ const Dropdown: FC<DropdownProps> = ({
     });
 
     useEffect(() => {
-        setSelectedOption(null);
+        if (!selectedKey) {
+            setSelectedOption(null);
+            return;
+        }
+
+        const option: Option | undefined = options.find((obj) => obj.value === selectedKey);
+
+        if (!option) {
+            setSelectedOption(null);
+            return;
+        }
+
+        setSelectedOption(option);
     }, [options]);
 
     const toggleDropdown = () => {
