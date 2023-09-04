@@ -9,8 +9,7 @@ import CircleTool from './tools/CircleTool';
 import TextTool from './tools/TextTool';
 import FillTool from './tools/FillTool';
 import DeleteTool from './tools/DeleteTool';
-import PlanRepository from '../data-access/PlanRepository';
-import ApiClient from '../data-access/ApiClient';
+import PlanManager from '../data-access/PlanManager';
 
 class Canvas {
     public canvas: HTMLCanvasElement;
@@ -19,17 +18,14 @@ class Canvas {
     public grid: Grid;
     public fillColour: string = '#FFFFFF';
     public strokeColour: string = '#000000';
-
-    private planRepository: PlanRepository;
-    private planId: string = '';
-    private planName: string = '';
     private _tools: CanvasToolInterface[] = [];
     private _selectedTool: CanvasToolInterface;
+    private planManager: PlanManager;
 
-    constructor(canvasId: string) {
+    constructor(canvasId: string, planManager: PlanManager) {
         this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
-        this.planRepository = new PlanRepository(new ApiClient());
+        this.planManager = planManager;
 
         this.grid = new Grid();
 
@@ -167,58 +163,15 @@ class Canvas {
             }
         );
 
-        //@ts-ignore
-        document.addEventListener('load-plan', (event: CustomEvent) => {
-            this.planId = event.detail;
-            this.loadPlan();
-        });
-
-        //@ts-ignore
-        document.addEventListener('save-plan', (event: CustomEvent) => {
-            this.planName = event.detail;
-            this.savePlan();
-        });
-    }
-
-    private async loadPlan() {
-        if (!this.planId) {
-            return;
-        }
-
-        await this.planRepository.load(this.planId).then((response: any) => {
-            this.canvasObjects = response.canvasObjects;
+        const planChangeHandler = () => {
+            this.canvasObjects = this.planManager.currentPlan.canvasObjects;
             this.redrawCanvas();
-        });
+        };
 
-        const loadPlanAlert = new CustomEvent('alert', {
-            detail: {
-                message: 'Plan loaded successfully',
-                type: 'success'
-            }
-        });
-
-        document.dispatchEvent(loadPlanAlert);
-    }
-
-    private async savePlan() {
-        await this.planRepository
-            .save(this.planId, this.planName, this.canvasObjects)
-            .then((response: any) => {
-                this.planId = response._id;
-            });
-
-        const savePlanAlert = new CustomEvent('alert', {
-            detail: {
-                message: `${this.planName} saved successfully`,
-                type: 'success'
-            }
-        });
-
-        document.dispatchEvent(savePlanAlert);
-
-        const savedPlanAlert = new CustomEvent('plan-saved');
-
-        document.dispatchEvent(savedPlanAlert);
+        this.planManager.addLoadingObserver(planChangeHandler);
+        this.planManager.addSavingObserver(() =>
+            this.planManager.savePlan(this.canvasObjects)
+        );
     }
 }
 
