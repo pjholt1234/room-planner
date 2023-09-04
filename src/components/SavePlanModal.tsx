@@ -1,48 +1,57 @@
 import Modal from './Modal';
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import PlanManager from '../data-access/PlanManager';
 
-interface SavePlanModalProp {
-    showModal: boolean;
-    onSubmit: (name: string) => void;
-    onClose: () => void;
-}
-
-const SavePlanModal: FC<SavePlanModalProp> = ({
-    showModal = false,
-    onSubmit,
-    onClose
-}) => {
-    const [name, setName] = useState<string>('');
+const SavePlanModal = () => {
+    const [planName, setPlanName] = useState<string>('');
     const [message, setMessage] = useState<string>('');
+    const [hidden, setHidden] = useState<boolean>(true);
+
+    const planManager = PlanManager.getInstance();
+
+    useEffect(() => {
+        const observer = () => {
+            setHidden(false);
+            setPlanName(planManager.getPlanName());
+        };
+
+        planManager.addSaveObserver(observer);
+
+        return () => {
+            planManager.removeSaveObserver(observer);
+        };
+    }, []);
 
     const handleSavePlan = () => {
-        if (name !== '') {
-            onSubmit(name);
-            onClose();
-
+        if (!planName) {
+            setMessage('Name cannot be empty');
             return;
         }
-        setMessage('Name cannot be empty');
+
+        planManager.setPlanName(planName);
+        planManager.notifySavingObservers();
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        if (!event.target.value) setName('');
-
-        setName(event.target.value);
+        if (!event.target.value) setPlanName('');
+        setPlanName(event.target.value);
     };
 
     return (
         <Modal
-            hidden={!showModal}
+            hidden={hidden}
+            onClose={() => {
+                setHidden(true);
+            }}
             className="modal-content_save-plan"
-            onClose={onClose}
         >
             <h3>Enter plan name</h3>
             <div className="container_flex">
                 <input
                     id="plan-input"
                     className="input__text"
-                    type="text"
+                    type="planName"
+                    value={planName}
                     onChange={handleInputChange}
                 />
                 <button
