@@ -15,11 +15,11 @@ interface DropdownProps {
 }
 
 const Dropdown: FC<DropdownProps> = ({
-                                         options,
-                                         onSelect,
-                                         disabled = false,
-                                         selectedKey = null
-                                     }) => {
+    options,
+    onSelect,
+    disabled = false,
+    selectedKey = null
+}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
@@ -36,7 +36,9 @@ const Dropdown: FC<DropdownProps> = ({
             return;
         }
 
-        const option: Option | undefined = options.find((obj) => obj.value === selectedKey);
+        const option: Option | undefined = options.find(
+            (obj) => obj.value === selectedKey
+        );
 
         if (!option) {
             setSelectedOption(null);
