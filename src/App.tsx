@@ -10,8 +10,9 @@ import GridButtonToolbarRow from './components/GridButtonToolbarRow';
 import ToolbarSection from './ToolbarSection';
 import ColourPicker from './components/ColourPicker';
 import DeleteIcon from './components/icons/DeleteIcon';
-import PlanManagementToolBar from './components/PlanManagementToolBar';
 import AlertModalWrapper from './components/AlertModalWrapper';
+import PlanToolbar from './components/PlanToolbar';
+import SavePlanModal from './components/SavePlanModal';
 
 function App() {
     return (
@@ -50,8 +51,9 @@ function App() {
                 <GridButtonToolbarRow />
             </ToolbarSection>
             <ToolbarSection title={'Plans'}>
-                <PlanManagementToolBar />
+                <PlanToolbar />
             </ToolbarSection>
+            <SavePlanModal />
         </>
     );
 }
