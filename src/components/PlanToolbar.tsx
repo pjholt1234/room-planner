@@ -68,6 +68,7 @@ const PlanToolbar = () => {
     };
 
     const isDisabled: boolean = !!(error || loading);
+    const noSelectedOption = Object.keys(dropdownState).length === 0;
 
     const getButtonClasses = (isDisabled: boolean): string => {
         const baseClasses: string = 'button button-circle';
@@ -87,9 +88,10 @@ const PlanToolbar = () => {
                 options={plans}
                 onSelect={(option: any) => setDropdownState(option)}
             />
+
             <button
-                disabled={isDisabled}
-                className={getButtonClasses(isDisabled)}
+                disabled={isDisabled || noSelectedOption}
+                className={getButtonClasses(isDisabled || noSelectedOption)}
                 onClick={handleLoad}
             >
                 <LoadIcon />
@@ -102,8 +104,8 @@ const PlanToolbar = () => {
                 {plan === 'new' ? <SaveIcon /> : <SaveAsIcon />}
             </button>
             <button
-                disabled={isDisabled}
-                className={getButtonClasses(isDisabled)}
+                disabled={isDisabled || plan === 'new'}
+                className={getButtonClasses(isDisabled || plan === 'new')}
                 onClick={handleDelete}
             >
                 <DeleteIcon />
