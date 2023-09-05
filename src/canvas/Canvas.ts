@@ -163,12 +163,20 @@ class Canvas {
             }
         );
 
-        const planChangeHandler = () => {
+        const handlePlanLoad = () => {
             this.canvasObjects = this.planManager.currentPlan.canvasObjects;
             this.redrawCanvas();
         };
 
-        this.planManager.addObserver('loading', planChangeHandler);
+        this.planManager.addObserver('loading', handlePlanLoad);
+
+        const handlePlanDeleted = () => {
+            this.canvasObjects = [];
+            this.redrawCanvas();
+        };
+
+        this.planManager.addObserver('deleted', handlePlanDeleted);
+
         this.planManager.addObserver('saving', () =>
             this.planManager.savePlan(this.canvasObjects)
         );
