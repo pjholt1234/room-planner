@@ -50,6 +50,27 @@ const PlanToolbar = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const fetchAndSetPlans = async () => {
+            const loadedPlans = await loadAllPlans();
+            if (loadedPlans) {
+                setPlans(translatePlansToDropdownOptions(loadedPlans));
+            }
+        };
+
+        fetchAndSetPlans();
+
+        const observer = async () => {
+            await fetchAndSetPlans();
+        };
+
+        planManager.addObserver('deleted', observer);
+
+        return () => {
+            planManager.removeObserver('deleted', observer);
+        };
+    }, []);
+
     const handleSave = () => {
         if (!dropdownState) return;
         planManager.notifyObservers('save');
