@@ -22,39 +22,37 @@ const PlanToolbar = () => {
             setPlan(newPlan);
         };
 
-        planManager.addLoadingObserver(observer);
+        planManager.addObserver('loading', observer);
 
         return () => {
-            planManager.removeLoadingObserver(observer);
+            planManager.removeObserver('loading', observer);
         };
     }, []);
 
     useEffect(() => {
-        const observer = () => {
-            fetchPlans();
+        const fetchAndSetPlans = async () => {
+            const loadedPlans = await loadAllPlans();
+            if (loadedPlans) {
+                setPlans(translatePlansToDropdownOptions(loadedPlans));
+            }
         };
 
-        planManager.addSavingObserver(observer);
+        fetchAndSetPlans();
+
+        const observer = async () => {
+            await fetchAndSetPlans();
+        };
+
+        planManager.addObserver('saved', observer);
 
         return () => {
-            planManager.removeSavingObserver(observer);
+            planManager.removeObserver('saved', observer);
         };
     }, []);
-
-    useEffect(() => {
-        fetchPlans();
-    }, []);
-
-    const fetchPlans = async () => {
-        const loadedPlans = await loadAllPlans();
-        if (loadedPlans) {
-            setPlans(translatePlansToDropdownOptions(loadedPlans));
-        }
-    };
 
     const handleSave = () => {
         if (!dropdownState) return;
-        planManager.notifySaveObservers();
+        planManager.notifyObservers('save');
     };
 
     const handleLoad = () => {
@@ -64,11 +62,12 @@ const PlanToolbar = () => {
 
     const handleDelete = () => {
         if (!dropdownState || dropdownState == '') return;
-        planManager.notifyDeleteObservers();
+        planManager.notifyObservers('delete');
     };
 
     const isDisabled: boolean = !!(error || loading);
-    const noSelectedOption = Object.keys(dropdownState).length === 0;
+    const noSelectedOption =
+        Object.keys(dropdownState).length === 0 || dropdownState.value == 'new';
 
     const getButtonClasses = (isDisabled: boolean): string => {
         const baseClasses: string = 'button button-circle';
@@ -81,7 +80,7 @@ const PlanToolbar = () => {
     };
 
     return (
-        <div className="toolbar-row">
+        <div className="toolbar-row" key={plans.length}>
             <Dropdown
                 selectedKey={plan}
                 disabled={isDisabled}

@@ -14,15 +14,14 @@ const DeletePlanModal = () => {
             setPlanId(planManager.getPlanId());
         };
 
-        planManager.addDeleteObserver(observer);
+        planManager.addObserver('delete', observer);
 
         return () => {
-            planManager.removeDeleteObserver(observer);
+            planManager.removeObserver('delete', observer);
         };
     }, []);
 
     const handleDeletePlan = () => {
-        console.log('deleting plan', planId);
         if (!planId) {
             return;
         }

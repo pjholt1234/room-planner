@@ -15,10 +15,10 @@ const SavePlanModal = () => {
             setPlanName(planManager.getPlanName());
         };
 
-        planManager.addSaveObserver(observer);
+        planManager.addObserver('save', observer);
 
         return () => {
-            planManager.removeSaveObserver(observer);
+            planManager.removeObserver('save', observer);
         };
     }, []);
 
@@ -29,7 +29,7 @@ const SavePlanModal = () => {
         }
 
         planManager.setPlanName(planName);
-        planManager.notifySavingObservers();
+        planManager.notifyObservers('saving');
         setHidden(true);
     };
 

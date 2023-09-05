@@ -1,22 +1,18 @@
 import PlanRepository from './PlanRepository';
 import ApiClient from './ApiClient';
 import ShapeInterface from '../canvas/shapes/ShapeInterface';
+import Observable from './Observable';
 
-type Observer = (newPlan: string) => void;
-
-class PlanManager {
+class PlanManager extends Observable {
     public currentPlan: any = null;
 
     private static instance: PlanManager | null = null;
     private planRepository: PlanRepository;
-    private planId: string = 'new';
     private planName: string = '';
-    private saveObservers: Observer[] = [];
-    private savingObservers: Observer[] = [];
-    private loadingObservers: Observer[] = [];
-    private deleteObservers: Observer[] = [];
 
     constructor(planRepository: PlanRepository) {
+        super();
+        this.id = 'new';
         this.planRepository = planRepository;
     }
 
@@ -30,7 +26,7 @@ class PlanManager {
     }
 
     public getPlanId(): string {
-        return this.planId;
+        return this.id;
     }
 
     public setPlanName(planName: string): void {
@@ -46,13 +42,11 @@ class PlanManager {
             return;
         }
 
-        this.planId = newPlan;
+        this.id = newPlan;
         this.currentPlan = await this.planRepository.load(newPlan);
         this.planName = this.currentPlan.planName;
 
-        console.log('Loaded plan: ', this.planName);
-
-        this.notifyLoadingObservers();
+        this.notifyObservers('loading');
 
         const loadPlanAlert = new CustomEvent('alert', {
             detail: {
@@ -65,15 +59,14 @@ class PlanManager {
     }
 
     public async savePlan(canvasObjects: ShapeInterface[]): Promise<void> {
-        const planId = this.planId === 'new' ? '' : this.planId;
+        const planId = this.id === 'new' ? '' : this.id;
 
         await this.planRepository
             .save(planId, this.planName, canvasObjects)
             .then((response: any) => {
-                this.planId = response._id;
+                this.id = response._id;
             });
 
-        console.log(this.planId);
         const savePlanAlert = new CustomEvent('alert', {
             detail: {
                 message: `${this.planName} saved successfully`,
@@ -82,16 +75,18 @@ class PlanManager {
         });
 
         document.dispatchEvent(savePlanAlert);
+
+        this.notifyObservers('saved');
     }
 
     public async deletePlan(): Promise<void> {
-        if (!this.planId) {
+        if (!this.id) {
             return;
         }
 
-        await this.planRepository.delete(this.planId);
+        await this.planRepository.delete(this.id);
 
-        this.planId = 'new';
+        this.id = 'new';
         this.planName = 'Untitled';
         this.currentPlan = null;
 
@@ -104,63 +99,7 @@ class PlanManager {
 
         document.dispatchEvent(deletePlanAlert);
 
-        this.notifyLoadingObservers();
-    }
-
-    public addSaveObserver(observer: Observer): void {
-        this.saveObservers.push(observer);
-    }
-
-    public removeSaveObserver(observer: Observer): void {
-        this.saveObservers = this.saveObservers.filter(
-            (obs) => obs !== observer
-        );
-    }
-
-    public notifySaveObservers(): void {
-        this.saveObservers.forEach((observer) => observer(this.planId));
-    }
-
-    public addSavingObserver(observer: Observer): void {
-        this.savingObservers.push(observer);
-    }
-
-    public removeSavingObserver(observer: Observer): void {
-        this.savingObservers = this.savingObservers.filter(
-            (obs) => obs !== observer
-        );
-    }
-
-    public notifySavingObservers(): void {
-        this.savingObservers.forEach((observer) => observer(this.planId));
-    }
-
-    public addLoadingObserver(observer: Observer): void {
-        this.loadingObservers.push(observer);
-    }
-
-    public removeLoadingObserver(observer: Observer): void {
-        this.loadingObservers = this.loadingObservers.filter(
-            (obs) => obs !== observer
-        );
-    }
-
-    public notifyLoadingObservers(): void {
-        this.loadingObservers.forEach((observer) => observer(this.planId));
-    }
-
-    public addDeleteObserver(observer: Observer): void {
-        this.deleteObservers.push(observer);
-    }
-
-    public removeDeleteObserver(observer: Observer): void {
-        this.deleteObservers = this.deleteObservers.filter(
-            (obs) => obs !== observer
-        );
-    }
-
-    public notifyDeleteObservers(): void {
-        this.deleteObservers.forEach((observer) => observer(this.planId));
+        this.notifyObservers('deleted');
     }
 }
 
