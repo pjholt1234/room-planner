@@ -87,7 +87,7 @@ class PlanManager extends Observable {
         await this.planRepository.delete(this.id);
 
         this.id = 'new';
-        this.planName = 'Untitled';
+        this.planName = '';
         this.currentPlan = null;
 
         const deletePlanAlert = new CustomEvent('alert', {
