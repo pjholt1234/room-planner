@@ -22,6 +22,10 @@
     margin: 10px;
 }
 
+.button-circle--danger {
+    background-color: var(--button-bg-color--danager) !important;
+}
+
 .button-circle--active {
     border: 2px solid white;
 }
@@ -36,12 +40,21 @@
     border: transparent 2px solid;
     border-radius: 2px;
     background-color: var(--button-bg-color-primary);
-    width: 40px;
+    min-width: 40px;
     height: 40px;
+    padding: 5px;
 }
 
 .button-square--active {
     border: 2px solid white;
+}
+
+.button-square--danger {
+    background-color: var(--button-bg-color--danager) !important;
+}
+
+.button-square--success {
+    background-color: var(--button-bg-color--success) !important;
 }
 
 .button-up-down {

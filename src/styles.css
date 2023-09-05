@@ -27,6 +27,9 @@
 
     --button-bg-color--disabled: #4a4949;
     --button-bg-color-secondary--disabled: #114a70;
+
+    --button-bg-color--danager: #f71505;
+    --button-bg-color--success: #2ecf06;
 }
 
 body {

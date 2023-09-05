@@ -37,9 +37,9 @@ const DeletePlanModal = () => {
             className="modal-content_save-plan"
         >
             <h3>
-                Are you sure you want to delete {planManager.getPlanName()}?
+                Are you sure you want to delete "{planManager.getPlanName()}"?
             </h3>
-            <div className="container_flex">
+            <div className="modal-content__button-container">
                 <button
                     className="button button-square"
                     onClick={() => setHidden(true)}
@@ -47,7 +47,7 @@ const DeletePlanModal = () => {
                     Cancel
                 </button>
                 <button
-                    className="button button-square"
+                    className="button button-square button-square--danger"
                     onClick={handleDeletePlan}
                 >
                     Delete
