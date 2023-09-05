@@ -7,6 +7,7 @@ import { translatePlansToDropdownOptions } from './helpers/helpers';
 import SaveAsIcon from './icons/SaveAsIcon';
 import SaveIcon from './icons/SaveIcon';
 import LoadIcon from './icons/LoadIcon';
+import DeleteIcon from './icons/DeleteIcon';
 
 const PlanToolbar = () => {
     const { error, loading, loadAllPlans } = usePlanRepository(new apiClient());
@@ -61,6 +62,11 @@ const PlanToolbar = () => {
         planManager.loadPlan(dropdownState.value);
     };
 
+    const handleDelete = () => {
+        if (!dropdownState || dropdownState == '') return;
+        planManager.notifyDeleteObservers();
+    };
+
     const isDisabled: boolean = !!(error || loading);
 
     const getButtonClasses = (isDisabled: boolean): string => {
@@ -94,6 +100,13 @@ const PlanToolbar = () => {
                 onClick={handleSave}
             >
                 {plan === 'new' ? <SaveIcon /> : <SaveAsIcon />}
+            </button>
+            <button
+                disabled={isDisabled}
+                className={getButtonClasses(isDisabled)}
+                onClick={handleDelete}
+            >
+                <DeleteIcon />
             </button>
         </div>
     );

@@ -13,6 +13,7 @@ import DeleteIcon from './components/icons/DeleteIcon';
 import AlertModalWrapper from './components/AlertModalWrapper';
 import PlanToolbar from './components/PlanToolbar';
 import SavePlanModal from './components/SavePlanModal';
+import DeletePlanModal from './components/DeletePlanModal';
 
 function App() {
     return (
@@ -54,6 +55,7 @@ function App() {
                 <PlanToolbar />
             </ToolbarSection>
             <SavePlanModal />
+            <DeletePlanModal />
         </>
     );
 }

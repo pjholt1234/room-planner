@@ -14,6 +14,8 @@ class PlanManager {
     private saveObservers: Observer[] = [];
     private savingObservers: Observer[] = [];
     private loadingObservers: Observer[] = [];
+    private deleteObservers: Observer[] = [];
+
 
     constructor(planRepository: PlanRepository) {
         this.planRepository = planRepository;
@@ -26,6 +28,18 @@ class PlanManager {
             );
         }
         return PlanManager.instance;
+    }
+
+    public getPlanId(): string {
+        return this.planId;
+    }
+
+    public setPlanName(planName: string): void {
+        this.planName = planName;
+    }
+
+    public getPlanName(): string {
+        return this.planName;
     }
 
     public async loadPlan(newPlan: string): Promise<void> {
@@ -70,16 +84,25 @@ class PlanManager {
         document.dispatchEvent(savePlanAlert);
     }
 
-    public getPlanId(): string {
-        return this.planId;
-    }
+    public async deletePlan(): Promise<void> {
+        if (this.planId === 'new' || !this.planId) {
+            return;
+        }
 
-    public setPlanName(planName: string): void {
-        this.planName = planName;
-    }
+        await this.planRepository.delete(this.planId);
 
-    public getPlanName(): string {
-        return this.planName;
+        this.planId = 'new';
+        this.planName = 'Untitled';
+        this.currentPlan = null;
+
+        const deletePlanAlert = new CustomEvent('alert', {
+            detail: {
+                message: `${this.planName} deleted successfully`,
+                type: 'success'
+            }
+        });
+
+        document.dispatchEvent(deletePlanAlert);
     }
 
     public addSaveObserver(observer: Observer): void {
@@ -122,6 +145,20 @@ class PlanManager {
 
     public notifyLoadingObservers(): void {
         this.loadingObservers.forEach((observer) => observer(this.planId));
+    }
+
+    public addDeleteObserver(observer: Observer): void {
+        this.deleteObservers.push(observer);
+    }
+
+    public removeDeleteObserver(observer: Observer): void {
+        this.deleteObservers = this.deleteObservers.filter(
+            (obs) => obs !== observer
+        );
+    }
+
+    public notifyDeleteObservers(): void {
+        this.deleteObservers.forEach((observer) => observer(this.planId));
     }
 }
 
