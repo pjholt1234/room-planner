@@ -124,7 +124,9 @@ const PlanToolbar = () => {
             </button>
             <button
                 disabled={isDisabled || plan === 'new'}
-                className={getButtonClasses(isDisabled || plan === 'new')}
+                className={`${getButtonClasses(
+                    isDisabled || plan === 'new'
+                )}  button-circle--danger`}
                 onClick={handleDelete}
             >
                 <DeleteIcon />
