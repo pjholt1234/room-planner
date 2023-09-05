@@ -164,6 +164,12 @@ class Canvas {
         );
 
         const planChangeHandler = () => {
+            if (this.planManager.currentPlan === null) {
+                this.canvasObjects = [];
+                this.redrawCanvas();
+                return;
+            }
+
             this.canvasObjects = this.planManager.currentPlan.canvasObjects;
             this.redrawCanvas();
         };

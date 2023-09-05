@@ -10,12 +10,11 @@ class PlanManager {
     private static instance: PlanManager | null = null;
     private planRepository: PlanRepository;
     private planId: string = 'new';
-    private planName: string = 'Untitled';
+    private planName: string = '';
     private saveObservers: Observer[] = [];
     private savingObservers: Observer[] = [];
     private loadingObservers: Observer[] = [];
     private deleteObservers: Observer[] = [];
-
 
     constructor(planRepository: PlanRepository) {
         this.planRepository = planRepository;
@@ -74,6 +73,7 @@ class PlanManager {
                 this.planId = response._id;
             });
 
+        console.log(this.planId);
         const savePlanAlert = new CustomEvent('alert', {
             detail: {
                 message: `${this.planName} saved successfully`,
@@ -85,7 +85,7 @@ class PlanManager {
     }
 
     public async deletePlan(): Promise<void> {
-        if (this.planId === 'new' || !this.planId) {
+        if (!this.planId) {
             return;
         }
 
@@ -103,6 +103,8 @@ class PlanManager {
         });
 
         document.dispatchEvent(deletePlanAlert);
+
+        this.notifyLoadingObservers();
     }
 
     public addSaveObserver(observer: Observer): void {

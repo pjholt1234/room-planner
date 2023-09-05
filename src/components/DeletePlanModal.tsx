@@ -22,6 +22,7 @@ const DeletePlanModal = () => {
     }, []);
 
     const handleDeletePlan = () => {
+        console.log('deleting plan', planId);
         if (!planId) {
             return;
         }
