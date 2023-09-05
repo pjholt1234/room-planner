@@ -30,6 +30,7 @@ const SavePlanModal = () => {
 
         planManager.setPlanName(planName);
         planManager.notifySavingObservers();
+        setHidden(true);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
