@@ -88,7 +88,6 @@ const PlanToolbar = () => {
                 options={plans}
                 onSelect={(option: any) => setDropdownState(option)}
             />
-
             <button
                 disabled={isDisabled || noSelectedOption}
                 className={getButtonClasses(isDisabled || noSelectedOption)}
