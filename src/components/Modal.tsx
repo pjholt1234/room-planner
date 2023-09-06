@@ -30,9 +30,11 @@ const Modal: FC<ModalProps> = ({
     return createPortal(
         <div className={`modal ${hiddenClass}`}>
             <div className={`modal-content ${className}`}>
-                <button className="close" onClick={() => setClosed()}>
-                    &times;
-                </button>
+                <div className="modal-header">
+                    <button className="close" onClick={() => setClosed()}>
+                        &times;
+                    </button>
+                </div>
                 {children}
             </div>
             <div className="modal-background"></div>

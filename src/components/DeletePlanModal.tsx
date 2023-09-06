@@ -34,24 +34,30 @@ const DeletePlanModal = () => {
         <Modal
             hidden={hidden}
             onClose={() => setHidden(true)}
-            className="modal-content_save-plan"
+            className="modal-content"
         >
-            <h3>
-                Are you sure you want to delete "{planManager.getPlanName()}"?
-            </h3>
-            <div className="modal-content__button-container">
-                <button
-                    className="button button-square"
-                    onClick={() => setHidden(true)}
-                >
-                    Cancel
-                </button>
-                <button
-                    className="button button-square button-square--danger"
-                    onClick={handleDeletePlan}
-                >
-                    Delete
-                </button>
+            <div className="modal-body">
+                <p>
+                    Are you sure you want to delete{' '}
+                    <b>"{planManager.getPlanName()}</b>
+                    "?
+                </p>
+            </div>
+            <div className="modal-footer">
+                <div className="modal-content__button-container">
+                    <button
+                        className="button button-square"
+                        onClick={() => setHidden(true)}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        className="button button-square button-square--danger"
+                        onClick={handleDeletePlan}
+                    >
+                        Delete
+                    </button>
+                </div>
             </div>
         </Modal>
     );

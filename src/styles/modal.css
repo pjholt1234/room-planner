@@ -28,7 +28,15 @@
 .modal-content {
     z-index: 501;
     opacity: 100% !important;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
 }
+
+.modal-body {
+    padding: 16px;
+}
+
 
 .modal-content_save-plan {
     background-color: white;
@@ -43,9 +51,20 @@
     color: red;
 }
 
+.modal-header {
+    padding: 5px 10px 0 10px;
+}
+
+.modal-footer {
+    width: 100%;
+    background-color: #7f8c8d;
+    padding: 10px;
+    display: flex;
+}
+
 .modal-content__button-container {
     display: flex;
-    width: 100%;
-    margin-top: 16px;
-    justify-content: space-evenly;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: 0;
 }
