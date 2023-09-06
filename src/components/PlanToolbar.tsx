@@ -105,7 +105,7 @@ const PlanToolbar = () => {
     };
 
     return (
-        <div className="toolbar-row" key={plans.length}>
+        <div className="toolbar-row">
             <Dropdown
                 className={loading || error ? 'loading' : ''}
                 selectedKey={plan}
