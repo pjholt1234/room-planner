@@ -45,6 +45,10 @@
     padding: 5px;
 }
 
+.button-square--wide {
+    min-width: 70px !important;
+}
+
 .button-square--active {
     border: 2px solid white;
 }

@@ -44,25 +44,38 @@ const SavePlanModal = () => {
             onClose={() => {
                 setHidden(true);
             }}
-            className="modal-content_save-plan"
+            className="modal-content"
         >
-            <h3>Enter plan name</h3>
-            <div className="container_flex">
-                <input
-                    id="plan-input"
-                    className="input__text"
-                    type="planName"
-                    value={planName}
-                    onChange={handleInputChange}
-                />
-                <button
-                    className="button button-square"
-                    onClick={handleSavePlan}
-                >
-                    Save
-                </button>
+            <div className="modal-body">
+                <div className="container_flex container_full-width">
+                    <p>Save plan as..</p>
+                    <input
+                        id="plan-input"
+                        className="input__text input__text--save-plan"
+                        type="planName"
+                        value={planName}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <p className="modal-content_save-plan_message">{message}</p>
             </div>
-            <p className="modal-content_save-plan_message">{message}</p>
+
+            <div className="modal-footer">
+                <div className="modal-content__button-container">
+                    <button
+                        className="button button-square button-square--wide"
+                        onClick={() => setHidden(true)}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        className="button button-square button-square--wide button-square--success "
+                        onClick={handleSavePlan}
+                    >
+                        Save
+                    </button>
+                </div>
+            </div>
         </Modal>
     );
 };

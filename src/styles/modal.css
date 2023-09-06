@@ -31,20 +31,11 @@
     background-color: white;
     border-radius: 8px;
     overflow: hidden;
+    min-width: 400px;
 }
 
 .modal-body {
     padding: 16px;
-}
-
-
-.modal-content_save-plan {
-    background-color: white;
-    border-radius: 8px;
-    padding: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    height: 200px;
-    width: 500px;
 }
 
 .modal-content_save-plan_message {
@@ -60,6 +51,7 @@
     background-color: #7f8c8d;
     padding: 10px;
     display: flex;
+    margin-bottom: 0;
 }
 
 .modal-content__button-container {
