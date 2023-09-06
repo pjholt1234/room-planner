@@ -10,7 +10,7 @@ import TextTool from './tools/TextTool';
 import FillTool from './tools/FillTool';
 import DeleteTool from './tools/DeleteTool';
 import PlanManager from '../data-access/PlanManager';
-import * as cursors from '../../public/assets/index.js';
+import * as cursors from '../../public/assets/index.ts';
 
 class Canvas {
     public canvas: HTMLCanvasElement;
