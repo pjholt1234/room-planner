@@ -42,3 +42,20 @@ body {
 }
 
 
+.loading {
+    position: relative;
+    color: transparent;
+    background: linear-gradient(90deg, transparent, #4d4c4c, transparent); /* Create a gradient background */
+    background-size: 200% 100%; /* Double the size to allow for movement */
+    animation: loading-animation 4s linear infinite; /* Add the loading animation */
+}
+
+@keyframes loading-animation {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+

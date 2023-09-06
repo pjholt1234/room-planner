@@ -8,6 +8,7 @@ interface Option {
 }
 
 interface DropdownProps {
+    className?: string;
     options: Option[];
     onSelect: (option: Option) => void;
     disabled?: boolean;
@@ -15,6 +16,7 @@ interface DropdownProps {
 }
 
 const Dropdown: FC<DropdownProps> = ({
+    className,
     options,
     onSelect,
     disabled = false,
@@ -61,7 +63,7 @@ const Dropdown: FC<DropdownProps> = ({
     };
 
     return (
-        <div className="dropdown">
+        <div className={`dropdown ${className}`}>
             <div
                 className={`dropdown-header ${
                     disabled ? 'dropdown--disabled' : ''

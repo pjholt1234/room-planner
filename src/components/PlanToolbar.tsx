@@ -93,16 +93,21 @@ const PlanToolbar = () => {
     const getButtonClasses = (isDisabled: boolean): string => {
         const baseClasses: string = 'button button-circle';
 
-        if (!isDisabled) {
-            return baseClasses;
+        if (isDisabled) {
+            return `${baseClasses} button-circle--disabled`;
         }
 
-        return `${baseClasses} button-circle--disabled`;
+        if (loading || error) {
+            return `${baseClasses} button-circle--disabled loading`;
+        }
+
+        return baseClasses;
     };
 
     return (
         <div className="toolbar-row" key={plans.length}>
             <Dropdown
+                className={loading || error ? 'loading' : ''}
                 selectedKey={plan}
                 disabled={isDisabled}
                 options={plans}
