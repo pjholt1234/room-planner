@@ -10,6 +10,7 @@ import TextTool from './tools/TextTool';
 import FillTool from './tools/FillTool';
 import DeleteTool from './tools/DeleteTool';
 import PlanManager from '../data-access/PlanManager';
+import * as cursors from '../../public/assets/index.js';
 
 class Canvas {
     public canvas: HTMLCanvasElement;
@@ -137,8 +138,11 @@ class Canvas {
         const gridAlignedX = Math.round(event.x / gridSize) * gridSize;
         const gridAlignedY = Math.round(event.y / gridSize) * gridSize;
 
-        this.ctx.fillStyle = '#000000';
-        this.ctx.fillRect(gridAlignedX, gridAlignedY, 2, 2);
+        const cursorImage = this.getCursorImage();
+        const centerX = gridAlignedX - cursorImage.width / 2;
+        const centerY = gridAlignedY - cursorImage.height / 2;
+
+        this.ctx.drawImage(this.getCursorImage(), centerX, centerY);
 
         return {
             clientX: gridAlignedX,
@@ -180,6 +184,27 @@ class Canvas {
         this.planManager.addObserver('saving', () =>
             this.planManager.savePlan(this.canvasObjects)
         );
+    }
+
+    private getCursorImage(): any {
+        const cursor = new Image();
+        console.log(this.selectedTool.getCursorStyle());
+        switch (this.selectedTool.getCursorStyle()) {
+            case 'crosshair':
+                cursor.src = cursors.crosshair;
+                break;
+            case 'move':
+                cursor.src = cursors.move;
+                break;
+            case 'text':
+                cursor.src = cursors.text;
+                break;
+            default:
+                cursor.src = cursors.defaultCursor;
+                break;
+        }
+
+        return cursor;
     }
 }
 
