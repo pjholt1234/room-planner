@@ -11,6 +11,7 @@ import FillTool from './tools/FillTool';
 import DeleteTool from './tools/DeleteTool';
 import PlanManager from '../data-access/PlanManager';
 import * as cursors from '../assets/index.ts';
+import LineTool from './tools/LineTool';
 
 class Canvas {
     public canvas: HTMLCanvasElement;
@@ -38,10 +39,11 @@ class Canvas {
             new TextTool(),
             new FillTool(),
             new GridTool(),
-            new DeleteTool()
+            new DeleteTool(),
+            new LineTool()
         ];
 
-        this.selectedTool = new RectangleTool();
+        this.selectedTool = new LineTool();
         this.initCanvasDimensions();
         this.setModeClickListener();
         this.redrawCanvas();
