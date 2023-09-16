@@ -14,6 +14,7 @@ import AlertModalWrapper from './components/AlertModalWrapper';
 import PlanToolbar from './components/PlanToolbar';
 import SavePlanModal from './components/SavePlanModal';
 import DeletePlanModal from './components/DeletePlanModal';
+import LineIcon from './components/icons/LineIcon';
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
             <ActiveToolProvider>
                 <ToolbarSection title={'Shapes'}>
                     <div className="toolbar-row">
+                        <ToolButton eventName="line" icon={<LineIcon />} />
                         <ToolButton
                             eventName="rectangle"
                             icon={<RectangleIcon />}
