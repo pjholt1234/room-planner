@@ -30,11 +30,79 @@ class Line extends AbstractShape {
         return this.points;
     }
 
-    //@ts-ignore
     public isPointInside(point: Point): boolean {
-        //todo
+        const m =
+            (this.points[0].y - this.points[1].y) /
+            (this.points[0].x - this.points[1].x);
 
-        return false;
+        const c = this.points[0].y - m * this.points[0].x;
+        const lineXCoordinate = (point.y - c) / m;
+
+        const clickLineXIntersect = Math.abs(point.x - lineXCoordinate);
+
+        if (clickLineXIntersect > 2 && clickLineXIntersect < 2) {
+            return false;
+        }
+
+        const boundingBox = this.calculateBoundingBox();
+
+        let minY = boundingBox[0].y;
+        let maxY = boundingBox[0].y;
+
+        for (let i = 0; i < boundingBox.length - 1; i++) {
+            if (boundingBox[i].y < minY) {
+                minY = boundingBox[i].y;
+            }
+            if (boundingBox[i].y > maxY) {
+                maxY = boundingBox[i].y;
+            }
+        }
+
+        if (point.y < minY || point.y > maxY) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private calculateBoundingBox(): Point[] {
+        const m =
+            (this.points[0].y - this.points[1].y) /
+            (this.points[0].x - this.points[1].x);
+
+        const c = this.points[0].y - m * this.points[0].x;
+
+        const boundingBoxSize = 5;
+
+        let lowestX;
+        let highestX;
+
+        if (this.points[0].x < this.points[1].x) {
+            lowestX = this.points[0].x - boundingBoxSize;
+            highestX = this.points[1].x + boundingBoxSize;
+        } else {
+            lowestX = this.points[1].x - boundingBoxSize;
+            highestX = this.points[0].x + boundingBoxSize;
+        }
+
+        return [
+            {
+                x: lowestX,
+                y: m * lowestX + c - boundingBoxSize
+            },
+            {
+                x: lowestX,
+                y: m * lowestX + c + boundingBoxSize
+            },
+            {
+                x: highestX,
+                y: m * highestX + c + boundingBoxSize
+            },
+            {
+                x: highestX,
+                y: m * highestX + c - boundingBoxSize
+            }
+        ];
     }
 }
 
