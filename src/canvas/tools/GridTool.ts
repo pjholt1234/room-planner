@@ -41,6 +41,9 @@ class GridTool extends AbstractTool {
         }
     }
 
+    // @ts-ignore
+    public keyUp(event: any, canvas: Canvas): void {}
+
     //Overrides
     protected enableTool(canvas: Canvas): void {
         canvas.grid.gridEnabled = !canvas.grid.gridEnabled;
@@ -95,7 +98,7 @@ class GridTool extends AbstractTool {
     private toggleGridSnapping(canvas: Canvas): void {
         canvas.grid.toggleSnapping();
         canvas.redrawCanvas();
-        
+
         if (!canvas.grid.gridSnap) {
             canvas.resetCursorStyle();
         }

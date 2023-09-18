@@ -34,6 +34,9 @@ class TriangleTool extends AbstractTool {
         }
     }
 
+    // @ts-ignore
+    public keyUp(event: any, canvas: Canvas): void {}
+
     private draw(
         event: any,
         canvas: Canvas,
@@ -49,7 +52,7 @@ class TriangleTool extends AbstractTool {
 
         const triangle = new Triangle(points);
         triangle.strokeColour = canvas.strokeColour;
-        
+
         let color = canvas.strokeColour;
         if (preview) color = 'blue';
 

@@ -35,6 +35,9 @@ class LineTool extends AbstractTool {
         }
     }
 
+    // @ts-ignore
+    public keyUp(event: any, canvas: Canvas): void {}
+
     private draw(
         event: any,
         canvas: Canvas,

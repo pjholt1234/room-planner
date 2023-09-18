@@ -14,6 +14,9 @@ class TextTool extends abstractTool {
         }
     }
 
+    // @ts-ignore
+    public keyUp(event: any, canvas: Canvas): void {}
+
     public mouseDown(event: any, canvas: Canvas): void {
         const body = prompt('Enter text');
         if (!body) return;

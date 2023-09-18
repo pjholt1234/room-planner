@@ -14,6 +14,9 @@ class FillTool extends AbstractTool {
         }
     }
 
+    // @ts-ignore
+    public keyUp(event: any, canvas: Canvas): void {}
+
     public mouseDown(event: any, canvas: Canvas): void {
         const selectedPoint = { x: event.clientX, y: event.clientY };
 

@@ -40,6 +40,9 @@ class DeleteTool extends abstractTool {
 
     //@ts-ignore
     public mouseUp(event: any, canvas: Canvas): void {}
+
+    // @ts-ignore
+    public keyUp(event: any, canvas: Canvas): void {}
 }
 
 export default DeleteTool;

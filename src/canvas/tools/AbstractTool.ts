@@ -9,6 +9,8 @@ abstract class AbstractTool implements CanvasToolInterface {
 
     public abstract keyDown(event: any, canvas: Canvas): void;
 
+    public abstract keyUp(event: any, canvas: Canvas): void;
+
     public abstract mouseDown(event: any, canvas: Canvas): void;
 
     public abstract mouseMove(event: any, canvas: Canvas): void;

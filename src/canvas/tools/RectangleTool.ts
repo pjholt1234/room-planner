@@ -35,6 +35,9 @@ class RectangleTool extends AbstractTool {
         }
     }
 
+    // @ts-ignore
+    public keyUp(event: any, canvas: Canvas): void {}
+
     private translateCoordinates(point1: Point, point2: Point): Point[] {
         const topLeft = [
             Math.min(point1.x, point2.x),

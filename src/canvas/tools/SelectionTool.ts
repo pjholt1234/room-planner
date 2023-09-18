@@ -76,6 +76,9 @@ class SelectionTool extends AbstractTool {
         }
     }
 
+    // @ts-ignore
+    public keyUp(event: any, canvas: Canvas): void {}
+
     private deselectObject(canvas: Canvas): void {
         if (this.selectedObject === null) return;
 

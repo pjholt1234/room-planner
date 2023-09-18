@@ -36,6 +36,9 @@ class CircleTool extends AbstractTool {
         this._isDrawing = false;
     }
 
+    // @ts-ignore
+    public keyUp(event: any, canvas: Canvas): void {}
+
     private draw(
         event: any,
         canvas: Canvas,
