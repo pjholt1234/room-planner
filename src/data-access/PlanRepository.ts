@@ -4,6 +4,8 @@ import Rectangle from '../canvas/shapes/Rectangle';
 import Circle from '../canvas/shapes/Circle';
 import Triangle from '../canvas/shapes/Triangle';
 import Text from '../canvas/utilities/Text';
+import Line from '../canvas/shapes/Line';
+import CustomShape from '../canvas/shapes/CustomShape';
 
 class PlanRepository {
     private baseUrl: string = '';
@@ -15,7 +17,9 @@ class PlanRepository {
             Rectangle,
             Circle,
             Triangle,
-            Text
+            Text,
+            Line,
+            CustomShape
         };
     }
 
