@@ -7,8 +7,8 @@ import Line from '../shapes/Line';
 
 class CustomShapeTool extends AbstractTool {
     protected cursorStyle: CursorStyle = CursorStyle.Crosshair;
-    protected eventName: string = 'customShape';
-    protected toolName: string = 'customShape';
+    protected eventName: string = 'custom-shape';
+    protected toolName: string = 'custom-shape';
 
     private _selectedPoints: Point[] = [];
     private _isDrawing: boolean = false;
