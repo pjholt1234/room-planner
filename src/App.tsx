@@ -15,6 +15,7 @@ import PlanToolbar from './components/PlanToolbar';
 import SavePlanModal from './components/SavePlanModal';
 import DeletePlanModal from './components/DeletePlanModal';
 import LineIcon from './components/icons/LineIcon';
+import CustomShapeIcon from './components/icons/CustomShapeIcon';
 
 function App() {
     return (
@@ -24,6 +25,10 @@ function App() {
                 <ToolbarSection title={'Shapes'}>
                     <div className="toolbar-row">
                         <ToolButton eventName="line" icon={<LineIcon />} />
+                        <ToolButton
+                            eventName="custom-shape"
+                            icon={<CustomShapeIcon />}
+                        />
                         <ToolButton
                             eventName="rectangle"
                             icon={<RectangleIcon />}
