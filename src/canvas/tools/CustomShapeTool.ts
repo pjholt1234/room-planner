@@ -26,11 +26,11 @@ class CustomShapeTool extends AbstractTool {
             y: event.clientY
         };
 
-        this.draw(event, canvas, false);
+        this.draw(event, canvas);
     }
 
     public mouseMove(event: any, canvas: Canvas): void {
-        this.draw(event, canvas, true);
+        this.draw(event, canvas);
     }
 
     public keyDown(event: any, canvas: Canvas): void {
@@ -46,12 +46,7 @@ class CustomShapeTool extends AbstractTool {
     // @ts-ignore
     public keyUp(event: any, canvas: Canvas): void {}
 
-    //@ts-ignore
-    private draw(
-        event: any,
-        canvas: Canvas,
-        preview: boolean = false
-    ): CustomShape | undefined {
+    private draw(event: any, canvas: Canvas): CustomShape | undefined {
         if (!this._isDrawing) return;
         canvas.redrawCanvas();
 
@@ -81,7 +76,7 @@ class CustomShapeTool extends AbstractTool {
 
         this._isDrawing = false;
         this._selectedPoints = [];
-        
+
         canvas.canvasObjects.push(customShape);
         canvas.redrawCanvas();
     }
