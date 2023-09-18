@@ -12,6 +12,7 @@ import DeleteTool from './tools/DeleteTool';
 import PlanManager from '../data-access/PlanManager';
 import * as cursors from '../assets/index.ts';
 import LineTool from './tools/LineTool';
+import CustomShapeTool from './tools/CustomShapeTool';
 
 class Canvas {
     public canvas: HTMLCanvasElement;
@@ -40,7 +41,8 @@ class Canvas {
             new FillTool(),
             new GridTool(),
             new DeleteTool(),
-            new LineTool()
+            new LineTool(),
+            new CustomShapeTool()
         ];
 
         this.selectedTool = new LineTool();
@@ -112,6 +114,13 @@ class Canvas {
         document.addEventListener('keydown', (event) => {
             this._tools.forEach((tool: CanvasToolInterface) => {
                 tool.keyDown(event, this);
+            });
+        });
+
+        document.removeEventListener('keyup', () => {});
+        document.addEventListener('keyup', (event) => {
+            this._tools.forEach((tool: CanvasToolInterface) => {
+                tool.keyUp(event, this);
             });
         });
 
