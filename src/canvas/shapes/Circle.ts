@@ -3,7 +3,8 @@ import AbstractShape from './AbstractShape';
 
 class Circle extends AbstractShape {
     public points: Point[];
-
+    public name: string = 'Circle';
+    
     constructor(points: Point[]) {
         super();
         this.points = points;

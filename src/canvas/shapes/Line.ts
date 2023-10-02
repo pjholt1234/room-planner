@@ -3,6 +3,7 @@ import AbstractShape from './AbstractShape';
 
 class Line extends AbstractShape {
     public points: Point[];
+    public name: string = 'Line';
 
     constructor(points: Point[]) {
         super();
