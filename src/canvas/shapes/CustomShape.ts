@@ -2,6 +2,7 @@ import Point from './point-types/Point';
 import AbstractShape from './AbstractShape';
 
 class CustomShape extends AbstractShape {
+    public name: string = 'CustomShape';
     public points: Point[];
 
     constructor(points: Point[]) {
@@ -34,11 +35,30 @@ class CustomShape extends AbstractShape {
         return this.points;
     }
 
-    //@ts-ignore
     public isPointInside(point: Point): boolean {
-        //todo
+        let crossings = 0;
 
-        return false;
+        for (let i = 0; i < this.points.length; i++) {
+            const currentPoint = this.points[i];
+            const nextPoint = this.points[(i + 1) % this.points.length];
+
+            if (
+                (currentPoint.y <= point.y && point.y < nextPoint.y) ||
+                (nextPoint.y <= point.y && point.y < currentPoint.y)
+            ) {
+                const intersectionX =
+                    ((point.y - currentPoint.y) /
+                        (nextPoint.y - currentPoint.y)) *
+                        (nextPoint.x - currentPoint.x) +
+                    currentPoint.x;
+
+                if (point.x < intersectionX) {
+                    crossings++;
+                }
+            }
+        }
+
+        return crossings % 2 === 1;
     }
 }
 
