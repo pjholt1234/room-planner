@@ -41,6 +41,10 @@ class CustomShapeTool extends AbstractTool {
         if (event.key === 'Shift') {
             this.completeShape(canvas);
         }
+
+        if (event.key == 'Escape') {
+            this.cancelShape(canvas);
+        }
     }
 
     // @ts-ignore
@@ -78,6 +82,12 @@ class CustomShapeTool extends AbstractTool {
         this._selectedPoints = [];
 
         canvas.canvasObjects.push(customShape);
+        canvas.redrawCanvas();
+    }
+
+    private cancelShape(canvas: Canvas): void {
+        this._isDrawing = false;
+        this._selectedPoints = [];
         canvas.redrawCanvas();
     }
 }
