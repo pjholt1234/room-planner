@@ -2,6 +2,7 @@ import PlanRepository from './PlanRepository';
 import ApiClient from './ApiClient';
 import ShapeInterface from '../canvas/shapes/ShapeInterface';
 import Observable from './Observable';
+import Room from '../canvas/shapes/Room';
 
 class PlanManager extends Observable {
     public currentPlan: any = null;
@@ -58,11 +59,14 @@ class PlanManager extends Observable {
         document.dispatchEvent(loadPlanAlert);
     }
 
-    public async savePlan(canvasObjects: ShapeInterface[]): Promise<void> {
+    public async savePlan(
+        canvasObjects: ShapeInterface[],
+        room: Room
+    ): Promise<void> {
         const planId = this.id === 'new' ? '' : this.id;
 
         await this.planRepository
-            .save(planId, this.planName, canvasObjects)
+            .save(planId, this.planName, canvasObjects, room)
             .then((response: any) => {
                 this.id = response._id;
             });

@@ -6,6 +6,7 @@ import Triangle from '../canvas/shapes/Triangle';
 import Text from '../canvas/utilities/Text';
 import Line from '../canvas/shapes/Line';
 import CustomShape from '../canvas/shapes/CustomShape';
+import Room from '../canvas/shapes/Room';
 
 class PlanRepository {
     private baseUrl: string = '';
@@ -26,14 +27,17 @@ class PlanRepository {
     public async save(
         id: string,
         planName: string,
-        planData: ShapeInterface[]
+        planData: ShapeInterface[],
+        roomData: Room
     ): Promise<void> {
-        const plan: any = { planName: planName, planData: [] };
+        const plan: any = { planName: planName, planData: [], roomData: {} };
 
         planData.map((object: ShapeInterface) => {
             // @ts-ignore
             plan.planData.push(object.encode());
         });
+
+        plan.roomData = roomData.encode();
 
         if (id) {
             return await this.apiClient.post(
@@ -55,11 +59,12 @@ class PlanRepository {
         }
 
         const data = response[0];
-
+        
         return {
             id: data._id,
             planName: data.planName,
-            canvasObjects: this.prepareDataForCanvas(data.planData)
+            canvasObjects: this.prepareDataForCanvas(data.planData),
+            room: this.prepareRoomDataForCanvas(data.roomData)
         };
     }
 
@@ -93,6 +98,13 @@ class PlanRepository {
         });
 
         return canvasObjects;
+    }
+
+    private prepareRoomDataForCanvas(roomData: any): Room {
+        const room = new Room(roomData.points);
+        room.strokeColour = roomData.strokeColour;
+
+        return room;
     }
 }
 
