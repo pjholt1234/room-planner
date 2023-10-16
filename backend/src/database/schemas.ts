@@ -21,6 +21,10 @@ const schemas: Record<string, mongoose.SchemaDefinition> = {
             type: String,
             required: true
         },
+        roomData: {
+            type: Object,
+            required: true
+        },
         planData: {
             type: Array,
             required: false
