@@ -16,6 +16,7 @@ import SavePlanModal from './components/SavePlanModal';
 import DeletePlanModal from './components/DeletePlanModal';
 import LineIcon from './components/icons/LineIcon';
 import CustomShapeIcon from './components/icons/CustomShapeIcon';
+import RoomIcon from './components/icons/RoomIcon';
 
 function App() {
     return (
@@ -42,6 +43,7 @@ function App() {
                 </ToolbarSection>
                 <ToolbarSection title={'Tools'}>
                     <div className="toolbar-row">
+                        <ToolButton eventName="room-tool" icon={<RoomIcon />} />
                         <ToolButton eventName="select" icon={<SelectIcon />} />
                         <ToolButton
                             eventName="delete-tool"
