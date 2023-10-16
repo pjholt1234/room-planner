@@ -13,11 +13,14 @@ import PlanManager from '../data-access/PlanManager';
 import * as cursors from '../assets/index.ts';
 import LineTool from './tools/LineTool';
 import CustomShapeTool from './tools/CustomShapeTool';
+import RoomTool from './tools/RoomTool';
+import Room from './shapes/Room';
 
 class Canvas {
     public canvas: HTMLCanvasElement;
     public ctx: CanvasRenderingContext2D;
     public canvasObjects: ShapeInterface[] = [];
+    public room: Room | null = null;
     public grid: Grid;
     public fillColour: string = '#FFFFFF';
     public strokeColour: string = '#000000';
@@ -42,7 +45,8 @@ class Canvas {
             new GridTool(),
             new DeleteTool(),
             new LineTool(),
-            new CustomShapeTool()
+            new CustomShapeTool(),
+            new RoomTool()
         ];
 
         this.selectedTool = new LineTool();
@@ -72,6 +76,10 @@ class Canvas {
         this.clearCanvas();
 
         this.grid.draw(this.ctx, this);
+
+        if (this.room) {
+            this.room.draw(this.ctx, 'white');
+        }
 
         this.canvasObjects.forEach((canvasObject: ShapeInterface) => {
             canvasObject.draw(this.ctx);
@@ -180,6 +188,7 @@ class Canvas {
 
         const handlePlanLoad = () => {
             this.canvasObjects = this.planManager.currentPlan.canvasObjects;
+            this.room = this.planManager.currentPlan.room;
             this.redrawCanvas();
         };
 
@@ -187,14 +196,16 @@ class Canvas {
 
         const handlePlanDeleted = () => {
             this.canvasObjects = [];
+            this.room = null;
             this.redrawCanvas();
         };
 
         this.planManager.addObserver('deleted', handlePlanDeleted);
 
-        this.planManager.addObserver('saving', () =>
-            this.planManager.savePlan(this.canvasObjects)
-        );
+        this.planManager.addObserver('saving', () => {
+            if (!this.room) return;
+            this.planManager.savePlan(this.canvasObjects, this.room);
+        });
     }
 
     private getCursorImage(): any {
