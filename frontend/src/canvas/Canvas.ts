@@ -203,7 +203,14 @@ class Canvas {
         this.planManager.addObserver('deleted', handlePlanDeleted);
 
         this.planManager.addObserver('saving', () => {
-            if (!this.room) return;
+            //if (!this.room) return; placeholder
+            this.room = new Room([
+                { x: 0, y: 0 },
+                { x: this.canvas.width, y: 0 },
+                { x: this.canvas.width, y: this.canvas.height },
+                { x: 0, y: this.canvas.height }
+            ]);
+
             this.planManager.savePlan(this.canvasObjects, this.room);
         });
     }
