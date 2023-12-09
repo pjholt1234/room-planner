@@ -1,0 +1,38 @@
+version: '3.8'
+networks:
+  room-planner-network:
+    driver: bridge
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+      - '/app/node_modules'
+    ports:
+      - '3001:3001'
+    networks:
+      - room-planner-network
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - '/app/node_modules'
+    ports:
+      - '3000:3000'
+    environment:
+      - PORT=3000
+      - APP_PORT=3001
+    command: npm run dev -- --host
+    networks:
+      - room-planner-network
+
+  mongodb:
+    image: mongo
+    ports:
+      - '27017:27017'
+    networks:
+      - room-planner-network

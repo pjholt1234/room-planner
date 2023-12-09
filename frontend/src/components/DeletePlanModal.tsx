@@ -5,7 +5,7 @@ import PlanManager from '../data-access/PlanManager';
 const DeletePlanModal = () => {
     const [planId, setPlanId] = useState<string>('');
     const [hidden, setHidden] = useState<boolean>(true);
-
+    
     const planManager = PlanManager.getInstance();
 
     useEffect(() => {

@@ -6,6 +6,7 @@ class ApiClient {
 
     constructor() {
         this.baseURL = import.meta.env.VITE_API_URL;
+        console.log(import.meta.env.VITE_API_URL);
         this.authToken = import.meta.env.VITE_AUTH_TOKEN;
     }
 
@@ -31,6 +32,7 @@ class ApiClient {
 
             return response.data;
         } catch (error: any) {
+            console.error(error);
             const errorAlert = new CustomEvent('alert', {
                 detail: {
                     message:
