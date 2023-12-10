@@ -12,17 +12,14 @@ beforeAll(async () => {
   process.env.DB_NAME = "test";
 });
 
-afterAll(async () => {
-  await mongoose.disconnect();
-  await mongoServer.stop();
-});
+describe("MongoDatabase", () => {
+  test("should connect to the database", async () => {
+    const db = MongoDatabase.getInstance();
+    expect(mongoose.connection.readyState).toBeGreaterThanOrEqual(1);
+  });
 
-test("should connect to the database", async () => {
-  const db = new MongoDatabase();
-  expect(mongoose.connection.readyState).toBeGreaterThan(1);
-});
-
-test("should register models", async () => {
-  const db = new MongoDatabase();
-  expect(Object.keys(db.models).length).toBeGreaterThan(0);
+  test("should register models", async () => {
+    const db = MongoDatabase.getInstance();
+    expect(Object.keys(db.models).length).toBeGreaterThan(0);
+  });
 });

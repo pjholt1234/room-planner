@@ -4,11 +4,19 @@ import mongoose, { Schema } from "mongoose";
 
 class MongoDatabase {
   public models = <any>{};
+  private static instance: MongoDatabase;
 
-  constructor() {
+  private constructor() {
     importEnv();
     this.connectToDatabase();
     this.registerModels();
+  }
+
+  public static getInstance(): MongoDatabase {
+    if (!this.instance) {
+      this.instance = new MongoDatabase();
+    }
+    return this.instance;
   }
 
   private getDatabaseUri(): string {
@@ -16,7 +24,6 @@ class MongoDatabase {
   }
 
   private async connectToDatabase(): Promise<void> {
-    console.log("Connecting to database ", this.getDatabaseUri());
     try {
       await mongoose.connect(this.getDatabaseUri(), {
         dbName: process.env.DB_NAME,
@@ -39,7 +46,13 @@ class MongoDatabase {
         schema = new mongoose.Schema(schemaConfig[schemaName]);
       }
 
-      this.models[schemaName] = mongoose.model(schemaName, schema);
+      // Check if the model has already been registered
+      if (!mongoose.models[schemaName]) {
+        this.models[schemaName] = mongoose.model(schemaName, schema);
+      } else {
+        // If the model is already registered, use the existing model
+        this.models[schemaName] = mongoose.model(schemaName);
+      }
     }
   }
 }
