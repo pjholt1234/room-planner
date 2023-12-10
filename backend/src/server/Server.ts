@@ -12,8 +12,11 @@ class Server {
     importEnv();
     this.app = express();
     this.routes = routes;
-    this.setUpServer();
     this.registerRoutes();
+  }
+
+  public start(): void {
+    this.setUpServer();
   }
 
   private setUpServer(): void {
