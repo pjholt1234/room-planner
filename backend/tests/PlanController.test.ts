@@ -1,5 +1,4 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
-import mongoose from "mongoose";
 // @ts-ignore
 import supertest from "supertest";
 import MongoDatabase from "../src/database/MongoDatabase";
@@ -19,7 +18,6 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await mongoose.disconnect();
   await mongoServer.stop();
 });
 

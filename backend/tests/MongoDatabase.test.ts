@@ -12,6 +12,10 @@ beforeAll(async () => {
   process.env.DB_NAME = "test";
 });
 
+afterAll(async () => {
+  await mongoServer.stop();
+});
+
 describe("MongoDatabase", () => {
   test("should connect to the database", async () => {
     const db = MongoDatabase.getInstance();
